@@ -1,0 +1,23 @@
+npm i install
+npx eslint --init
+(question #)
+-3
+-1
+-1
+-no
+-node
+-1
+-airbnb
+-javascript
+
+testing prod
+  -npm run build
+  then
+  -npm run server
+  localhost:3001
+
+else
+  -npm run server
+  dif terminal
+  -npm start
+  localhost:3000
