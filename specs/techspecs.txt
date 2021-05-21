@@ -1,0 +1,86 @@
+styleguide:
+  -airbnb eslint
+  -es6 styling 
+  -all arrow functions
+  -promise based
+  -2 space tabbing
+  -single quotes
+  -const and let only
+  -function grouping (sort functions logically)
+  -comment as much as reasonable
+
+frontend:
+  -routing: react routing
+  -framework: react hooks
+  -styling: bootstrap + inline-css + material UI + css module per component (ask me)
+  -backendCommunication: axios
+  -SEPARATE COMPONENTS AS MUCH AS POSSIBLE
+  -new folders per sub category of feature
+  BRANCH
+    COMPONENTS
+      feature
+        COMPONENTS
+      feature
+        COMPONENTS
+  -variable naming:
+    -camelCase
+    -<Feature />
+    -<SubFeature />
+    -<Feature
+      key={}
+      variable={}
+      style={{
+        color: 'color',
+        size: '10vh',
+      }}
+      variable={}
+    />
+    -const [variable, setVariable] = useState('');
+
+  -css style:
+    -use vh whenever POSSIBLE
+    -use font resizing
+    -everything flexbox
+  
+
+backend: 
+  -framework: node/express
+  -routes: server/server.js (app.get('/route', controller), app.post, app.put ...)
+  -controllers: server/controllers/ (handle route get logic from models)
+  -models: server/models/ (database communication)
+  -style guide: 
+    -/single /two-words
+    -app.get('/api/users', usersController)
+    -const usersControllers = () => {
+      const users = modelUser.get();//Ey model give me users from database
+      //Do logic with our users and return it
+    }
+    -const modelUser = {
+      get: () => databaseCall('SELECT * FROM users'); //Ey database give me users
+    }
+
+  Do you change the database? Only modify the model
+  Do you change your logic? Only modify the controller
+  Do you change your routing? Only modify the route
+
+  variable naming: 
+    -camelCase
+    -/functionality
+    -functionalityController
+    -modelFunctionality
+
+database:
+  -db: mongodb
+  -driver: mongoose
+  -separate functionality based on collection
+
+testing: 
+  -frameworks: jest, react testing utils
+  -stresstest: k6, loader.io
+  -try to test atleast the most important features
+  -if possible end to end testing
+
+etc
+ -all images / files go into assets
+
+
