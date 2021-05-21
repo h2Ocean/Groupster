@@ -3,11 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb',
-    'prettier',
-  ],
+  extends: ['plugin:react/recommended', 'airbnb'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -15,14 +11,10 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'prettier',
-  ],
+  plugins: ['react'],
   rules: {
     'linebreak-style': 0,
-    'prettier/prettier': ['error'],
-    "no-unused-vars": "warn",
-
+    'no-unused-vars': 'warn',
+    'no-console': 'off',
   },
 };

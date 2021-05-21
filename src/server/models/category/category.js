@@ -5,7 +5,7 @@ const Category = mongoose.model(
   new Schema({
     name: String,
     subCategory: [Schema.types.ObjectId],
-  })
+  }),
 );
 
 export default Category;

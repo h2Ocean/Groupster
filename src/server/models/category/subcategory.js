@@ -5,7 +5,7 @@ const SubCategory = mongoose.model(
   new Schema({
     name: String,
     channels: [Schema.types.ObjectId],
-  })
+  }),
 );
 
 export default SubCategory;

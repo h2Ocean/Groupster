@@ -17,7 +17,7 @@ const Channel = mongoose.model(
         role: Schema.types.ObjectId,
       },
     ],
-  })
+  }),
 );
 
 export default Channel;
