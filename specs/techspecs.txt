@@ -84,3 +84,16 @@ etc
  -all images / files go into assets
 
 
+
+
+
+research 
+  -https://www.framer.com/motion/ --motion
+  -https://tailwindcss.com/ --css alternative
+  -https://undraw.co/ --logos
+  -date-fns --date
+  -dotenv --using env variables
+  -socket.io --chatroom
+  -uuid -- unique id
+  -https://use-http.com/#/ --fetch
+  -useMedia -- screen resizing

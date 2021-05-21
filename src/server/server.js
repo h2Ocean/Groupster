@@ -2,10 +2,11 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
-import resolvers from './resolvers';
-import typeDefs from './typeDefs';
+import typeDefs from './schemas';
 
-const port = process.env.PORT || 4000;
+require('dotenv').config();
+
+const port = process.env.PORT;
 
 const url = 'mongodb://localhost:27017/groupster';
 
@@ -14,7 +15,6 @@ const startServer = async () => {
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers,
     cors: true,
   });
 

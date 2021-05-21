@@ -6,7 +6,7 @@ const Role = mongoose.model(
     channel: Schema.types.ObjectID,
     name: String,
     permissions: [Boolean],
-  })
+  }),
 );
 
 export default Role;

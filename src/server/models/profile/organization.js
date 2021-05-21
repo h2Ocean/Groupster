@@ -7,7 +7,7 @@ const Organization = mongoose.model(
     desc: String,
     admin: [Schema.types.ObjectId],
     owner: Schema.types.ObjectId,
-  })
+  }),
 );
 
 export default Organization;
