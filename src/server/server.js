@@ -1,31 +1,34 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+import typeDefs from './schemas';
 
-const port = process.env.PORT || 3001;
-const app = express();
+require('dotenv').config();
 
-app.use(cors());
-app.use(express.json({ limit: '50mb', extended: true }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(express.static('build'));
+const port = process.env.PORT;
 
 const url = 'mongodb://localhost:27017/groupster';
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Mongo connection error: '));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
-});
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
-
 
 const startServer = async () => {
-  
-}
+  const app = express();
+
+  const server = new ApolloServer({
+    typeDefs,
+    cors: true,
+  });
+
+  server.applyMiddleware({ app });
+
+  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}${server.graphqlPath}`);
+  });
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+  });
+};
+
+startServer();
