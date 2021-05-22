@@ -45,7 +45,7 @@ const Form = ({ open, handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nameString = [firstName, lastName].join(' ');
+    const nameString = `${firstName} ${lastName}`;
     const userObj = {
       username: userName,
       name: nameString,

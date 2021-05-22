@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Dialog } from '@material-ui/core';
-import Form from './SignUpForm';
+import LoginForm from './LoginForm';
 
-const SignUp = ({ open, handleClose }) => (
+const Login = ({ open, handleClose }) => (
   <Dialog open={open} onClose={handleClose}>
-    <Form handleClose={handleClose} open={open} />
+    <LoginForm open={open} handleClose={handleClose} />
   </Dialog>
 );
 
-export default SignUp;
+export default Login;
