@@ -6,7 +6,7 @@ import Form from './SignUpForm';
 const SignUp = ({ open, handleClose }) => (
   <>
     <Dialog open={open} onClose={handleClose}>
-      <Form handleClose={handleClose} />
+      <Form handleClose={handleClose} open={open} />
     </Dialog>
   </>
 );
