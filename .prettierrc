@@ -2,5 +2,6 @@
   "printWidth": 100,
   "singleQuote": true,
   "endOfLine": "crlf",
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "objectCurlyNewLine": "on"
 }

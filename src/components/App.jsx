@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
+import Chat from './chat/Chat';
 
 const App = () => (
   <div className="App">
-    <h1>Hello, gamers!</h1>
+    <Chat />
   </div>
 );
 
