@@ -15,6 +15,7 @@ const channelSchema = gql`
   }
 
   type UserData {
+    Nick: String
     profile: Profile
     role: Role
   }

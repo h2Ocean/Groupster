@@ -13,6 +13,7 @@ const Channel = mongoose.model(
     org: Schema.types.ObjectId,
     users: [
       {
+        nick: String,
         profile: Schema.types.ObjectId,
         role: Schema.types.ObjectId,
       },
