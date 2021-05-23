@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LoginSignup from './login-signup/LoginSignup';
+import Chat from './Chat/Chat';
 import './App.css';
 
 const App = () => {
@@ -19,7 +20,11 @@ const App = () => {
         </div>
       );
     }
-    return <h1>helloworld</h1>;
+    return (
+      <div>
+        <Chat username={username} />
+      </div>
+    );
   };
 
   return <div className="App">{populate()}</div>;
