@@ -22,7 +22,6 @@ const Chat = () => {
   // handle message recieved
   useEffect(() => {
     socket.on('receive_message', (data) => {
-      console.log('data');
       setMessageList([...messageList, data]);
     });
   });
