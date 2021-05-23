@@ -83,17 +83,22 @@ testing:
 etc
  -all images / files go into assets
 
-
+  -https://undraw.co/ --logos
+  -https://www.framer.com/motion/ --motion
 
 
 
 research 
-  -https://www.framer.com/motion/ --motion
-  -https://tailwindcss.com/ --css alternative
-  -https://undraw.co/ --logos
   -date-fns --date
-  -dotenv --using env variables
   -socket.io --chatroom
   -uuid -- unique id
-  -https://use-http.com/#/ --fetch
+  -useQuery vs fetch vs axios vs usehttp
+  -pw encryption bcrypt vs others
+
+homework sue ann:
+  -https://tailwindcss.com/ --css alternative
+  -react bootstrap
+  -etc
+  -material ui
+  -material ui + tailwind vs bootstrap
   -useMedia -- screen resizing

@@ -5,7 +5,7 @@ const Role = mongoose.model(
   new Schema({
     channel: Schema.types.ObjectID,
     name: String,
-    permissions: [Boolean],
+    permissions: [String],
   }),
 );
 

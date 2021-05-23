@@ -1,46 +1,28 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import LoginSignup from './login-signup/LoginSignup';
 import './App.css';
-import SignUp from './signup/SignUp';
-import Login from './login/Login';
-import { ThemeProvider } from '@material-ui/styles';
-import theme from './Reusable/theme';
 
 const App = () => {
-  const [open, setOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const [username, setUsername] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // function to handle modal open
-  const handleOpen = () => {
-    setOpen(true);
+  const populate = () => {
+    if (!isLoggedIn) {
+      return (
+        <div>
+          <h1>Hello, Learners!</h1>
+          <LoginSignup
+            setUsername={setUsername}
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+          />
+        </div>
+      );
+    }
+    return <h1>helloworld</h1>;
   };
 
-  // function to handle modal close
-  const handleClose = () => {
-    setOpen(false);
-    setLoginOpen(false);
-  };
-
-  const handleLogin = () => {
-    setLoginOpen(true);
-  };
-
-  return (
-    <div className="App">
-      <h1>Hello, Learners!</h1>
-      <ThemeProvider theme={theme}>
-        <Button variant="contained" color="secondary" onClick={handleOpen}>
-          Sign Up
-        </Button>
-        <Button variant="contained" color="secondary" onClick={handleLogin}>
-          Login
-        </Button>
-      </ThemeProvider>
-
-      <SignUp open={open} handleClose={handleClose} />
-      <Login open={loginOpen} handleClose={handleClose} />
-    </div>
-  );
+  return <div className="App">{populate()}</div>;
 };
 
 export default App;
