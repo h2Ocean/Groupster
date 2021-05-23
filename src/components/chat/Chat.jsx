@@ -7,10 +7,10 @@ import './styles/chat.css';
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
 
-const Chat = () => {
+const Chat = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [room, setRoom] = useState('lobby');
-  const [username, setUsername] = useState('tobiasaf');
+  const [{ username }] = useState(props);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
@@ -53,13 +53,6 @@ const Chat = () => {
       {!loggedIn ? (
         <div className="logIn">
           <div className="inputs">
-            <input
-              type="text"
-              placeholder="Name..."
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
             <input
               type="text"
               placeholder="Room..."
