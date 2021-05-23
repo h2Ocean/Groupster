@@ -47,66 +47,68 @@ const LoginForm = ({ open, handleClose }) => {
   };
 
   return (
-    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Log In
-          </Typography>
-          <form className={classes.form} onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
+    <div style={{ overflow: 'hidden' }}>
+      <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+        <Container component="main" maxWidth="xs" style={{ height: '45vh' }}>
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Log In
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="none"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Grid>
+                <Button
+                  type="submit"
                   fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="none"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  {/* <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link> */}
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Login
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    {/* <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link> */}
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container>
-    </Slide>
+            </form>
+          </div>
+        </Container>
+      </Slide>
+    </div>
   );
 };
 

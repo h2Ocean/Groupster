@@ -4,7 +4,6 @@ import SignUp from './signup/SignUp';
 import Login from './login/Login';
 import './App.css';
 
-
 const App = () => {
   const [open, setOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
