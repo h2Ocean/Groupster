@@ -4,14 +4,16 @@ import React from 'react';
 // import theme from '../Reusable/theme.jsx';
 // import colors from '../Reusable/colors.js';
 
-const Explore = () => {
-  return (
-    <div>
-      <div>Language</div>
-      <input type="checkbox" value="language" />
-      <div>Science</div>
-    </div>
-    {/* <ThemeProvider theme={theme}>
+const Explore = () => (
+  <div>
+    <div>Language</div>
+    <input type="checkbox" value="language" />
+    <div>Science</div>
+  </div>
+);
+
+export default Explore;
+/* <ThemeProvider theme={theme}>
       <Button variant="contained" color="primary" style={{ width: '200px' }}>
         Sign In / Sign Up
       </Button>
@@ -20,8 +22,4 @@ const Explore = () => {
       </Button>
     </ThemeProvider>
     <button style={{ backgroundColor: `${colors.accent.yellow}` }}>push</button>
-    <Explore /> */}
-  );
-};
-
-export default Explore;
+    <Explore /> */

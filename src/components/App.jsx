@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import LoginSignup from './login-signup/LoginSignup';
-import Chat from './Chat/Chat';
+import GroupChat from './GroupChat/GroupChat';
+import NavTopbar from './NavTopbar/NavTopbar';
 import './App.css';
 
 const App = () => {
   const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const populate = () => {
     if (!isLoggedIn) {
@@ -20,9 +21,12 @@ const App = () => {
         </div>
       );
     }
+    // <Chat username={username} />
+
     return (
       <div>
-        <Chat username={username} />
+        <NavTopbar />
+        <GroupChat />
       </div>
     );
   };

@@ -1,14 +1,9 @@
 import React from 'react';
-import SearchChat from './SearchChat';
-import WriteMessage from './WriteMessage';
+import Chat from './Chat/Chat';
 
-const MessageWindow = () => {
-  return (
-    <div id="MessageWindow" style={{ border: '1px solid purple' }}>
-      <SearchChat />
-      Hello to our members!
-      <WriteMessage />
-    </div>
-  );
-};
+const MessageWindow = () => (
+  <div id="MessageWindow" style={{ border: '1px solid purple' }}>
+    <Chat />
+  </div>
+);
 export default MessageWindow;
