@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from '@apollo/client';
 import LoginSignup from './login-signup/LoginSignup';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
@@ -6,7 +12,14 @@ import './App.css';
 
 const App = () => {
   const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const httpLink = createHttpLink({
+    uri: 'http://localhost:4000/graphql',
+  });
+  const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache(),
+  });
 
   const populate = () => {
     if (!isLoggedIn) {
@@ -24,8 +37,10 @@ const App = () => {
 
     return (
       <div>
-        <NavTopbar />
-        <GroupChat username={username} />
+        <ApolloProvider client={client}>
+          <NavTopbar />
+          <GroupChat username={username} client={client} />
+        </ApolloProvider>
       </div>
     );
   };
