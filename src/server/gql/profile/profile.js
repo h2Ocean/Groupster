@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const profileSchema = gql`
+export const typeDef = gql`
   type Profile {
     username: String!
     name: String!
@@ -11,4 +11,3 @@ const profileSchema = gql`
     channels: [Channel]
   }
 `;
-export default profileSchema;

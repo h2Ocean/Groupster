@@ -16,5 +16,7 @@ module.exports = {
     'linebreak-style': 0,
     'no-unused-vars': 'warn',
     'no-console': 'off',
+    'import/prefer-default-export': 'off',
+    'object-curly-newline': 'off',
   },
 };
