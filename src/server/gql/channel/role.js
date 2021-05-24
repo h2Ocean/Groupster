@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const roleSchema = gql`
+export const typeDef = gql`
   type Role {
     id: ID!
     channel: ID!
@@ -13,4 +13,3 @@ const roleSchema = gql`
     allowed: Boolean!
   }
 `;
-export default roleSchema;

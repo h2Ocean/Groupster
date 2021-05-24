@@ -6,7 +6,7 @@ import './App.css';
 
 const App = () => {
   const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const populate = () => {
     if (!isLoggedIn) {
@@ -21,7 +21,6 @@ const App = () => {
         </div>
       );
     }
-    // <Chat username={username} />
 
     return (
       <div>
