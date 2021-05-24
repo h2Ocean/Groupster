@@ -26,7 +26,7 @@ const App = () => {
     return (
       <div>
         <NavTopbar />
-        <GroupChat />
+        <GroupChat username={username} />
       </div>
     );
   };
