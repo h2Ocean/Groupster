@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import './styles/chat.css';
 
@@ -13,6 +13,7 @@ const Chat = (props) => {
   const [{ username }] = useState(props);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const dummy = useRef();
 
   // establish connection
   useEffect(() => {
@@ -45,55 +46,39 @@ const Chat = (props) => {
       await socket.emit('send_message', messageContent);
       setMessageList([...messageList, messageContent.content]);
       setMessage('');
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
     <div className="Chat">
-      {!loggedIn ? (
-        <div className="logIn">
-          <div className="inputs">
-            <input
-              type="text"
-              placeholder="Room..."
-              onChange={(e) => {
-                setRoom(e.target.value);
-              }}
-            />
-          </div>
-          <button type="submit" onClick={connectToRoom}>
-            Enter Chat
-          </button>
+      <div className="chatContainer">
+        <div className="messages">
+          {messageList.map((val, key) => (
+            <div
+              className="messageContainer"
+              key={key}
+              id={val.author === username ? 'You' : 'Other'}
+              ref={dummy}
+            >
+              <div className="messageIndividual">{`${val.author}: ${val.message}`}</div>
+            </div>
+          ))}
         </div>
-      ) : (
-        <div className="chatContainer">
-          <div className="messages">
-            {messageList.map((val, key) => (
-              <div
-                className="messageContainer"
-                key={key}
-                id={val.author === username ? 'You' : 'Other'}
-              >
-                <div className="messageIndividual">{`${val.author}: ${val.message}`}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="messageInputs">
-            <input
-              type="text"
-              placeholder="Message..."
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-            />
-            <button type="submit" onClick={sendMessage}>
-              Send
-            </button>
-          </div>
-        </div>
-      )}
+      </div>
+      <div className="messageInputs">
+        <input
+          type="text"
+          placeholder="Message..."
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+        />
+        <button type="submit" onClick={sendMessage}>
+          Send
+        </button>
+      </div>
     </div>
   );
 };
