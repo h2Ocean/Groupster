@@ -3,6 +3,7 @@ import LoginSignup from './login-signup/LoginSignup';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
 import './App.css';
+import Explore from './Explore/Explore';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -24,10 +25,11 @@ const App = () => {
     // <Chat username={username} />
 
     return (
-      <div>
-        <NavTopbar />
-        <GroupChat />
-      </div>
+      <fragment style={{ margin: 'auto' }}>
+        <Explore className="container" />
+        {/* <NavTopbar />
+        <GroupChat /> */}
+      </fragment>
     );
   };
 

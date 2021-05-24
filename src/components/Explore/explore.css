@@ -1,0 +1,24 @@
+#Explore {
+  margin: auto;
+  font-size: 18px;
+  font-family: 'Quicksand', sans-serif;
+}
+#categories {
+  height: 90vh;
+  width: 90vh;
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-rows: 30% 30% 30%;
+  row-gap: 15px;
+  column-gap: 15px;
+  justify-content: center;
+  align-content: center;
+}
+.categoryCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.categoryCard div:hover {
+  color: rgb(136, 88, 199);
+}
