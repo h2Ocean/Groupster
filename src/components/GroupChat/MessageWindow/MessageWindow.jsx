@@ -3,9 +3,11 @@ import Chat from './Chat/Chat';
 
 const MessageWindow = (props) => {
   const [{ username }] = useState(props);
+  const [{ client }] = useState(props);
+
   return (
     <div id="MessageWindow" style={{ border: '1px solid purple' }}>
-      <Chat username={username} />
+      <Chat client={client} username={username} />
     </div>
   );
 };

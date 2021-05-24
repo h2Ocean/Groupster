@@ -6,10 +6,11 @@ import './GroupChat.css';
 
 const GroupChat = (props) => {
   const [{ username }] = useState(props);
+  const [{ client }] = useState(props);
   return (
     <div id="GroupChat_container">
       <NavSidebar />
-      <MessageWindow username={username} />
+      <MessageWindow client={client} username={username} />
       <Members />
     </div>
   );
