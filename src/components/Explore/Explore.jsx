@@ -1,9 +1,9 @@
 import React from 'react';
-// import { Button } from '@material-ui/core';
-// import { ThemeProvider } from '@material-ui/styles';
+import { Button } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import Category from './Category';
 import './explore.css';
-// import theme from '../Reusable/theme.jsx';
+import theme from '../Reusable/theme';
 // import colors from '../Reusable/colors.js';
 const categoryList = [
   'Math',
@@ -32,17 +32,14 @@ const Explore = ({ setCategories, categories }) => (
         />
       ))}
     </div>
+    <div className="buttonContainer">
+      <ThemeProvider theme={theme}>
+        <Button variant="contained" color="secondary" className="nextButton">
+          Next
+        </Button>
+      </ThemeProvider>
+    </div>
   </div>
 );
 
 export default Explore;
-/* <ThemeProvider theme={theme}>
-      <Button variant="contained" color="primary" style={{ width: '200px' }}>
-        Sign In / Sign Up
-      </Button>
-      <Button variant="contained" color="secondary">
-        second
-      </Button>
-    </ThemeProvider>
-    <button style={{ backgroundColor: `${colors.accent.yellow}` }}>push</button>
-    <Explore /> */

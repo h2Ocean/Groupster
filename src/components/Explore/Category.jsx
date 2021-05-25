@@ -12,7 +12,7 @@ const categoryColors = [
   'rgba(235, 181, 130, 0.7)',
   'rgba(189, 189, 189, 0.7)',
   'rgba(137, 137, 255, 0.6)',
-  'rgba(218, 155, 232, 0.7)',
+  'rgba(237, 176, 176, 0.7)',
 ];
 
 // eslint-disable-next-line object-curly-newline

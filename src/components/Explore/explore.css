@@ -11,13 +11,15 @@
 #categories {
   height: 80vh;
   width: 80vh;
+  min-width: 450px;
+  min-height: 500px;
   display: grid;
   grid-template-columns: 30% 30% 30%;
   grid-template-rows: 30% 30% 30%;
   row-gap: 25px;
   column-gap: 25px;
   justify-content: center;
-  align-content: center;
+  margin: auto;
 }
 .categoryCard {
   position: relative;
@@ -26,7 +28,7 @@
   justify-content: center;
 }
 .categoryCard:hover {
-  border-color: #a3e6c5;
+  background-color: #a197d8;
 }
 /* .checkMark {
   position: absolute;
@@ -34,3 +36,9 @@
   right: 20px;
   opacity: 0.8;
 } */
+.buttonContainer {
+  padding: 10px;
+}
+.nextButton {
+  width: 200px;
+}
