@@ -31,7 +31,6 @@ export const resolvers = {
     async getChats() {
       try {
         const chats = await Chat.find();
-        console.log(chats);
         return chats;
       } catch (err) {
         throw new Error(err);
@@ -40,16 +39,14 @@ export const resolvers = {
   },
   Mutation: {
     // prettier dis
-    sendMessage: async (
-      _,
-      { message: { name, nick, msg } },
-    ) => {
+    sendMessage: async (_, { message: { name, nick, msg } }) => {
       const message = new Chat({
         name,
         nick,
         msg,
         created: new Date().toISOString(),
       });
+      console.log(message);
       const res = await message.save();
       return {
         id: res._id,

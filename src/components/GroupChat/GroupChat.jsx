@@ -7,10 +7,12 @@ import './GroupChat.css';
 const GroupChat = (props) => {
   const [{ username }] = useState(props);
   const [{ client }] = useState(props);
+  const [{ nick }] = useState(props);
+
   return (
     <div id="GroupChat_container">
       <NavSidebar />
-      <MessageWindow client={client} username={username} />
+      <MessageWindow nick={nick} client={client} username={username} />
       <Members />
     </div>
   );

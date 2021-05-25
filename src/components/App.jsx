@@ -12,7 +12,8 @@ import Dashboard from './Dashboard/Dashboard';
 import './App.css';
 
 const App = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('tobiasaf');
+  const [nick, setNick] = useState('tobias');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql',
@@ -39,9 +40,7 @@ const App = () => {
     return (
       <div>
         <ApolloProvider client={client}>
-          {/* <NavTopbar />
-          <GroupChat username={username} client={client} /> */}
-          <Dashboard />
+          <GroupChat nick={nick} username={username} client={client} />
         </ApolloProvider>
       </div>
     );
