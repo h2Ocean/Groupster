@@ -12,11 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 import { useAuth } from '../../../contexts/AuthContent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -43,29 +44,45 @@ const Form = ({ open, handleClose }) => {
   const [userEmail, setEmail] = useState('');
   const [affiliatedOrg, setAffiliatedOrg] = useState('');
   const [userAge, setAge] = useState();
+  const [person, setPerson] = useState();
   const { signup } = useAuth();
   const classes = useStyles();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const nameString = `${firstName} ${lastName}`;
     const userObj = {
       username: userName,
       name: nameString,
-      pfp: password,
       email: userEmail,
       orgs: affiliatedOrg,
       age: userAge,
     };
-    signup(userEmail, password);
-    console.log(userObj);
-    handleClose();
+    if (password !== confirmPassword) {
+      return setError('Passwords do not match');
+    }
+    if (password.length < 6) {
+      return setError('Password should be at least 6 characters');
+    }
+
+    try {
+      setError('');
+      setLoading(true);
+      await signup(userEmail, password);
+      setPerson(userObj);
+    } catch {
+      setError('Failed to create an account');
+    }
+    setLoading(false);
+    return handleClose();
   };
 
   return (
     <div style={{ overflow: 'hidden' }}>
       <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-        <Container component="main" maxWidth="xs" style={{ height: '72vh' }}>
+        <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -74,6 +91,11 @@ const Form = ({ open, handleClose }) => {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
+            {error && (
+              <Alert style={{ marginTop: '1vh' }} severity="error">
+                {error}
+              </Alert>
+            )}
             <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -191,6 +213,7 @@ const Form = ({ open, handleClose }) => {
               </Grid>
               <Button
                 type="submit"
+                disabled={loading}
                 fullWidth
                 variant="contained"
                 color="primary"
