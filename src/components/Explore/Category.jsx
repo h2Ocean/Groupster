@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const categoryColors = [
   '#C7A7E8',
@@ -13,21 +14,25 @@ const categoryColors = [
   '#8989FF',
   '#DA9BE8',
 ];
-const Category = ({ name, index }) => (
-  <Card
-    border="primary"
-    key={index}
-    className="categoryCard"
-    style={{
-      backgroundColor: `${categoryColors[index]}`,
-      borderRadius: '30px',
-      opacity: '0.9',
-    }}
-  >
-    <Card.Header>
-      <div className="categoryText">{name}</div>
-    </Card.Header>
-  </Card>
-);
+const Category = ({ name, index }) => {
+  const [isChecked, setCheck] = useState(false);
+  return (
+    <Card
+      border="primary"
+      key={index}
+      className="categoryCard"
+      style={{
+        backgroundColor: `${categoryColors[index]}`,
+        borderRadius: '30px',
+        opacity: '0.9',
+      }}
+    >
+      <Card.Header onClick={setCheck(true)}>
+        <div className="categoryText">{name}</div>
+        {isChecked ? <CheckCircleIcon /> : null}
+      </Card.Header>
+    </Card>
+  );
+};
 
 export default Category;

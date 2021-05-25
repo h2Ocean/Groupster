@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import { ThemeProvider, makeStyles } from '@material-ui/styles';
+// import { Button } from '@material-ui/core';
+// import { ThemeProvider } from '@material-ui/styles';
 import Category from './Category';
 import './explore.css';
 // import theme from '../Reusable/theme.jsx';
@@ -16,24 +16,10 @@ const categoryList = [
   'Business',
   'Music',
 ];
-const categoryColors = [
-  '#C7A7E8',
-  '#AEE5F2',
-  '#B1DBA8',
-  '#F5E2AB',
-  '#EB9083',
-  '#EBB582',
-  '#bdbdbd',
-];
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: '#bdbdbd',
-  },
-});
 
 const Explore = () => (
   <div id="Explore">
-    Choose aread of interest
+    Choose areas of interest
     <div id="categories">
       {categoryList.map((category, index) => (
         <Category name={category} index={index} />
