@@ -3,22 +3,34 @@
   font-size: 18px;
   font-family: 'Quicksand', sans-serif;
 }
+.exploreHeader {
+  padding: 30px;
+  font-weight: 500;
+  font-size: 28px;
+}
 #categories {
-  height: 90vh;
-  width: 90vh;
+  height: 80vh;
+  width: 80vh;
   display: grid;
   grid-template-columns: 30% 30% 30%;
   grid-template-rows: 30% 30% 30%;
-  row-gap: 15px;
-  column-gap: 15px;
+  row-gap: 25px;
+  column-gap: 25px;
   justify-content: center;
   align-content: center;
 }
 .categoryCard {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.categoryCard div:hover {
-  color: rgb(136, 88, 199);
+.categoryCard:hover {
+  border-color: #a3e6c5;
 }
+/* .checkMark {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.8;
+} */

@@ -17,12 +17,19 @@ const categoryList = [
   'Music',
 ];
 
-const Explore = () => (
+// eslint-disable-next-line react/prop-types
+const Explore = ({ setCategories, categories }) => (
   <div id="Explore">
-    Choose areas of interest
+    <div className="exploreHeader">Choose areas of interest</div>
+    {console.log(setCategories.toString())}
     <div id="categories">
       {categoryList.map((category, index) => (
-        <Category name={category} index={index} />
+        <Category
+          name={category}
+          index={index}
+          addToCategories={setCategories}
+          categories={categories}
+        />
       ))}
     </div>
   </div>

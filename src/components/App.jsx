@@ -8,6 +8,7 @@ import Explore from './Explore/Explore';
 const App = () => {
   const [username, setUsername] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [categories, setCategories] = useState([]);
 
   const populate = () => {
     if (!isLoggedIn) {
@@ -26,7 +27,7 @@ const App = () => {
 
     return (
       <fragment style={{ margin: 'auto' }}>
-        <Explore className="container" />
+        <Explore className="container" categories={categories} setCategories={setCategories} />
         {/* <NavTopbar />
         <GroupChat /> */}
       </fragment>
