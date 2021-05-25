@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavTopbar = () => {
   const classes = useStyles();
-  const [open] = React.useState(true);
+  const [open] = useState(true);
   return (
     <AppBar
       position="absolute"
