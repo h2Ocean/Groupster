@@ -9,6 +9,7 @@ import LoginSignup from './login-signup/LoginSignup';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
 import Dashboard from './Dashboard/Dashboard';
+import Profile from './Profile/Profile';
 import './App.css';
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
           <GroupChat username={username} client={client} /> */}
           {/* <Dashboard /> */}
         </ApolloProvider>
+        <Profile />
       </div>
     );
   };

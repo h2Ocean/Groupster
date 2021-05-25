@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { Container, CssBaseline, makeStyles, Grid } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+
+}));
 
 const Profile = (props) => {
   const [{ username }] = useState(props);
@@ -10,7 +15,14 @@ const Profile = (props) => {
 
   return (
     <div>
-      <p>Hello World!</p>
+      <Container component="main">
+        <CssBaseline />
+        <form>
+          <Grid container spacing={2}>
+            Hello
+          </Grid>
+        </form>
+      </Container>
     </div>
   );
 };
