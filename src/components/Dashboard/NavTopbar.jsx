@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavTopbar = () => {
   const classes = useStyles();
-  const [open] = React.useState(true);
+  const [open, setOpen] = useState(true);
   return (
     <AppBar
       position="absolute"
