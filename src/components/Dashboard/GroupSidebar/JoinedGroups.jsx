@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 const JoinedGroups = () => {
   return (
     <List>
+      <h3>Your Groups</h3>
       <li>Energy Crystals</li>
       <li>Odd cat behavior</li>
       <li>Javascript for dummies</li>
