@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GroupSidebar = () => {
-  const [open] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const classes = useStyles();
   return (
     <Drawer
