@@ -2,11 +2,13 @@ const { ApolloServer, graphqlExpress } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const express = require('express');
+const path = require('path');
 const app = require('express')();
 const cors = require('cors');
 const index = require('./routes/index ').default;
 const schema = require('./gql/schema').default;
-require('dotenv').config();
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
 
 const port = process.env.PORT;
 const url = 'mongodb://localhost:27017/groupster';
@@ -23,7 +25,7 @@ const startServer = async () => {
   server.applyMiddleware({ app });
   app.use(index);
   app.use(cors);
-  // app.use('/graphql', graphqlExpress({ schema }));
+
   await mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

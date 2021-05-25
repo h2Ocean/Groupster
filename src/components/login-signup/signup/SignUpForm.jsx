@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Container from '@material-ui/core/Container';
+import { useAuth } from '../../../contexts/AuthContent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,9 +39,11 @@ const Form = ({ open, handleClose }) => {
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [userEmail, setEmail] = useState('');
   const [affiliatedOrg, setAffiliatedOrg] = useState('');
   const [userAge, setAge] = useState();
+  const { signup } = useAuth();
   const classes = useStyles();
 
   const handleSubmit = (e) => {
@@ -54,6 +57,7 @@ const Form = ({ open, handleClose }) => {
       orgs: affiliatedOrg,
       age: userAge,
     };
+    signup(userEmail, password);
     console.log(userObj);
     handleClose();
   };
@@ -137,6 +141,20 @@ const Form = ({ open, handleClose }) => {
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="current-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
