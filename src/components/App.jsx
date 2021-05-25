@@ -41,7 +41,7 @@ const App = () => {
         <ApolloProvider client={client}>
           {/* <NavTopbar />
           <GroupChat username={username} client={client} /> */}
-          <Dashboard />
+          {/* <Dashboard /> */}
         </ApolloProvider>
       </div>
     );
