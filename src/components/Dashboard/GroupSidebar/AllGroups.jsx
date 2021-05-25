@@ -1,12 +1,13 @@
 import React from 'react';
+import List from '@material-ui/core/List';
 
 const AllGroups = () => {
   return (
-    <div id="AllGroups">
+    <List>
       <li>Himalayan food recipes</li>
       <li>Zoomer meme culture</li>
       <li>Pharmacological Chemistry</li>
-    </div>
+    </List>
   );
 };
 

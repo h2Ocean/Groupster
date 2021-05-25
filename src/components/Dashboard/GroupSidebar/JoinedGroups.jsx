@@ -1,12 +1,13 @@
 import React from 'react';
+import List from '@material-ui/core/List';
 
 const JoinedGroups = () => {
   return (
-    <div id="JoinedGroups">
+    <List>
       <li>Energy Crystals</li>
       <li>Odd cat behavior</li>
       <li>Javascript for dummies</li>
-    </div>
+    </List>
   );
 };
 
