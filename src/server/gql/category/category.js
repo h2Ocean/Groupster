@@ -1,10 +1,9 @@
 import { gql } from 'apollo-server-express';
 
-const categorySchema = gql`
+export const typeDef = gql`
   type Category {
     id: ID!
     name: String!
-    subCategory: [SubCategory]
+    channels: [Channel]
   }
 `;
-export default categorySchema;

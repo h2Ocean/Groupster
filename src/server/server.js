@@ -1,28 +1,37 @@
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer, graphqlExpress } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
+const express = require('express');
 const app = require('express')();
 const cors = require('cors');
-const typeDefs = require('./schemas').default;
 const index = require('./routes/index ').default;
-
+const schema = require('./gql/schema').default;
 require('dotenv').config();
 
 const port = process.env.PORT;
 const url = 'mongodb://localhost:27017/groupster';
 
 const startServer = async () => {
-  app.use(index);
-  app.use(cors);
   const server = new ApolloServer({
-    typeDefs,
-    cors: true,
+    schema,
+    cors: {
+      origin: 'http://localhost:4001',
+    },
+    playground: true,
+    introspection: true,
   });
   server.applyMiddleware({ app });
-  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+  app.use(index);
+  app.use(cors);
+  // app.use('/graphql', graphqlExpress({ schema }));
+  await mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   const httpServer = app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}${server.graphqlPath}`);
   });
+
   const io = socketIo(httpServer, {
     cors: {
       origin: 'http://localhost:4001',

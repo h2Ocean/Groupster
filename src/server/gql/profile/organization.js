@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const organizationSchema = gql`
+export const typeDef = gql`
   type Organization {
     id: ID!
     name: String!
@@ -9,4 +9,3 @@ const organizationSchema = gql`
     owner: Profile
   }
 `;
-export default organizationSchema;

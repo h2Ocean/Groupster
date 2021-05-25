@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from '@apollo/client';
 import LoginSignup from './login-signup/LoginSignup';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
+import Dashboard from './Dashboard/Dashboard';
 import './App.css';
 import Explore from './Explore/Explore';
 
 const App = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('tobiasaf');
+  const [nick, setNick] = useState('tobias');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [categories, setCategories] = useState([]);
+  const httpLink = createHttpLink({
+    uri: 'http://localhost:4000/graphql',
+  });
+  const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache(),
+  });
 
   const populate = () => {
     if (!isLoggedIn) {
@@ -23,18 +38,22 @@ const App = () => {
         </div>
       );
     }
-    // <Chat username={username} />
 
     return (
-      <fragment style={{ margin: 'auto' }}>
-        <Explore className="container" categories={categories} setCategories={setCategories} />
-        {/* <NavTopbar />
-        <GroupChat /> */}
-      </fragment>
+      <div style={{ margin: 'auto' }}>
+        <Explore categories={categories} setCategories={setCategories} />
+        {/* <ApolloProvider client={client}>
+          <GroupChat nick={nick} username={username} client={client} />
+        </ApolloProvider> */}
+      </div>
     );
   };
 
-  return <div className="App">{populate()}</div>;
+  return (
+    <div className="App" style={{ margin: 'auto' }}>
+      {populate()}
+    </div>
+  );
 };
 
 export default App;
