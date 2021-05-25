@@ -8,6 +8,7 @@ import {
 import LoginSignup from './login-signup/LoginSignup';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
+import Dashboard from './Dashboard/Dashboard';
 import './App.css';
 
 const App = () => {
@@ -38,8 +39,9 @@ const App = () => {
     return (
       <div>
         <ApolloProvider client={client}>
-          <NavTopbar />
-          <GroupChat username={username} client={client} />
+          {/* <NavTopbar />
+          <GroupChat username={username} client={client} /> */}
+          <Dashboard />
         </ApolloProvider>
       </div>
     );

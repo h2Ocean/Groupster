@@ -12,6 +12,7 @@
     "apollo-server-express": "^2.24.1",
     "babel-eslint": "^10.1.0",
     "bcrypt": "^5.0.1",
+    "clsx": "^1.1.1",
     "cors": "^2.8.5",
     "date-fns": "^2.21.3",
     "dotenv": "^10.0.0",
