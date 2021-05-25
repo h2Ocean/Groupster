@@ -1,5 +1,5 @@
 import React from 'react';
-import NavSidebar from './NavSidebar';
+import NavSidebar from './NavSidebar/NavSidebar';
 import SuggestedGroups from './SuggestedGroups';
 import NavTopbar from '../NavTopbar/NavTopbar';
 
