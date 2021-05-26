@@ -9,11 +9,13 @@ import NavTopbar from './NavTopbar/NavTopbar';
 import Dashboard from './Dashboard/Dashboard';
 import './App.css';
 import { AuthProvider } from '../contexts/AuthContent';
+import Explore from './Explore/Explore';
 
 const App = () => {
   const [username, setUsername] = useState('tobiasaf');
   const [nick, setNick] = useState('tobias');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [categories, setCategories] = useState([]);
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql',
   });
@@ -42,15 +44,20 @@ const App = () => {
     }
 
     return (
-      <div>
-        <ApolloProvider client={client}>
+      <div style={{ margin: 'auto' }}>
+        <Explore categories={categories} setCategories={setCategories} />
+        {/* <ApolloProvider client={client}>
           <GroupChat nick={nick} username={username} client={client} />
-        </ApolloProvider>
+        </ApolloProvider> */}
       </div>
     );
   };
 
-  return <div className="App">{populate()}</div>;
+  return (
+    <div className="App" style={{ margin: 'auto' }}>
+      {populate()}
+    </div>
+  );
 };
 
 export default App;
