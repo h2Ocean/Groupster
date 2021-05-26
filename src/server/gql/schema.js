@@ -6,7 +6,7 @@ import { typeDef as Channel } from './channel/channel';
 import { typeDef as Chat, resolvers as chatResolvers } from './channel/chat';
 import { typeDef as Role } from './channel/role';
 import { typeDef as Organization } from './profile/organization';
-import { typeDef as Profile } from './profile/profile';
+import { typeDef as Profile, resolvers as profileResolvers } from './profile/profile';
 
 const Query = gql`
   type Query {
@@ -19,7 +19,7 @@ const Query = gql`
 const resolvers = {};
 const schema = makeExecutableSchema({
   typeDefs: [Query, Category, Channel, Chat, Role, Organization, Profile],
-  resolvers: merge(resolvers, chatResolvers),
+  resolvers: merge(resolvers, chatResolvers, profileResolvers),
 });
 
 export default schema;
