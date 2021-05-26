@@ -25,17 +25,17 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginRight: -'20vw',
+    marginRight: 0,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginRight: 0,
+    marginRight: '20vw',
   },
   header: {
-    paddingTop: '5vh',
+    paddingTop: '10vh',
   },
   title: {
     fontSize: '5vh',
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const categoryList = [
   'Himalayan food recipes',
   'Python for Dummies',
-  'Pharmacological Chemistry',
+  'Organic Chemistry',
   'Zoomer meme culture',
   'Led Zeppelin fan club',
   'Java for Dummies',
@@ -75,14 +75,10 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-    <div
-      className={clsx(classes.content, {
-        [classes.contentShift]: open,
-      })}
-    >
+    <div className={classes.root}>
       <NavTopbar key={open} setOpen={setOpen} open={open} />
       <NavSidebar />
-      <main className={classes.root}>
+      <main className={clsx(classes.content, open && classes.contentShift)}>
         <Container maxWidth="sm" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>
           <Autocomplete

@@ -1,7 +1,6 @@
-const { ApolloServer, graphqlExpress } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
-const express = require('express');
 const path = require('path');
 const app = require('express')();
 const cors = require('cors');

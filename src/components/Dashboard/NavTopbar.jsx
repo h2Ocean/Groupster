@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
 import GroupSidebar from './GroupSidebar';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100% - 20vw',
     marginLeft: '20vw',
     backgroundColor: 'lightGrey',
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -27,16 +29,21 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '20vw',
     marginRight: '20vw',
     backgroundColor: 'lightGrey',
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
     }),
   },
   hide: {
     display: 'none',
   },
   menuButton: {
-    marginLeft: '90vw',
+    marginLeft: '94vw',
+  },
+  createGroupButton: {
+    position: 'absolute',
+    display: 'static',
+    marginLeft: '20vw',
   },
 }));
 
@@ -54,17 +61,22 @@ const NavTopbar = (props) => {
         [classes.appBarShift]: open,
       })}
     >
-      <IconButton
-        style={{ label: 'Your Groups' }}
-        color="inherit"
-        aria-label="open drawer"
-        edge="end"
-        onClick={handleDrawerOpen}
-        className={clsx(classes.menuButton, open && classes.hide)}
-      >
-        <MenuIcon />
-      </IconButton>
-      <GroupSidebar key={open} setOpen={setOpen} open={open} />
+      <Toolbar>
+        <Button size="small" color="primary" className={classes.createGroupButton}>
+          Create Group
+        </Button>
+        <IconButton
+          style={{ label: 'Your Groups' }}
+          color="inherit"
+          aria-label="open drawer"
+          edge="end"
+          onClick={handleDrawerOpen}
+          className={clsx(classes.menuButton, open && classes.hide)}
+        >
+          <MenuIcon />
+        </IconButton>
+        <GroupSidebar key={open} setOpen={setOpen} open={open} />
+      </Toolbar>
     </AppBar>
   );
 };
