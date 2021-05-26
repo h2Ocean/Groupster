@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 // import { ThemeProvider } from '@material-ui/styles';
@@ -12,11 +12,14 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
 import NavSidebar from './NavSidebar/NavSidebar';
+import { auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '90%',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginRight: '20vw',
+    marginRight: '10vw',
   },
   header: {
     paddingTop: '10vh',
@@ -70,12 +73,19 @@ const categoryList = [
   'Theoritical Physics',
 ];
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
 
+  useEffect(() => {
+    if (!auth.currentUser) {
+      setIsLogged(<Redirect to="/signup" />);
+    }
+  }, []);
   return (
     <div className={classes.root}>
+      {isLogged}
       <NavTopbar key={open} setOpen={setOpen} open={open} />
       <NavSidebar />
       <main className={clsx(classes.content, open && classes.contentShift)}>

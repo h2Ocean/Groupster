@@ -18,6 +18,7 @@ const App = () => {
     link: httpLink,
     cache: new InMemoryCache(),
   });
+  const [loggedIn, setLogin] = useState(true);
 
   return (
     <div className="App" style={{ margin: 'auto' }}>

@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
 
@@ -57,6 +57,7 @@ const Signup = () => {
   const [userEmail, setEmail] = useState('');
   const [userAge, setAge] = useState();
   const [createUser, { user }] = useMutation(CREATE_USER);
+  const [emailInUse, setEmailInUse] = useState([]);
   const { signup } = useAuth();
   const classes = useStyles();
   const [error, setError] = useState('');
@@ -87,7 +88,12 @@ const Signup = () => {
           profile: userObj,
         },
       });
-    } catch {
+    } catch (err) {
+      if (err.message === 'The email address is already in use by another account.') {
+        setEmailInUse(<Redirect to="/login" />);
+      }
+      setPassword('');
+      setConfirmPassword('');
       setError('Failed to create an account');
     }
     return setLoading(false);
@@ -95,6 +101,7 @@ const Signup = () => {
 
   return (
     <div style={{ overflow: 'hidden' }}>
+      {emailInUse}
       <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
         <CssBaseline />
         <div className={classes.paper}>
