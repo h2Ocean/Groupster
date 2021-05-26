@@ -7,8 +7,7 @@
 }
 
 #NavSidebar {
-  height: 100vh;
-
+  height: 95.6vh;
   width: 20%;
   text-align: left;
 }
@@ -23,7 +22,7 @@
 }
 
 #Members {
-  height: 100vh;
+  height: 95.6vh;
   width: 15%;
   background-color: #d2d4da;
 }
@@ -50,4 +49,10 @@
   height: 120px;
   min-height: 80px;
   border: 1px solid #b6bbcd;
+}
+
+.groupMember:hover {
+  cursor: pointer;
+  color: #9fe5c3;
+  text-shadow: 1px 1px rgb(43, 43, 43);
 }

@@ -45,6 +45,7 @@ const Chat = (props) => {
   const [{ nick }] = useState(props);
 
   const dummy = useRef();
+  const endRef = useRef();
 
   useEffect(() => {
     if (data) {
@@ -131,6 +132,12 @@ const Chat = (props) => {
   useEffect(() => {
     populate();
   }, [messageList]);
+
+  useEffect(() => {
+    if (dummy.current) {
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messageContentList]);
 
   return (
     <div className="Chat">

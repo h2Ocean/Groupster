@@ -24,8 +24,9 @@ const widget = {
         }}
       >
         <span
+          id="face-icon"
           className="material-icons"
-          style={{ fontSize: '18px', paddingRight: '5px' }}
+          style={{ fontSize: '4vh', paddingRight: '5px' }}
         >
           face
         </span>

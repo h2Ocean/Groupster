@@ -16,6 +16,7 @@
   right: 20px;
 }
 .profileIcon:hover {
+  cursor: pointer;
   color: #4d3ea3;
 }
 .searchIcon {
@@ -27,6 +28,11 @@
   margin-left: 10px;
   font-family: 'Quicksand', sans-serif;
   font-size: 15px;
+}
+
+#aDash:hover {
+  color: #4d3ea3;
+  text-shadow: 1px 1px rgb(199, 199, 199);
 }
 
 a:link {
