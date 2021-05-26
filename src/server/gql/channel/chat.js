@@ -46,7 +46,6 @@ export const resolvers = {
         msg,
         created: new Date().toISOString(),
       });
-      console.log(message);
       const res = await message.save();
       return {
         id: res._id,
