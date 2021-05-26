@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import LoginSignup from './login-signup/LoginSignup';
 import Signup from './login-signup/SignUp';
 import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
