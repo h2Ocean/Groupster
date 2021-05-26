@@ -16,7 +16,7 @@ const Interests = () => {
       {/* <li>Himalayan food recipes</li>
       <li>Zoomer meme culture</li>
       <li>Pharmacological Chemistry</li> */}
-      <li className={classes.subjects}>Astrology</li>
+      <li className={classes.subjects}>Art</li>
       <Divider />
       <li className={classes.subjects}>Science</li>
       <Divider />

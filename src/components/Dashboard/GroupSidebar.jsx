@@ -54,6 +54,8 @@ const GroupSidebar = (props) => {
       <Divider />
       <List>
         <ListItem>Odd Cat Behavior</ListItem>
+        <ListItem>Energy Crystals</ListItem>
+        <ListItem>Javascript for Dummies</ListItem>
       </List>
       <Divider />
     </Drawer>

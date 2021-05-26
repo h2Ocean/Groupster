@@ -1,31 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import {
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-  ApolloProvider,
-} from '@apollo/client';
-import LoginSignup from './login-signup/LoginSignup';
-// import GroupChat from './GroupChat/GroupChat';
-// import NavTopbar from './NavTopbar/NavTopbar';
-import Dashboard from './Dashboard/Dashboard';
-import './App.css';
-// import Explore from './Explore/Explore';
-=======
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import LoginSignup from './login-signup/LoginSignup';
 import Signup from './login-signup/SignUp';
 import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
-import Dashboard from './Dashboard/Dashboard';
-import './App.css';
 import { AuthProvider } from '../contexts/AuthContent';
 import Explore from './Explore/Explore';
->>>>>>> 7de77ae7590f66892da8ac8795bf69605ef28bfd
+import Dashboard from './Dashboard/Dashboard';
+import './App.css';
 
 const App = () => {
   const [username, setUsername] = useState('tobiasaf');

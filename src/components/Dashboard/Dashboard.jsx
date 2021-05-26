@@ -1,25 +1,122 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import SuggestedGroups from './SuggestedGroups';
+import clsx from 'clsx';
+// import { ThemeProvider } from '@material-ui/styles';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import NavTopbar from './NavTopbar';
 import NavSidebar from './NavSidebar/NavSidebar';
-import GroupSidebar from './GroupSidebar';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    justifyContent: 'center',
+  },
+  content: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginRight: -'20vw',
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginRight: 0,
+  },
+  header: {
+    paddingTop: '5vh',
+  },
+  title: {
+    fontSize: '5vh',
+    fontFamily: 'Roboto',
+  },
+  cardGrid: {
+    paddingTop: '5vh',
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
+
+const categoryList = [
+  'Math',
+  'Language',
+  'Science',
+  'Literature',
+  'Social Science',
+  'Art',
+  'Technology',
+  'Business',
+  'Music',
+];
+
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
   return (
-    <div className={classes.root}>
-      <NavTopbar className={classes.appBar} setOpen={setOpen} open={open} />
+    <div
+      className={clsx(classes.content, {
+        [classes.contentShift]: open,
+      })}
+    >
+      <NavTopbar key={open} setOpen={setOpen} open={open} />
       <NavSidebar />
-      <SuggestedGroups open={open} />
-      <GroupSidebar setOpen={setOpen} open={open} />
+      <main className={classes.root}>
+        <Container maxWidth="sm" className={classes.header}>
+          <h1 className={classes.title}>Discover More Groups</h1>
+          <Autocomplete
+            freeSolo
+            id="groupSearch"
+            disableClearable
+            options={categoryList.map((option) => option)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search Groups"
+                margin="normal"
+                variant="outlined"
+                InputProps={{ ...params.InputProps, type: 'search' }}
+              />
+            )}
+          />
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container spacing={4}>
+              {categoryList.map((category) => (
+                <Grid item key={category} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <CardContent className={classes.cardContent}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {category}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        Join Group
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Container>
+      </main>
     </div>
   );
 };
