@@ -7,7 +7,7 @@ const NavTopbar = () => (
       width: '100vw',
       backgroundColor: 'lightGrey',
       position: 'absolute',
-      height: '45px',
+      height: '3vh',
     }}
   >
     Top Navigation Bar

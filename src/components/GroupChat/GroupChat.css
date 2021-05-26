@@ -1,14 +1,14 @@
 #GroupChat_container {
   width: 100vw;
-  height: 90vh;
-  margin-top: 5vh;
-
+  height: 92vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
 #NavSidebar {
+  margin-top: 3vh;
+  height: 97vh;
   width: 25%;
 }
 
@@ -23,6 +23,8 @@
 }
 
 #Members {
+  margin-top: 3vh;
+  height: 96.5vh;
   width: 18%;
 }
 

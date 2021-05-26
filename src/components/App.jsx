@@ -41,9 +41,3 @@ const App = () => {
 };
 
 export default App;
-
-/* <LoginSignup
-setUsername={setUsername}
-setIsLoggedIn={setIsLoggedIn}
-isLoggedIn={isLoggedIn}
-/> */

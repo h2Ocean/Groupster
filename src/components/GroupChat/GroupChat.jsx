@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import MessageWindow from './MessageWindow/MessageWindow';
-import NavSidebar from './NavSidebar';
-import Members from './Members';
+import Chat from './components/Chat';
+import NavTopBar from '../NavTopbar/NavTopbar';
+import NavSidebar from './components/NavSidebar';
+import Members from './components/Members';
 import './GroupChat.css';
 
-const GroupChat = (props) => {
-  const [{ username }] = useState(props);
-  const [{ client }] = useState(props);
-  const [{ nick }] = useState(props);
+const GroupChat = () => {
+  const [username] = useState('tobiasaf');
+  const [nick] = useState('Tobias');
 
   return (
     <div id="GroupChat_container">
+      <NavTopBar />
       <NavSidebar />
-      <MessageWindow nick={nick} client={client} username={username} />
+      <Chat nick={nick} username={username} />
       <Members />
     </div>
   );
