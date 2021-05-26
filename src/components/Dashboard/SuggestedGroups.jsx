@@ -55,6 +55,7 @@ const SuggestedGroups = (props) => {
   const classes = useStyles();
   return (
     <main
+      style={{ align: 'top' }}
       className={clsx(classes.content, {
         [classes.contentShift]: open,
       })}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SuggestedGroups from './SuggestedGroups';
 import NavTopbar from './NavTopbar';
@@ -14,12 +14,13 @@ const useStyles = makeStyles(() => ({
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
-      <NavTopbar className={classes.appBar} setOpen={setOpen} open={open} />
+      <NavTopbar key={open} className={classes.appBar} setOpen={setOpen} open={open} />
       <NavSidebar />
       <SuggestedGroups open={open} />
-      <GroupSidebar setOpen={setOpen} open={open} />
+      <GroupSidebar key={open} setOpen={setOpen} open={open} />
     </div>
   );
 };
