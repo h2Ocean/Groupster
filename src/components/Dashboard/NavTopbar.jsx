@@ -38,11 +38,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   menuButton: {
-    marginLeft: '94vw',
+    marginLeft: '88vw',
   },
   createGroupButton: {
     position: 'absolute',
-    display: 'static',
     marginLeft: '20vw',
   },
 }));
@@ -62,17 +61,18 @@ const NavTopbar = (props) => {
       })}
     >
       <Toolbar>
-        <Button size="small" color="primary" className={classes.createGroupButton}>
+        <Button size="medium" color="primary" className={classes.createGroupButton}>
           Create Group
         </Button>
         <IconButton
-          style={{ label: 'Your Groups' }}
-          color="inherit"
+          color="primary"
           aria-label="open drawer"
           edge="end"
           onClick={handleDrawerOpen}
+          size="small"
           className={clsx(classes.menuButton, open && classes.hide)}
         >
+          Your Groups
           <MenuIcon />
         </IconButton>
         <GroupSidebar key={open} setOpen={setOpen} open={open} />
