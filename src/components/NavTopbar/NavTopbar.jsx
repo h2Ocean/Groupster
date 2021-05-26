@@ -8,10 +8,13 @@ const NavTopbar = () => (
     style={{
       width: '100vw',
       backgroundColor: 'rgba(0,0,0,.03)',
-      height: '30px',
+      height: '40px',
       border: '1px solid rgba(0,0,0,.125)',
     }}
   >
+    <a href="/" id="aDash">
+      Dashboard
+    </a>
     <Search />
     <span className="material-icons profileIcon">account_circle</span>
   </div>
