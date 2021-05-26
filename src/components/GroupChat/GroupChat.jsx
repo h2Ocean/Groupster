@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Chat from './components/Chat';
-import NavTopBar from '../NavTopbar/NavTopbar';
-import NavSidebar from './components/NavSidebar';
-import Members from './components/Members';
+import NavTopbar from '../NavTopbar/NavTopbar';
+import MessageWindow from './MessageWindow/MessageWindow';
+import NavSidebar from './NavSidebar';
+import Members from './Members';
 import './GroupChat.css';
 
 const GroupChat = () => {
@@ -10,12 +10,14 @@ const GroupChat = () => {
   const [nick] = useState('Tobias');
 
   return (
-    <div id="GroupChat_container">
-      <NavTopBar />
-      <NavSidebar />
-      <Chat nick={nick} username={username} />
-      <Members />
-    </div>
+    <fragment>
+      <NavTopbar />
+      <div id="GroupChat_container">
+        <NavSidebar />
+        <MessageWindow nick={nick} username={username} />
+        <Members />
+      </div>
+    </fragment>
   );
 };
 

@@ -1,0 +1,29 @@
+#NavTopbar {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#searchChat {
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
+.profileIcon {
+  position: absolute;
+  right: 20px;
+}
+.profileIcon:hover {
+  color: #4d3ea3;
+}
+.searchIcon {
+  font-size: 18px;
+  top: 1px;
+}
+#aDash {
+  margin-left: 10px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 15px;
+}
