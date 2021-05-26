@@ -122,6 +122,12 @@ const Chat = (props) => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   useEffect(() => {
     populate();
   }, [messageList]);
@@ -139,6 +145,7 @@ const Chat = (props) => {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          onKeyPress={handleKeyDown}
         />
         {/* the entire code breaks unless you have this invisible button */}
         <button style={{ display: 'none' }} type="submit" onClick={sendMessage}>
