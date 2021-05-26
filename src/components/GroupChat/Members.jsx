@@ -1,9 +1,16 @@
 import React from 'react';
+import widgets from '../Reusable/widgets';
 
 const Members = () => (
   <div id="Members">
-    <li>Member 1</li>
-    <li>Member 2</li>
+    <div
+      className="navBarWidget"
+      style={{ paddingTop: '30px', border: 'none' }}
+    >
+      {widgets.member('Amber')}
+      {widgets.member('Peter')}
+      {widgets.member('Jason')}
+    </div>
   </div>
 );
 

@@ -15,6 +15,9 @@
   position: absolute;
   right: 20px;
 }
+.profileIcon:hover {
+  color: #4d3ea3;
+}
 .searchIcon {
   font-size: 18px;
   top: 1px;

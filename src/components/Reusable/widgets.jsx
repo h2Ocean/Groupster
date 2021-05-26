@@ -11,6 +11,28 @@ const widget = {
       </div>
     );
   },
+  member(name) {
+    return (
+      <div
+        className="groupMember"
+        style={{
+          fontSize: '14px',
+          display: 'flex',
+          alignItems: 'center',
+          paddingLeft: '10%',
+          paddingTop: '5px',
+        }}
+      >
+        <span
+          className="material-icons"
+          style={{ fontSize: '18px', paddingRight: '5px' }}
+        >
+          face
+        </span>
+        {name}
+      </div>
+    );
+  },
 };
 
 export default widget;
