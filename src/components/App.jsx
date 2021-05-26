@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
-import LoginSignup from './login-signup/LoginSignup';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import LoginSignup from './login-signup/LoginSignup';
+import Signup from './login-signup/SignUp';
+import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
 import NavTopbar from './NavTopbar/NavTopbar';
 import Dashboard from './Dashboard/Dashboard';
@@ -23,14 +26,15 @@ const App = () => {
     if (!isLoggedIn) {
       return (
         <div>
-          <h1>Hello, Learners!</h1>
-          <AuthProvider>
-            <LoginSignup
-              setUsername={setUsername}
-              setIsLoggedIn={setIsLoggedIn}
-              isLoggedIn={isLoggedIn}
-            />
-          </AuthProvider>
+          <Router>
+            <AuthProvider>
+              <Switch>
+                <Route exact path="/" component={Dashboard} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+              </Switch>
+            </AuthProvider>
+          </Router>
         </div>
       );
     }
@@ -48,3 +52,9 @@ const App = () => {
 };
 
 export default App;
+
+/* <LoginSignup
+setUsername={setUsername}
+setIsLoggedIn={setIsLoggedIn}
+isLoggedIn={isLoggedIn}
+/> */
