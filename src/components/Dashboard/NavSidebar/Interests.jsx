@@ -13,9 +13,6 @@ const Interests = () => {
   const classes = useStyles();
   return (
     <List>
-      {/* <li>Himalayan food recipes</li>
-      <li>Zoomer meme culture</li>
-      <li>Pharmacological Chemistry</li> */}
       <li className={classes.subjects}>Art</li>
       <Divider />
       <li className={classes.subjects}>Science</li>

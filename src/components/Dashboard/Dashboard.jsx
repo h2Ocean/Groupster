@@ -49,21 +49,26 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  actions: {
+    display: 'flex',
+    justifyContent: 'end',
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
 }));
 
 const categoryList = [
-  'Math',
-  'Language',
-  'Science',
-  'Literature',
-  'Social Science',
-  'Art',
-  'Technology',
-  'Business',
-  'Music',
+  'Himalayan food recipes',
+  'Python for Dummies',
+  'Pharmacological Chemistry',
+  'Zoomer meme culture',
+  'Led Zeppelin fan club',
+  'Java for Dummies',
+  'Beethoven Symphonies',
+  'Vietnamese food recipes',
+  'Theoritical Physics',
 ];
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
@@ -105,7 +110,7 @@ const Dashboard = () => {
                         {category}
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.actions}>
                       <Button size="small" color="primary">
                         Join Group
                       </Button>
