@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NavTopbar from '../NavTopbar/NavTopbar';
 import MessageWindow from './MessageWindow/MessageWindow';
 import NavSidebar from './NavSidebar';
 import Members from './Members';
@@ -10,11 +11,14 @@ const GroupChat = (props) => {
   const [{ nick }] = useState(props);
 
   return (
-    <div id="GroupChat_container">
-      <NavSidebar />
-      <MessageWindow nick={nick} client={client} username={username} />
-      <Members />
-    </div>
+    <fragment>
+      <NavTopbar />
+      <div id="GroupChat_container">
+        <NavSidebar />
+        <MessageWindow nick={nick} client={client} username={username} />
+        <Members />
+      </div>
+    </fragment>
   );
 };
 
