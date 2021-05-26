@@ -4,33 +4,32 @@ import Profile from '../../models/profile/profile';
 
 export const typeDef = gql`
   type Profile {
-    username: String!
+    id: ID!
     name: String!
-    pfp: String!
+    username: String!
     email: String!
-    orgs: [Organization]
     age: Int!
-    channels: [Channel]
   }
   extend type Query {
-    getChats(email: String!): [Profile]
+    getProfile(email: String!): [Profile]
   }
 
   input InputUser {
     name: String!
     email: String!
     username: String!
-    age: String!
+    age: Int!
   }
 
   extend type Mutation {
-    createProfile(message: InputUser!): Profile!
+    createProfile(profile: InputUser!): Profile!
   }
 `;
 
 export const resolvers = {
   Query: {
-    async getProfile(_, email) {
+    async getProfile(_, { email }) {
+      console.log(email);
       try {
         const profile = await Profile.find({ email });
         return profile;
@@ -44,11 +43,13 @@ export const resolvers = {
     createProfile: async (_, { profile: { name, email, username, age } }) => {
       const user = new Profile({
         name,
-        email,
-        username,
-        age,
+        email: email.toLowerCase,
+        username: username.toLowerCase,
+        age: parseInt(age, 10),
       });
       const res = await user.save();
+      console.log(res);
+
       return {
         id: res._id,
         name: res.name,

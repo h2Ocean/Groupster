@@ -28,11 +28,13 @@ const App = () => {
         <div>
           <Router>
             <AuthProvider>
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-              </Switch>
+              <ApolloProvider client={client}>
+                <Switch>
+                  <Route exact path="/" component={Dashboard} />
+                  <Route path="/signup" component={Signup} />
+                  <Route path="/login" component={Login} />
+                </Switch>
+              </ApolloProvider>
             </AuthProvider>
           </Router>
         </div>

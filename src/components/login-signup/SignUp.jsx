@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,26 +36,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const GET_CHATS = gql`
-  query {
-    getChats {
-      id
-      name
-      nick
-      msg
-      created
-    }
-  }
-`;
 
-const SEND_CHATS = gql`
-  mutation SendMessage($message: InputMessage!) {
-    sendMessage(message: $message) {
+const CREATE_USER = gql`
+  mutation CreateProfile($profile: InputUser!) {
+    createProfile(profile: $profile) {
       id
       name
-      nick
-      msg
-      created
+      email
+      username
+      age
     }
   }
 `;
@@ -66,9 +55,8 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userEmail, setEmail] = useState('');
-  const [affiliatedOrg, setAffiliatedOrg] = useState('');
   const [userAge, setAge] = useState();
-  const [person, setPerson] = useState();
+  const [createUser, { user }] = useMutation(CREATE_USER);
   const { signup } = useAuth();
   const classes = useStyles();
   const [error, setError] = useState('');
@@ -78,11 +66,10 @@ const Signup = () => {
     e.preventDefault();
     const nameString = `${firstName} ${lastName}`;
     const userObj = {
-      username: userName,
       name: nameString,
+      username: userName,
       email: userEmail,
-      orgs: affiliatedOrg,
-      age: userAge,
+      age: parseInt(userAge, 10),
     };
     if (password !== confirmPassword) {
       return setError('Passwords do not match');
@@ -95,11 +82,14 @@ const Signup = () => {
       setError('');
       setLoading(true);
       await signup(userEmail, password);
-      setPerson(userObj);
+      createUser({
+        variables: {
+          profile: userObj,
+        },
+      });
     } catch {
       setError('Failed to create an account');
     }
-
     return setLoading(false);
   };
 
@@ -203,19 +193,6 @@ const Signup = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="affiliatedOrg"
-                  label="Affiliated Organization"
-                  id="affiliatedOrg"
-                  autoComplete="none"
-                  value={affiliatedOrg}
-                  onChange={(e) => setAffiliatedOrg(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={3}>
                 <TextField
                   variant="outlined"
                   fullWidth

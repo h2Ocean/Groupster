@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import { Link } from 'react-router-dom';
+import { useLazyQuery, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,17 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+const GET_USER = gql`
+  query getProfile($email: String!) {
+    getProfile(email: $email) {
+      id
+      email
+      username
+      name
+      age
+    }
+  }
+`;
 
 const Signup = () => {
   const [password, setPassword] = useState('');
@@ -44,18 +56,34 @@ const Signup = () => {
   const classes = useStyles();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [getUser, { data }] = useLazyQuery(GET_USER, {
+    variables: {
+      email: userEmail,
+    },
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setError('');
       setLoading(true);
       await login(userEmail, password);
-    } catch {
+      getUser({
+        variables: {
+          email: userEmail,
+        },
+      });
+    } catch (err) {
+      console.log(err);
       setError('Failed to login');
     }
     return setLoading(false);
   };
+
+  useEffect(() => {
+    if (data) {
+      setPerson(data.getProfile[0]);
+    }
+  }, [data]);
 
   return (
     <div style={{ overflow: 'hidden' }}>
