@@ -1,0 +1,21 @@
+#NavTopbar {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#searchChat {
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
+.profileIcon {
+  position: absolute;
+  right: 20px;
+}
+.searchIcon {
+  font-size: 18px;
+  top: 1px;
+}

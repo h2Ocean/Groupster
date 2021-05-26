@@ -2,14 +2,16 @@
   display: grid;
   place-items: center;
   height: 90vh;
-  background-color: #2a2730;
+  background-color: #f2f2f2;
+  /* #2a2730; */
 }
 .chatContainer::-webkit-scrollbar {
   width: 0.25rem;
 }
 
 .chatContainer::-webkit-scrollbar-track {
-  background: #1e1e24;
+  background: #f2f2f2;
+  /* #1e1e24 */
 }
 
 .chatContainer::-webkit-scrollbar-thumb {
@@ -29,7 +31,7 @@
   flex: 70%;
   width: 100%;
   height: 90vh;
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 
 .messageInputs {

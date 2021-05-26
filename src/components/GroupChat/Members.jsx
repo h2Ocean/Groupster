@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Members = () => (
-  <div id="Members" style={{ border: '1px solid blue' }}>
+  <div id="Members">
     <li>Member 1</li>
     <li>Member 2</li>
   </div>

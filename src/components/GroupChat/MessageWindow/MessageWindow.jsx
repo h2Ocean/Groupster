@@ -7,7 +7,7 @@ const MessageWindow = (props) => {
   const [{ client }] = useState(props);
 
   return (
-    <div id="MessageWindow" style={{ border: '1px solid purple' }}>
+    <div id="MessageWindow">
       <Chat nick={nick} client={client} username={username} />
     </div>
   );

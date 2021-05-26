@@ -1,8 +1,6 @@
 #GroupChat_container {
   width: 100vw;
   height: 90vh;
-  margin-top: 5vh;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -15,17 +13,13 @@
 #MessageWindow {
   width: 55%;
   display: grid;
-  grid-template-rows: 38px auto 100px;
+  grid-template-rows: auto 100px;
   grid-template-areas:
-    'search'
     'messages'
     'write';
 }
 
 #Members {
-  width: 18%;
-}
-
-#SearchChat {
-  grid-area: search;
+  width: 20%;
+  background-color: #d2d4da;
 }

@@ -40,11 +40,12 @@ const App = () => {
     }
 
     return (
-      <div style={{ margin: 'auto' }}>
-        <Explore categories={categories} setCategories={setCategories} />
-        {/* <ApolloProvider client={client}>
+      <div id="mainDisplay">
+        {/* <Explore categories={categories} setCategories={setCategories} /> */}
+        <NavTopbar />
+        <ApolloProvider client={client}>
           <GroupChat nick={nick} username={username} client={client} />
-        </ApolloProvider> */}
+        </ApolloProvider>
       </div>
     );
   };
