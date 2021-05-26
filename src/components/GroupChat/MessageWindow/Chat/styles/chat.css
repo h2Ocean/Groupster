@@ -2,7 +2,7 @@
   display: grid;
   place-items: center;
   height: 90vh;
-  background-color: #f2f2f2;
+  background-color: rgb(43, 43, 43);
   /* #2a2730; */
 }
 .chatContainer::-webkit-scrollbar {
@@ -74,6 +74,7 @@
 }
 
 #Other .messageIndividual {
+  margin-left: 2vh;
   background: #e5e5ea;
   color: black;
 }
