@@ -1,42 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SuggestedGroups from './SuggestedGroups';
 import NavTopbar from './NavTopbar';
-import GroupSidebar from './GroupSidebar/GroupSidebar';
+import NavSidebar from './NavSidebar/NavSidebar';
+import GroupSidebar from './GroupSidebar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
-  },
-  content: {
-    flexGrow: 1,
-    marginTop: '20vh',
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
   },
 }));
 
 const Dashboard = () => {
-  // const [setOpen] = React.useState(true);
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <NavTopbar
-        className={classes.appBar}
-        // handleDrawerOpen={handleDrawerOpen}
-      />
-      <GroupSidebar />
-      <SuggestedGroups className={classes.content} />
+      <NavTopbar className={classes.appBar} setOpen={setOpen} open={open} />
+      <NavSidebar />
+      <SuggestedGroups open={open} />
+      <GroupSidebar setOpen={setOpen} open={open} />
     </div>
   );
 };
