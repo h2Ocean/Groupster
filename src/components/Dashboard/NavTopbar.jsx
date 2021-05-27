@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import GroupSidebar from './GroupSidebar';
+import '../NavTopbar/navtop.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,9 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     display: 'flex',
-    width: '100% - 30vw',
+    width: '100% - 20vw',
     marginLeft: '20vw',
-    backgroundColor: 'lightGrey',
+    backgroundColor: 'rgba(0,0,0,.03)',
+    border: '1px solid rgba(0,0,0,.125)',
+    height: '8vh',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -28,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100% - 40vw',
     marginLeft: '20vw',
     marginRight: '20vw',
-    backgroundColor: 'lightGrey',
+    height: '8vh',
+    backgroundColor: 'rgba(0,0,0,.03)',
+    border: '1px solid rgba(0,0,0,.125)',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -38,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   menuButton: {
-    marginLeft: '80vw',
+    marginLeft: '88vw',
   },
   createGroupButton: {
     position: 'absolute',
@@ -61,9 +66,6 @@ const NavTopbar = (props) => {
       })}
     >
       <Toolbar>
-        <Button size="medium" color="primary" className={classes.createGroupButton}>
-          Create Group
-        </Button>
         <IconButton
           color="primary"
           aria-label="open drawer"
