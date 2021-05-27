@@ -6,6 +6,7 @@ const Search = () => {
     <div id="searchChat">
       <input
         type="text"
+        value="search in chat"
         style={{
           fontSize: '14px',
           borderRadius: '10px',

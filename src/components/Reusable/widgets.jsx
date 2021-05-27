@@ -31,7 +31,7 @@ const widgets = {
     return (
       <div
         className="groupWidget"
-        style={{ textIndent: '15px', fontWeight: '500', paddingTop: '10px' }}
+        style={{ textIndent: '15px', paddingTop: '10px', fontSize: '16px' }}
       >
         {name}
       </div>
