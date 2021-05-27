@@ -13,7 +13,6 @@ const GET_CHATS = gql`
     getChats {
       id
       name
-      nick
       msg
       created
     }
@@ -25,7 +24,6 @@ const SEND_CHATS = gql`
     sendMessage(message: $message) {
       id
       name
-      nick
       msg
       created
     }
@@ -33,20 +31,15 @@ const SEND_CHATS = gql`
 `;
 
 const Chat = (props) => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [room, setRoom] = useState('lobby');
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
-  const [{ client }] = useState(props);
   const { data } = useQuery(GET_CHATS);
-  const [sendChat, { info }] = useMutation(SEND_CHATS);
-  // user info
-  const [{ username }] = useState(props);
-  const [{ nick }] = useState(props);
-
+  const [sendChat] = useMutation(SEND_CHATS);
+  const [{ user }] = useState(props);
+  const { username } = user.getProfile[0];
   const dummy = useRef();
-  const endRef = useRef();
 
   useEffect(() => {
     if (data) {
@@ -62,7 +55,6 @@ const Chat = (props) => {
   }, [data]);
 
   const connectToRoom = () => {
-    setLoggedIn(true);
     socket.emit('join', room);
   };
 
@@ -99,7 +91,6 @@ const Chat = (props) => {
         variables: {
           message: {
             name: username,
-            nick,
             msg: message,
           },
         },

@@ -68,7 +68,7 @@ const Signup = (props) => {
       await login(userEmail, password);
       getUser({
         variables: {
-          email: userEmail,
+          email: userEmail.toLowerCase(),
         },
       });
       setLoggedIn(<Redirect to="/" />);

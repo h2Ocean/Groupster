@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import { Redirect } from 'react-router-dom';
 import Category from './Category';
 import './explore.css';
 import theme from '../Reusable/theme';
+import { auth } from '../../firebase';
+
 // import colors from '../Reusable/colors.js';
 const categoryList = [
   'Math',
@@ -20,11 +23,18 @@ const categoryList = [
 // eslint-disable-next-line react/prop-types
 const Explore = () => {
   const [categories, setCategories] = useState([]);
+  const [isLogged, setIsLogged] = useState([]);
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      setIsLogged(<Redirect to="/signup" />);
+    }
+  }, []);
 
   return (
     <div id="Explore">
+      {isLogged}
       <div className="exploreHeader">Choose areas of interest</div>
-      {console.log(setCategories.toString())}
       <div id="categories">
         {categoryList.map((category, index) => (
           <Category

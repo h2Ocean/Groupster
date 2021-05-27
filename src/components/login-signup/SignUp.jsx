@@ -57,7 +57,7 @@ const Signup = () => {
   const [userEmail, setEmail] = useState('');
   const [userAge, setAge] = useState();
   const [createUser, { user }] = useMutation(CREATE_USER);
-  const [emailInUse, setEmailInUse] = useState([]);
+  const [redirect, setRedirect] = useState([]);
   const { signup } = useAuth();
   const classes = useStyles();
   const [error, setError] = useState('');
@@ -88,9 +88,10 @@ const Signup = () => {
           profile: userObj,
         },
       });
+      setRedirect(<Redirect to="/" />);
     } catch (err) {
       if (err.message === 'The email address is already in use by another account.') {
-        setEmailInUse(<Redirect to="/login" />);
+        setRedirect(<Redirect to="/login" />);
       }
       setPassword('');
       setConfirmPassword('');
@@ -101,7 +102,7 @@ const Signup = () => {
 
   return (
     <div style={{ overflow: 'hidden' }}>
-      {emailInUse}
+      {redirect}
       <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
         <CssBaseline />
         <div className={classes.paper}>
