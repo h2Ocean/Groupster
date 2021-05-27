@@ -16,6 +16,7 @@
   right: 20px;
 }
 .profileIcon:hover {
+  cursor: pointer;
   color: #4d3ea3;
 }
 .searchIcon {
@@ -23,7 +24,29 @@
   top: 1px;
 }
 #aDash {
+  color: black;
   margin-left: 10px;
   font-family: 'Quicksand', sans-serif;
   font-size: 15px;
+}
+
+#aDash:hover {
+  color: #4d3ea3;
+  text-shadow: 1px 1px rgb(199, 199, 199);
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }

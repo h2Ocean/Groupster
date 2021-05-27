@@ -20,9 +20,9 @@ const NavSidebar = () => {
         <div className="channel">#knights</div>
         <div className="channel">#research paper</div>
       </div>
-      <div className="navBarWidget">
+      {/* <div className="navBarWidget">
         <div className="heading">Voice Chat</div>
-      </div>
+      </div> */}
       <div className="navBarWidget">
         <div className="heading">Resources</div>
       </div>

@@ -43,8 +43,8 @@ export const resolvers = {
     createProfile: async (_, { profile: { name, email, username, age } }) => {
       const user = new Profile({
         name,
-        email: email.toLowerCase,
-        username: username.toLowerCase,
+        email: email.toLowerCase(),
+        username: username.toLowerCase(),
         age: parseInt(age, 10),
       });
       const res = await user.save();

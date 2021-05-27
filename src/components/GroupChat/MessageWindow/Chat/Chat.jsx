@@ -13,7 +13,6 @@ const GET_CHATS = gql`
     getChats {
       id
       name
-      nick
       msg
       created
     }
@@ -25,7 +24,6 @@ const SEND_CHATS = gql`
     sendMessage(message: $message) {
       id
       name
-      nick
       msg
       created
     }
@@ -33,18 +31,14 @@ const SEND_CHATS = gql`
 `;
 
 const Chat = (props) => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [room, setRoom] = useState('lobby');
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
-  const [{ client }] = useState(props);
   const { data } = useQuery(GET_CHATS);
-  const [sendChat, { info }] = useMutation(SEND_CHATS);
-  // user info
-  const [{ username }] = useState(props);
-  const [{ nick }] = useState(props);
-
+  const [sendChat] = useMutation(SEND_CHATS);
+  const [{ user }] = useState(props);
+  const { username } = user.getProfile[0];
   const dummy = useRef();
 
   useEffect(() => {
@@ -61,7 +55,6 @@ const Chat = (props) => {
   }, [data]);
 
   const connectToRoom = () => {
-    setLoggedIn(true);
     socket.emit('join', room);
   };
 
@@ -98,7 +91,6 @@ const Chat = (props) => {
         variables: {
           message: {
             name: username,
-            nick,
             msg: message,
           },
         },
@@ -123,9 +115,21 @@ const Chat = (props) => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   useEffect(() => {
     populate();
   }, [messageList]);
+
+  useEffect(() => {
+    if (dummy.current) {
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messageContentList]);
 
   return (
     <div className="Chat">
@@ -140,8 +144,10 @@ const Chat = (props) => {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          onKeyPress={handleKeyDown}
         />
-        <button type="submit" onClick={sendMessage}>
+        {/* the entire code breaks unless you have this invisible button */}
+        <button style={{ display: 'none' }} type="submit" onClick={sendMessage}>
           Send
         </button>
       </div>
