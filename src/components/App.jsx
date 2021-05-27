@@ -18,32 +18,25 @@ const App = () => {
     link: httpLink,
     cache: new InMemoryCache(),
   });
+  const [loggedIn, setLogin] = useState(true);
 
   return (
     <div className="App" style={{ margin: 'auto' }}>
-      <div>
-        <Router>
-          <AuthProvider>
-            <ApolloProvider client={client}>
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/explore" component={Explore} />
-                <Route path="/chat" component={GroupChat} />
-              </Switch>
-            </ApolloProvider>
-          </AuthProvider>
-        </Router>
-      </div>
+      <Router>
+        <AuthProvider>
+          <ApolloProvider client={client}>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              <Route path="/explore" component={Explore} />
+              <Route path="/chat" component={GroupChat} />
+            </Switch>
+          </ApolloProvider>
+        </AuthProvider>
+      </Router>
     </div>
   );
 };
 
 export default App;
-
-/* <LoginSignup
-setUsername={setUsername}
-setIsLoggedIn={setIsLoggedIn}
-isLoggedIn={isLoggedIn}
-/> */

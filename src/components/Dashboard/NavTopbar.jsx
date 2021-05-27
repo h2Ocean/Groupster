@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     display: 'flex',
-    width: '100% - 20vw',
+    width: '100% - 30vw',
     marginLeft: '20vw',
     backgroundColor: 'lightGrey',
     transition: theme.transitions.create('margin', {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   menuButton: {
-    marginLeft: '88vw',
+    marginLeft: '80vw',
   },
   createGroupButton: {
     position: 'absolute',

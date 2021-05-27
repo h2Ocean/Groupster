@@ -5,15 +5,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useLazyQuery, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
 
@@ -48,7 +46,7 @@ const GET_USER = gql`
   }
 `;
 
-const Signup = () => {
+const Signup = (props) => {
   const [password, setPassword] = useState('');
   const [userEmail, setEmail] = useState('');
   const [person, setPerson] = useState();
@@ -56,6 +54,7 @@ const Signup = () => {
   const classes = useStyles();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState([]);
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
       email: userEmail,
@@ -69,9 +68,10 @@ const Signup = () => {
       await login(userEmail, password);
       getUser({
         variables: {
-          email: userEmail,
+          email: userEmail.toLowerCase(),
         },
       });
+      setLoggedIn(<Redirect to="/" />);
     } catch (err) {
       console.log(err);
       setError('Failed to login');
@@ -86,8 +86,9 @@ const Signup = () => {
   }, [data]);
 
   return (
-    <div style={{ overflow: 'hidden' }}>
-      <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
+    <div style={{ height: '100vh' }}>
+      {loggedIn}
+      <Container component="main" maxWidth="xs" className="loginContainer">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>

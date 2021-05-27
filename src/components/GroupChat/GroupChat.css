@@ -1,12 +1,13 @@
 #GroupChat_container {
   width: 100vw;
-  height: 90vh;
+  height: 93vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
 #NavSidebar {
+  height: 95.6vh;
   width: 20%;
   text-align: left;
 }
@@ -14,13 +15,15 @@
 #MessageWindow {
   width: 65%;
   display: grid;
-  grid-template-rows: auto 100px;
+  grid-template-rows: auto auto;
   grid-template-areas:
     'messages'
     'write';
+  border-radius: 25px;
 }
 
 #Members {
+  height: 95.6vh;
   width: 15%;
   background-color: #d2d4da;
 }
@@ -47,4 +50,10 @@
   height: 120px;
   min-height: 80px;
   border: 1px solid #b6bbcd;
+}
+
+.groupMember:hover {
+  cursor: pointer;
+  color: #9fe5c3;
+  text-shadow: 1px 1px rgb(43, 43, 43);
 }

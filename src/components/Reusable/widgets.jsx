@@ -1,6 +1,32 @@
 import React from 'react';
+import './styleWidgets.css';
 
-const widget = {
+const widgets = {
+  button1(name, width) {
+    return (
+      <button
+        className="button1"
+        type="button"
+        style={{
+          width: `${width}`,
+          minWidth: '100px',
+          padding: '8px 16px',
+          fontSize: '1.1rem',
+          fontFamily: '"Roboto", sans-serif',
+          fontWeight: '500',
+          borderRadius: '7px',
+          color: '#fff',
+          backgroundColor: '#7E6ECB',
+          lineHeight: '1.75',
+          letterSpacing: '0.02857em',
+          textTransform: 'uppercase',
+          border: 'none',
+        }}
+      >
+        {name}
+      </button>
+    );
+  },
   groupWidget(name) {
     return (
       <div
@@ -23,7 +49,11 @@ const widget = {
           paddingTop: '10px',
         }}
       >
-        <span className="material-icons" style={{ fontSize: '18px', paddingRight: '5px' }}>
+        <span
+          id="face-icon"
+          className="material-icons"
+          style={{ fontSize: '4vh', paddingRight: '5px' }}
+        >
           face
         </span>
         {name}
@@ -52,4 +82,4 @@ const widget = {
   },
 };
 
-export default widget;
+export default widgets;

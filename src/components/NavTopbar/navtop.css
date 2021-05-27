@@ -3,6 +3,10 @@
   align-items: center;
   display: flex;
   justify-content: space-evenly;
+  /* grid-template-areas:
+  "navigation searchBar profile"
+  grid-template-columns:
+     */
 }
 
 #searchChat {
@@ -11,21 +15,44 @@
   align-items: center;
   height: 20px;
 }
-
 .profileIcon {
   position: absolute;
-  right: 20px;
+  right: 6vw;
   font-size: 30px;
 }
 .profileIcon:hover {
+  cursor: pointer;
   color: #4d3ea3;
 }
+
 .searchIcon {
   font-size: 20px;
   top: 1px;
 }
 #aDash {
+  color: black;
   margin-left: 10px;
   font-family: 'Quicksand', sans-serif;
   font-size: 16px;
+}
+
+#aDash:hover {
+  color: #4d3ea3;
+  text-shadow: 1px 1px rgb(199, 199, 199);
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }
