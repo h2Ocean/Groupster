@@ -1,20 +1,17 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import {
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-  ApolloProvider,
-} from '@apollo/client';
-import LoginSignup from './login-signup/LoginSignup';
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Signup from './login-signup/SignUp';
+import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
-import NavTopbar from './NavTopbar/NavTopbar';
 import Dashboard from './Dashboard/Dashboard';
 import Profile from './Profile/Profile';
 import './App.css';
+import { AuthProvider } from '../contexts/AuthContent';
+import Explore from './Explore/Explore';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql',
   });
@@ -22,34 +19,36 @@ const App = () => {
     link: httpLink,
     cache: new InMemoryCache(),
   });
+  const [loggedIn, setLogin] = useState(true);
 
-  const populate = () => {
-    if (!isLoggedIn) {
-      return (
-        <div>
-          <h1>Hello, Learners!</h1>
-          <LoginSignup
-            setUsername={setUsername}
-            setIsLoggedIn={setIsLoggedIn}
-            isLoggedIn={isLoggedIn}
-          />
-        </div>
-      );
-    }
-
-    return (
+  return (
+    <div className="App" style={{ margin: 'auto' }}>
       <div>
+<<<<<<< HEAD
         <ApolloProvider client={client}>
           {/* <NavTopbar />
           <GroupChat username={username} client={client} /> */}
           {/* <Dashboard /> */}
         </ApolloProvider>
         <Profile />
+=======
+        <Router>
+          <AuthProvider>
+            <ApolloProvider client={client}>
+              <Switch>
+                <Route exact path="/" component={Dashboard} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+                <Route path="/explore" component={Explore} />
+                <Route path="/chat" component={GroupChat} />
+              </Switch>
+            </ApolloProvider>
+          </AuthProvider>
+        </Router>
+>>>>>>> origin
       </div>
-    );
-  };
-
-  return <div className="App">{populate()}</div>;
+    </div>
+  );
 };
 
 export default App;

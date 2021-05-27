@@ -1,10 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect, useRef } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import io from 'socket.io-client';
 import './styles/chat.css';
-import { CardHeader } from '@material-ui/core';
 
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
@@ -13,24 +13,32 @@ const GET_CHATS = gql`
     getChats {
       id
       name
-      nick
       msg
       created
     }
   }
 `;
-const Chat = (props) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [room, setRoom] = useState('lobby');
 
+const SEND_CHATS = gql`
+  mutation SendMessage($message: InputMessage!) {
+    sendMessage(message: $message) {
+      id
+      name
+      msg
+      created
+    }
+  }
+`;
+
+const Chat = (props) => {
+  const [room, setRoom] = useState('lobby');
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [{ client }] = useState(props);
+  const [messageContentList, setMessageContentList] = useState([]);
   const { data } = useQuery(GET_CHATS);
-  // user info
-  const [{ username }] = useState(props);
-  const [{ nick }] = useState(props);
-
+  const [sendChat] = useMutation(SEND_CHATS);
+  const [{ user }] = useState(props);
+  const { username } = user.getProfile[0];
   const dummy = useRef();
 
   useEffect(() => {
@@ -42,12 +50,11 @@ const Chat = (props) => {
           message: msg,
         },
       }));
-      setMessageList([...messageList, arr]);
+      setMessageList([...messageList, ...arr]);
     }
   }, [data]);
 
   const connectToRoom = () => {
-    setLoggedIn(true);
     socket.emit('join', room);
   };
 
@@ -77,32 +84,57 @@ const Chat = (props) => {
       };
 
       await socket.emit('send_message', messageContent);
-      setMessageList([...messageList, messageContent.content]);
+      setMessageList([...messageList, messageContent]);
       setMessage('');
       dummy.current.scrollIntoView({ behavior: 'smooth' });
+      sendChat({
+        variables: {
+          message: {
+            name: username,
+            msg: message,
+          },
+        },
+      });
     }
   };
 
   const populate = () => {
-    if (messageList[0]) {
-      return messageList[0].map(({ content }, key) => (
-        <div
-          className="messageContainer"
-          key={key}
-          id={content.username === username ? 'You' : 'Other'}
-          ref={dummy}
-        >
-          <div className="messageIndividual">{`${content.username}: ${content.message}`}</div>
-        </div>
-      ));
+    if (messageList) {
+      setMessageContentList([
+        messageList.map(({ content }, key) => (
+          <div
+            className="messageContainer"
+            key={key}
+            id={content.username === username ? 'You' : 'Other'}
+            ref={dummy}
+          >
+            <div className="messageIndividual">{`${content.username}: ${content.message}`}</div>
+          </div>
+        )),
+      ]);
     }
-    return <></>;
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  useEffect(() => {
+    populate();
+  }, [messageList]);
+
+  useEffect(() => {
+    if (dummy.current) {
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messageContentList]);
 
   return (
     <div className="Chat">
       <div className="chatContainer">
-        <div className="messages">{populate()}</div>
+        <div className="messages">{messageContentList}</div>
       </div>
       <div className="messageInputs">
         <input
@@ -112,8 +144,10 @@ const Chat = (props) => {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          onKeyPress={handleKeyDown}
         />
-        <button type="submit" onClick={sendMessage}>
+        {/* the entire code breaks unless you have this invisible button */}
+        <button style={{ display: 'none' }} type="submit" onClick={sendMessage}>
           Send
         </button>
       </div>

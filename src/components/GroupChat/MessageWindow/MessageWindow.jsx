@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import Chat from './Chat/Chat';
 
 const MessageWindow = (props) => {
-  const [{ username }] = useState(props);
-  const [{ client }] = useState(props);
-
+  const [{ user }] = useState(props);
   return (
-    <div id="MessageWindow" style={{ border: '1px solid purple' }}>
-      <Chat client={client} username={username} />
+    <div id="MessageWindow">
+      <Chat user={user} />
     </div>
   );
 };
