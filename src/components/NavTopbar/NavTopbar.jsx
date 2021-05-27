@@ -8,7 +8,7 @@ const NavTopbar = () => (
     style={{
       width: '100vw',
       backgroundColor: 'rgba(0,0,0,.03)',
-      height: '40px',
+      height: '60px',
       border: '1px solid rgba(0,0,0,.125)',
     }}
   >

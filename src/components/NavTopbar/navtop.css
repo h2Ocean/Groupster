@@ -9,21 +9,23 @@
   display: flex;
   margin: auto;
   align-items: center;
+  height: 20px;
 }
 
 .profileIcon {
   position: absolute;
   right: 20px;
+  font-size: 30px;
 }
 .profileIcon:hover {
   color: #4d3ea3;
 }
 .searchIcon {
-  font-size: 18px;
+  font-size: 20px;
   top: 1px;
 }
 #aDash {
   margin-left: 10px;
   font-family: 'Quicksand', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
 }

@@ -6,13 +6,10 @@ const Search = () => {
     <div id="searchChat">
       <input
         type="text"
-        size="sm"
+        style={{ fontSize: '15px' }}
         onChange={(e) => setSearchWord(e.target.value)}
       />
-      <span
-        className="material-icons searchIcon"
-        style={{ position: 'relative', left: '-20px' }}
-      >
+      <span className="material-icons searchIcon" style={{ position: 'relative', left: '-20px' }}>
         search
       </span>
     </div>
