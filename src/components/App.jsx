@@ -24,14 +24,6 @@ const App = () => {
   return (
     <div className="App" style={{ margin: 'auto' }}>
       <div>
-<<<<<<< HEAD
-        <ApolloProvider client={client}>
-          {/* <NavTopbar />
-          <GroupChat username={username} client={client} /> */}
-          {/* <Dashboard /> */}
-        </ApolloProvider>
-        <Profile />
-=======
         <Router>
           <AuthProvider>
             <ApolloProvider client={client}>
@@ -41,11 +33,11 @@ const App = () => {
                 <Route path="/login" component={Login} />
                 <Route path="/explore" component={Explore} />
                 <Route path="/chat" component={GroupChat} />
+                <Route path="/profile" component={Profile} />
               </Switch>
             </ApolloProvider>
           </AuthProvider>
         </Router>
->>>>>>> origin
       </div>
     </div>
   );
