@@ -4,8 +4,8 @@
   height: 95.7vh;
   background-color: rgb(43, 43, 43);
   overflow-x: hidden;
-  grid-template-rows: 80% 20%;
-  grid-area: 'messages' 'write';
+  /* grid-template-rows: 80% 20%;
+  grid-area: 'messages' 'write'; */
   /* #2a2730; */
 }
 .chatContainer::-webkit-scrollbar {
