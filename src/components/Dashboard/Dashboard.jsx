@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
 import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
@@ -39,13 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     paddingTop: '10vh',
+    position: 'relative',
   },
   title: {
     fontSize: '5vh',
     fontFamily: 'Roboto',
   },
   cardGrid: {
-    paddingTop: '5vh',
+    paddingTop: '8vh',
   },
   card: {
     height: '100%',
@@ -58,6 +61,19 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1,
+  },
+  createGroupButton: {
+    border: '1px solid',
+    position: 'absolute',
+    left: '53vh',
+    bottom: '86.2vh',
+  },
+  groupModal: {
+    position: 'absolute',
+    width: '30vw',
+    height: '63vh',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
   },
 }));
 
@@ -73,16 +89,29 @@ const categoryList = [
   'Theoritical Physics',
 ];
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
+  const [modalOpen, setModalOpen] = useState(true);
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     if (!auth.currentUser) {
       setIsLogged(<Redirect to="/signup" />);
     }
   }, []);
+  const body = (
+    <div style={{ top: '20%', left: '40%' }} className={classes.groupModal}>
+      <h2>Text in a modal</h2>
+      <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+    </div>
+  );
   return (
     <div className={classes.root}>
       {isLogged}
@@ -92,14 +121,19 @@ const Dashboard = (props) => {
         <Container maxWidth="sm" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>
           <Autocomplete
-            freeSolo
+            debug
+            noOptionsText={
+              <Button type="button" onClick={handleModalOpen}>
+                Create a Group
+              </Button>
+            }
             id="groupSearch"
             disableClearable
             options={categoryList.map((option) => option)}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search Groups"
+                label="Search or Create Groups"
                 margin="normal"
                 variant="outlined"
                 InputProps={{ ...params.InputProps, type: 'search' }}
@@ -127,6 +161,14 @@ const Dashboard = (props) => {
             </Grid>
           </Container>
         </Container>
+        <Modal
+          open={modalOpen}
+          onClose={handleModalClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {body}
+        </Modal>
       </main>
     </div>
   );
