@@ -6,7 +6,6 @@ export const typeDef = gql`
   type Chat {
     id: ID!
     name: String!
-    nick: String!
     msg: String!
     created: String!
     room: String!
@@ -18,7 +17,6 @@ export const typeDef = gql`
 
   input InputMessage {
     name: String!
-    nick: String!
     msg: String!
     room: String!
   }
@@ -41,18 +39,17 @@ export const resolvers = {
   },
   Mutation: {
     // prettier dis
-    sendMessage: async (_, { message: { name, nick, msg } }) => {
+    sendMessage: async (_, { message: { name, msg, room } }) => {
       const message = new Chat({
         name,
-        nick,
         msg,
+        room,
         created: new Date().toISOString(),
       });
       const res = await message.save();
       return {
         id: res._id,
         name: res.name,
-        nick: res.nick,
         msg: res.msg,
         room: res.room,
         created: res.created,

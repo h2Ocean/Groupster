@@ -9,8 +9,8 @@ import './styles/chat.css';
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
 const GET_CHATS = gql`
-  query {
-    getChats {
+  query GetChats($room: String!) {
+    getChats(room: $room) {
       id
       name
       msg
@@ -37,7 +37,11 @@ const Chat = (props) => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
-  const { data } = useQuery(GET_CHATS);
+  const { data } = useQuery(GET_CHATS, {
+    variables: {
+      room,
+    },
+  });
   const [sendChat] = useMutation(SEND_CHATS);
   const [{ user }] = useState(props);
   const { username } = user.getProfile[0];
@@ -95,6 +99,7 @@ const Chat = (props) => {
           message: {
             name: username,
             msg: message,
+            room,
           },
         },
       });
@@ -103,6 +108,7 @@ const Chat = (props) => {
 
   const populate = () => {
     if (messageList) {
+      console.log(messageList);
       setMessageContentList([
         messageList.map(({ content }, key) => (
           <div
