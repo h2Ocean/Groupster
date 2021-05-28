@@ -151,7 +151,7 @@ const Dashboard = (props) => {
         </Container>
         <Modal
           open={modalOpen}
-          onClose={handleModalClose}
+          onClose={() => setModalOpen(false)}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
