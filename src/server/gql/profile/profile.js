@@ -9,7 +9,9 @@ export const typeDef = gql`
     username: String!
     email: String!
     age: Int!
+    bio: String
   }
+
   extend type Query {
     getProfile(email: String!): [Profile]
   }
@@ -21,15 +23,20 @@ export const typeDef = gql`
     age: Int!
   }
 
+  input UpdateBio {
+    email: String!
+    bio: String!
+  }
+
   extend type Mutation {
     createProfile(profile: InputUser!): Profile!
+    updateBio(info: UpdateBio!): Profile!
   }
 `;
 
 export const resolvers = {
   Query: {
     async getProfile(_, { email }) {
-      console.log(email);
       try {
         const profile = await Profile.find({ email });
         return profile;
@@ -48,7 +55,6 @@ export const resolvers = {
         age: parseInt(age, 10),
       });
       const res = await user.save();
-      console.log(res);
 
       return {
         id: res._id,
@@ -56,6 +62,18 @@ export const resolvers = {
         email: res.email,
         username: res.username,
         age: res.age,
+        bio: res.bio,
+      };
+    },
+    updateBio: async (_, { info: { bio, email } }) => {
+      const res = await Profile.findOneAndUpdate({ email }, { bio });
+      return {
+        id: res._id,
+        name: res.name,
+        email: res.email,
+        username: res.username,
+        age: res.age,
+        bio: res.bio,
       };
     },
   },
