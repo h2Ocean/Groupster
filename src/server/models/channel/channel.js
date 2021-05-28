@@ -6,8 +6,8 @@ const Channel = mongoose.model(
     strId: { type: String, unique: true },
     name: String,
     category: String,
-    admin: [{ type: Schema.types.ObjectId }],
-    users: [{ type: Schema.types.ObjectId }],
+    admin: [{ type: mongoose.types.ObjectId }],
+    users: [{ type: mongoose.types.ObjectId }],
   }),
 );
 
