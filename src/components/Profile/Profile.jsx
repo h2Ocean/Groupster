@@ -23,11 +23,11 @@ const GET_USER = gql`
 
 const Profile = () => {
   const [isLogged, setIsLogged] = useState([]);
-  const [name, setName] = useState('Travis Wheaton');
-  const [username] = useState('twheaton53');
+  let fullName;
+  let userName;
   const [bio, setBio] = useState(biography);
   let userEmail;
-  const [email] = useState('tjwheaton53@gmail.com');
+  let email;
   const [groups] = useState([
     'Medieval History',
     'Asian Cuisine',
@@ -37,9 +37,13 @@ const Profile = () => {
   const [edit, setEdit] = useState(false);
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
+      name: fullName,
+      username: userName,
       email: userEmail,
     },
   });
+
+  console.log('this is data,', data);
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -48,6 +52,8 @@ const Profile = () => {
       userEmail = auth.currentUser.email;
       getUser({
         variables: {
+          name: fullName,
+          username: userName,
           email: userEmail,
         },
       });
@@ -56,8 +62,10 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setEdit(false);
   };
 
+  const { name } = data.getProfile[0];
   if (!edit) {
     return (
       <Container className="Profile">
@@ -65,7 +73,7 @@ const Profile = () => {
         <h2>Full Name:&nbsp;</h2>
         <p>{name}</p>
         <h2>Username:&nbsp;</h2>
-        <p>{username}</p>
+        <p>{userName}</p>
         <h2>Biography</h2>
         <p>{bio}</p>
         <h2>Email</h2>
@@ -91,11 +99,11 @@ const Profile = () => {
         required
         id="name"
         label="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={fullName}
+        onChange
       />
       <h2>Username:&nbsp;</h2>
-      <p>{username}</p>
+      <p>{userName}</p>
       <h2>Biography</h2>
       <TextField
         name="biography"

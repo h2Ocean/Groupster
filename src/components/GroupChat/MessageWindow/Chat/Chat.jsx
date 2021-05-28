@@ -44,6 +44,7 @@ const Chat = (props) => {
   });
   const [sendChat] = useMutation(SEND_CHATS);
   const [{ user }] = useState(props);
+  console.log(user);
   const { username } = user.getProfile[0];
   const dummy = useRef();
 
