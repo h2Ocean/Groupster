@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { auth } from '../../firebase';
 import NavTopbar from '../NavTopbar/NavTopbar';
-import MessageWindow from './MessageWindow/MessageWindow';
+import Chat from './Chat/Chat';
 import NavSidebar from './NavSidebar';
 import Members from './Members';
 import './GroupChat.css';
@@ -49,7 +49,7 @@ const GroupChat = () => {
       <NavTopbar />
       <div id="GroupChat_container">
         <NavSidebar />
-        <MessageWindow user={data} />
+        <Chat user={data} />
         <Members />
       </div>
     </>
