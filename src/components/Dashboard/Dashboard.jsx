@@ -88,12 +88,6 @@ const Dashboard = (props) => {
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -111,7 +105,7 @@ const Dashboard = (props) => {
           <Autocomplete
             debug
             noOptionsText={
-              <Button type="button" onClick={handleModalOpen}>
+              <Button type="button" onClick={() => setModalOpen(true)}>
                 Create a Group
               </Button>
             }
@@ -151,7 +145,7 @@ const Dashboard = (props) => {
         </Container>
         <Modal
           open={modalOpen}
-          onClose={handleModalClose}
+          onClose={() => setModalOpen(false)}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
