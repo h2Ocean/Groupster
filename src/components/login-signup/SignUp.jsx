@@ -88,7 +88,7 @@ const Signup = () => {
           profile: userObj,
         },
       });
-      setRedirect(<Redirect to="/" />);
+      setRedirect(<Redirect to="/explore" />);
     } catch (err) {
       if (err.message === 'The email address is already in use by another account.') {
         setRedirect(<Redirect to="/login" />);
@@ -101,7 +101,7 @@ const Signup = () => {
   };
 
   return (
-    <div style={{ overflow: 'hidden' }}>
+    <div style={{ overflowY: 'auto' }}>
       {redirect}
       <Container component="main" maxWidth="xs" style={{ height: '100vh' }}>
         <CssBaseline />

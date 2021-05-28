@@ -4,6 +4,8 @@
   height: 95.7vh;
   background-color: rgb(43, 43, 43);
   overflow-x: hidden;
+  grid-template-rows: 80% 20%;
+  grid-area: 'messages' 'write';
   /* #2a2730; */
 }
 .chatContainer::-webkit-scrollbar {
@@ -27,6 +29,7 @@
   flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
+  grid-area: messages;
 }
 
 .chatContainer .messages {
@@ -41,6 +44,7 @@
   height: 6vh;
   display: flex;
   flex-direction: row;
+  grid-area: write;
 }
 
 .messageInputs input {
