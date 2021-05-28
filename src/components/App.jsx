@@ -23,22 +23,20 @@ const App = () => {
 
   return (
     <div className="App" style={{ margin: 'auto' }}>
-      <div>
-        <Router>
-          <AuthProvider>
-            <ApolloProvider client={client}>
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/explore" component={Explore} />
-                <Route path="/chat" component={GroupChat} />
-                <Route path="/profile" component={Profile} />
-              </Switch>
-            </ApolloProvider>
-          </AuthProvider>
-        </Router>
-      </div>
+      <Router>
+        <AuthProvider>
+          <ApolloProvider client={client}>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              <Route path="/explore" component={Explore} />
+              <Route path="/chat" component={GroupChat} />
+              <Route path="/profile" component={Profile} />
+            </Switch>
+          </ApolloProvider>
+        </AuthProvider>
+      </Router>
     </div>
   );
 };

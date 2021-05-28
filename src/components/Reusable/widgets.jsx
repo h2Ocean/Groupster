@@ -1,11 +1,37 @@
 import React from 'react';
+import './styleWidgets.css';
 
-const widget = {
+const widgets = {
+  button1(name, width) {
+    return (
+      <button
+        className="button1"
+        type="button"
+        style={{
+          width: `${width}`,
+          minWidth: '100px',
+          padding: '8px 16px',
+          fontSize: '1.1rem',
+          fontFamily: '"Roboto", sans-serif',
+          fontWeight: '500',
+          borderRadius: '7px',
+          color: '#fff',
+          backgroundColor: '#7E6ECB',
+          lineHeight: '1.75',
+          letterSpacing: '0.02857em',
+          textTransform: 'uppercase',
+          border: 'none',
+        }}
+      >
+        {name}
+      </button>
+    );
+  },
   groupWidget(name) {
     return (
       <div
         className="groupWidget"
-        style={{ textIndent: '15px', fontWeight: '500', paddingTop: '10px' }}
+        style={{ textIndent: '15px', paddingTop: '10px', fontSize: '16px' }}
       >
         {name}
       </div>
@@ -16,11 +42,11 @@ const widget = {
       <div
         className="groupMember"
         style={{
-          fontSize: '14px',
+          fontSize: '16px',
           display: 'flex',
           alignItems: 'center',
           paddingLeft: '10%',
-          paddingTop: '5px',
+          paddingTop: '10px',
         }}
       >
         <span
@@ -34,6 +60,26 @@ const widget = {
       </div>
     );
   },
+  category(subject) {
+    return (
+      <div
+        className="category"
+        style={{
+          height: '30px',
+          width: '30px',
+          fontWeight: '500',
+          borderRadius: '6px',
+          backgroundColor: '#F3DA75',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '2px solid #7E6ECB',
+        }}
+      >
+        {subject}
+      </div>
+    );
+  },
 };
 
-export default widget;
+export default widgets;

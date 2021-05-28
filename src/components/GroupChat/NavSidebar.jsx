@@ -11,6 +11,7 @@ const NavSidebar = () => {
   };
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#D2D4DA' }}>
+      {widgets.category('Sci')}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
