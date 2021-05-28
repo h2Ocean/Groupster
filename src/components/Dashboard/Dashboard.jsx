@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const categoryList = [
+const groupList = [
   'Himalayan food recipes',
   'Python for Dummies',
   'Organic Chemistry',
@@ -106,7 +106,7 @@ const Dashboard = (props) => {
       <NavTopbar key={open} setOpen={setOpen} open={open} />
       <NavSidebar />
       <main className={clsx(classes.content, open && classes.contentShift)}>
-        <Container maxWidth="sm" className={classes.header}>
+        <Container maxWidth="md" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>
           <Autocomplete
             debug
@@ -117,7 +117,7 @@ const Dashboard = (props) => {
             }
             id="groupSearch"
             disableClearable
-            options={categoryList.map((option) => option)}
+            options={groupList.map((option) => option)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -128,10 +128,10 @@ const Dashboard = (props) => {
               />
             )}
           />
-          <Container className={classes.cardGrid} maxWidth="md">
+          <Container className={classes.cardGrid} maxWidth="lg">
             <Grid container spacing={4}>
-              {categoryList.map((category) => (
-                <Grid item key={category} xs={12} sm={6} md={4}>
+              {groupList.map((category) => (
+                <Grid item key={category} xs={4} sm={4} md={4}>
                   <Card className={classes.card}>
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100% - 20vw',
     marginLeft: '20vw',
-    backgroundColor: 'rgba(0,0,0,.03)',
+    backgroundColor: 'lightGrey',
     border: '1px solid rgba(0,0,0,.125)',
     height: '8vh',
     transition: theme.transitions.create('margin', {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '20vw',
     marginRight: '20vw',
     height: '8vh',
-    backgroundColor: 'rgba(0,0,0,.03)',
+    backgroundColor: 'lightGrey',
     border: '1px solid rgba(0,0,0,.125)',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
