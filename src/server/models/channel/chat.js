@@ -4,8 +4,8 @@ const Chat = mongoose.model(
   'Chat',
   new Schema({
     name: String,
-    nick: String,
     msg: String,
+    room: String,
     created: { type: Date, default: Date.now },
   }),
 );

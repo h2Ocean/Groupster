@@ -10,7 +10,9 @@ const schema = require('./gql/schema').default;
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
 
 const port = process.env.PORT;
-const url = 'mongodb://localhost:27017/groupster';
+const pass = process.env.DB_PASSWORD;
+const username = process.env.DB_USERNAME;
+const url = `mongodb+srv://${username}:${pass}@cluster0.fshtv.mongodb.net/groupster?retryWrites=true&w=majority`;
 
 const startServer = async () => {
   const server = new ApolloServer({
