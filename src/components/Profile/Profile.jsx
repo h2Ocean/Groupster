@@ -22,7 +22,7 @@ const GET_USER = gql`
 `;
 
 const Profile = () => {
-  const [isLoggd, setIsLogged] = useState([]);
+  const [isLogged, setIsLogged] = useState([]);
   const [name, setName] = useState('Travis Wheaton');
   const [username] = useState('twheaton53');
   const [bio, setBio] = useState(biography);
@@ -52,7 +52,7 @@ const Profile = () => {
         },
       });
     }
-  });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
