@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, gql } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
 import { auth } from '../../firebase';
 import NavTopbar from '../NavTopbar/NavTopbar';
 import MessageWindow from './MessageWindow/MessageWindow';
@@ -43,14 +44,15 @@ const GroupChat = () => {
   }, []);
 
   const populate = () => (
-    <div>
+    <>
+      <CssBaseline />
       <NavTopbar />
       <div id="GroupChat_container">
         <NavSidebar />
         <MessageWindow user={data} />
         <Members />
       </div>
-    </div>
+    </>
   );
 
   useEffect(() => {
@@ -60,10 +62,10 @@ const GroupChat = () => {
   }, [data]);
 
   return (
-    <div>
+    <>
       {isLogged}
       {enviroment}
-    </div>
+    </>
   );
 };
 

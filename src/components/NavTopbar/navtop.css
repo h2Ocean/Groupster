@@ -3,31 +3,37 @@
   align-items: center;
   display: flex;
   justify-content: space-evenly;
+  /* grid-template-areas:
+  "navigation searchBar profile"
+  grid-template-columns:
+     */
 }
 
 #searchChat {
   display: flex;
   margin: auto;
   align-items: center;
+  height: 20px;
 }
-
 .profileIcon {
   position: absolute;
-  right: 20px;
+  right: 6vw;
+  font-size: 30px;
 }
 .profileIcon:hover {
   cursor: pointer;
   color: #4d3ea3;
 }
+
 .searchIcon {
-  font-size: 18px;
+  font-size: 20px;
   top: 1px;
 }
 #aDash {
   color: black;
   margin-left: 10px;
   font-family: 'Quicksand', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 #aDash:hover {

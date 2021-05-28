@@ -83,7 +83,7 @@ const categoryList = [
   'Theoritical Physics',
 ];
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();

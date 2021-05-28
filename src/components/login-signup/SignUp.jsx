@@ -48,6 +48,7 @@ const CREATE_USER = gql`
     }
   }
 `;
+
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -103,7 +104,7 @@ const Signup = () => {
   return (
     <div style={{ overflow: 'hidden' }}>
       {redirect}
-      <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
+      <Container component="main" maxWidth="xs" style={{ height: '100vh' }}>
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
