@@ -33,7 +33,7 @@ const SEND_CHATS = gql`
 `;
 
 const Chat = (props) => {
-  const [room, setRoom] = useState('lobby');
+  const [{ room }] = useState(props);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);

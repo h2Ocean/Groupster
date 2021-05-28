@@ -22,6 +22,7 @@ const GET_USER = gql`
 const GroupChat = () => {
   const [isLogged, setIsLogged] = useState([]);
   const [enviroment, setEnviroment] = useState([]);
+  const [room, setRoom] = useState([]);
   let userEmail;
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
@@ -46,8 +47,8 @@ const GroupChat = () => {
     <div>
       <NavTopbar />
       <div id="GroupChat_container">
-        <NavSidebar />
-        <MessageWindow user={data} />
+        <NavSidebar setRoom={setRoom} />
+        <MessageWindow room={room} user={data} />
         <Members />
       </div>
     </div>
