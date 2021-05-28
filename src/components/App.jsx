@@ -6,6 +6,7 @@ import Signup from './login-signup/SignUp';
 import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
 import Dashboard from './Dashboard/Dashboard';
+import Profile from './Profile/Profile';
 import './App.css';
 import { AuthProvider } from '../contexts/AuthContent';
 import Explore from './Explore/Explore';
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/login" component={Login} />
               <Route path="/explore" component={Explore} />
               <Route path="/chat" component={GroupChat} />
+              <Route path="/profile" component={Profile} />
             </Switch>
           </ApolloProvider>
         </AuthProvider>
