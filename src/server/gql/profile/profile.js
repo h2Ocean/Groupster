@@ -24,6 +24,7 @@ export const typeDef = gql`
   }
 
   input UpdateBio {
+    name: String!
     email: String!
     bio: String!
   }

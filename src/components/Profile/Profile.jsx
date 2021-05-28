@@ -21,13 +21,19 @@ const GET_USER = gql`
   }
 `;
 
+// const UPDATE_USER = gql`
+//   mutation updateBio(info: UpdateBio!) {
+
+//   }
+// `;
+
 const Profile = () => {
   const [isLogged, setIsLogged] = useState([]);
-  const [fullName, setFullName] = useState('Travis Wheaton');
-  const [userName, setUserName] = useState('tjwheaton53');
+  const [fullName, setFullName] = useState();
+  const [userName, setUserName] = useState();
   const [bio, setBio] = useState(biography);
   let userEmail;
-  const [email] = useState('tjwheaton53@gmail.com');
+  const [email, setEmail] = useState();
   const [groups] = useState([
     'Medieval History',
     'Asian Cuisine',
@@ -59,6 +65,14 @@ const Profile = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setFullName(data.getProfile[0].name);
+      setUserName(data.getProfile[0].username);
+      setEmail(data.getProfile[0].email);
+    }
+  }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -111,7 +125,7 @@ const Profile = () => {
         multiline
         rowsMax={5}
         id="standard-multiline-flexible"
-        label="biography"
+        label="Biography"
         value={bio}
         onChange={(e) => setBio(e.target.value)}
       />
