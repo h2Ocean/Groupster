@@ -4,7 +4,8 @@
   font-family: 'Quicksand', sans-serif;
 }
 .exploreHeader {
-  padding: 30px;
+  padding-top: 30px;
+  padding-bottom: 20px;
   font-weight: 500;
   font-size: 28px;
 }
@@ -28,7 +29,8 @@
   justify-content: center;
 }
 .categoryCard:hover {
-  background-color: #a197d8;
+  background-color: #c9c4e9;
+  cursor: pointer;
 }
 /* .checkMark {
   position: absolute;
