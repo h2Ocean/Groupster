@@ -23,11 +23,11 @@ const GET_USER = gql`
 
 const Profile = () => {
   const [isLogged, setIsLogged] = useState([]);
-  let fullName;
-  let userName;
+  const [fullName, setFullName] = useState('Travis Wheaton');
+  const [userName, setUserName] = useState('tjwheaton53');
   const [bio, setBio] = useState(biography);
   let userEmail;
-  let email;
+  const [email] = useState('tjwheaton53@gmail.com');
   const [groups] = useState([
     'Medieval History',
     'Asian Cuisine',
@@ -65,13 +65,12 @@ const Profile = () => {
     setEdit(false);
   };
 
-  const { name } = data.getProfile[0];
   if (!edit) {
     return (
       <Container className="Profile">
         <h1>Profile Page</h1>
         <h2>Full Name:&nbsp;</h2>
-        <p>{name}</p>
+        <p>{fullName}</p>
         <h2>Username:&nbsp;</h2>
         <p>{userName}</p>
         <h2>Biography</h2>
@@ -100,7 +99,7 @@ const Profile = () => {
         id="name"
         label="Name"
         value={fullName}
-        onChange
+        onChange={(e) => setFullName(e.target.value)}
       />
       <h2>Username:&nbsp;</h2>
       <p>{userName}</p>
