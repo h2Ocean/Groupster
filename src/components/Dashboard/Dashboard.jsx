@@ -88,12 +88,6 @@ const Dashboard = (props) => {
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
 
   useEffect(() => {
     if (!auth.currentUser) {
