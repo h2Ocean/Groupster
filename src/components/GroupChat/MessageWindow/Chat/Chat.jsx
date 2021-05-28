@@ -74,6 +74,7 @@ const Chat = (props) => {
   // handle message recieved
   useEffect(() => {
     socket.on('receive_message', (res) => {
+      console.log(res);
       setMessageList([...messageList, res]);
     });
   });
@@ -87,9 +88,10 @@ const Chat = (props) => {
         content: {
           username,
           message,
+          room,
         },
       };
-
+      console.log(messageContent);
       await socket.emit('send_message', messageContent);
       setMessageList([...messageList, messageContent]);
       setMessage('');
@@ -108,7 +110,6 @@ const Chat = (props) => {
 
   const populate = () => {
     if (messageList) {
-      console.log(messageList);
       setMessageContentList([
         messageList.map(({ content }, key) => (
           <div

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import widgets from '../Reusable/widgets';
+import Channels from './NavComponents/Channels';
 
-const NavSidebar = () => {
+const NavSidebar = (props) => {
   const [currentChannel, selectChannel] = useState('knights');
+  const [{ room }] = useState(props);
+
   // eslint-disable-next-line consistent-return
   const setStyle = (channel) => {
     if (channel === currentChannel) {
@@ -16,11 +19,7 @@ const NavSidebar = () => {
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
       </div>
-      <div className="navBarWidget">
-        <div className="heading">Channels</div>
-        <div className="channel">#knights</div>
-        <div className="channel">#research paper</div>
-      </div>
+      <Channels />
       {/* <div className="navBarWidget">
         <div className="heading">Voice Chat</div>
       </div> */}
