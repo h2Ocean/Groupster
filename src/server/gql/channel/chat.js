@@ -9,16 +9,18 @@ export const typeDef = gql`
     nick: String!
     msg: String!
     created: String!
+    room: String!
   }
 
   extend type Query {
-    getChats: [Chat]
+    getChats(room: String!): [Chat]
   }
 
   input InputMessage {
     name: String!
     nick: String!
     msg: String!
+    room: String!
   }
 
   extend type Mutation {
@@ -28,9 +30,9 @@ export const typeDef = gql`
 
 export const resolvers = {
   Query: {
-    async getChats() {
+    async getChats(_, { room }) {
       try {
-        const chats = await Chat.find();
+        const chats = await Chat.find({ room });
         return chats;
       } catch (err) {
         throw new Error(err);
@@ -52,6 +54,7 @@ export const resolvers = {
         name: res.name,
         nick: res.nick,
         msg: res.msg,
+        room: res.room,
         created: res.created,
       };
     },

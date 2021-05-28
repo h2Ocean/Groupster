@@ -15,6 +15,7 @@ const GET_CHATS = gql`
       name
       msg
       created
+      room
     }
   }
 `;
@@ -26,6 +27,7 @@ const SEND_CHATS = gql`
       name
       msg
       created
+      room
     }
   }
 `;
@@ -48,6 +50,7 @@ const Chat = (props) => {
         content: {
           username: name,
           message: msg,
+          room,
         },
       }));
       setMessageList([...messageList, ...arr]);

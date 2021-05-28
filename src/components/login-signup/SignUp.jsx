@@ -48,6 +48,7 @@ const CREATE_USER = gql`
     }
   }
 `;
+
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
