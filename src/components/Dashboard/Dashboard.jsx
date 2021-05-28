@@ -73,6 +73,7 @@ const categoryList = [
   'Theoritical Physics',
 ];
 
+// eslint-disable-next-line no-unused-vars
 const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);

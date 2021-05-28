@@ -86,9 +86,9 @@ const Signup = (props) => {
   }, [data]);
 
   return (
-    <div style={{ overflow: 'hidden' }}>
+    <div style={{ height: '100vh' }}>
       {loggedIn}
-      <Container component="main" maxWidth="xs" style={{ height: '83vh' }}>
+      <Container component="main" maxWidth="xs" className="loginContainer">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
