@@ -111,7 +111,7 @@ const Dashboard = (props) => {
           <Autocomplete
             debug
             noOptionsText={
-              <Button type="button" onClick={handleModalOpen}>
+              <Button type="button" onClick={() => setModalOpen(true)}>
                 Create a Group
               </Button>
             }
