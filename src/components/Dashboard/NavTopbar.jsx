@@ -49,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     marginLeft: '20vw',
   },
+  groupModal: {
+    position: 'absolute',
+    width: '50vw',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+  },
 }));
 
 const NavTopbar = (props) => {

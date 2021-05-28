@@ -17,6 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
 import NavSidebar from './NavSidebar/NavSidebar';
+import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,13 +69,6 @@ const useStyles = makeStyles((theme) => ({
     left: '53vh',
     bottom: '86.2vh',
   },
-  groupModal: {
-    position: 'absolute',
-    width: '30vw',
-    height: '63vh',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-  },
 }));
 
 const categoryList = [
@@ -93,7 +87,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -106,12 +100,6 @@ const Dashboard = () => {
       setIsLogged(<Redirect to="/signup" />);
     }
   }, []);
-  const body = (
-    <div style={{ top: '20%', left: '40%' }} className={classes.groupModal}>
-      <h2>Text in a modal</h2>
-      <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-    </div>
-  );
   return (
     <div className={classes.root}>
       {isLogged}
@@ -167,7 +155,7 @@ const Dashboard = () => {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          {body}
+          <CreateGroupModal />
         </Modal>
       </main>
     </div>
