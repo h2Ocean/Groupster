@@ -1,0 +1,20 @@
+.Profile {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.Profile-name {
+  position: absolute;
+  left: 10vw;
+  border: 3px solid purple;
+  margin: auto;
+  padding: 10px;
+}
+
+#bio-title {
+  border: 1px solid blue;
+}
+
+.Profile-bio {
+  border: 1px solid blue;
+  margin-left: 26vw;
+}
