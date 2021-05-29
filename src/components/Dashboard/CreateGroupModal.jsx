@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: 'none',
     borderRadius: '20px',
-    padding: '20px',
+    padding: '0 30px 20px 30px',
   },
   modalTitle: {
     textAlign: 'center',
@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
   createButton: {
     border: '1px solid',
     width: '90%',
-    marginTop: '10px',
+    marginTop: '30px',
   },
   form: {
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: '10px',
+    paddingTop: '20px',
   },
 }));
 
