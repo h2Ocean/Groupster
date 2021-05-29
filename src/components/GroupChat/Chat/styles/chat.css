@@ -15,8 +15,10 @@
 .chatContainer {
   width: 100%;
   height: 100%;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
+  /* height: 89.7vh; */
   overflow-y: scroll;
   overflow-x: hidden;
   grid-area: messages;
@@ -25,7 +27,6 @@
 .chatContainer .messages {
   flex: 70%;
   width: 100%;
-  height: 90vh;
   padding-left: 20px;
 }
 

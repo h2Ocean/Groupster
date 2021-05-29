@@ -14,7 +14,7 @@
 .Chat {
   width: 65%;
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: 90% auto;
   grid-template-areas:
     'messages'
     'write';

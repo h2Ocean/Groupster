@@ -33,7 +33,7 @@ const SEND_CHATS = gql`
 `;
 
 const Chat = (props) => {
-  const [room, setRoom] = useState('lobby');
+  const [{ room }] = useState(props);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
@@ -44,8 +44,15 @@ const Chat = (props) => {
   });
   const [sendChat] = useMutation(SEND_CHATS);
   const [{ user }] = useState(props);
-  const { username } = user.getProfile[0];
+  const [username, setUsername] = useState('');
+  let prev;
   const dummy = useRef();
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.getProfile[0].username);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (data) {
@@ -57,7 +64,7 @@ const Chat = (props) => {
           room,
         },
       }));
-      setMessageList([...messageList, ...arr]);
+      setMessageList([...arr]);
     }
   }, [data]);
 
@@ -87,9 +94,9 @@ const Chat = (props) => {
         content: {
           username,
           message,
+          room,
         },
       };
-
       await socket.emit('send_message', messageContent);
       setMessageList([...messageList, messageContent]);
       setMessage('');
@@ -108,7 +115,6 @@ const Chat = (props) => {
 
   const populate = () => {
     if (messageList) {
-      console.log(messageList);
       setMessageContentList([
         messageList.map(({ content }, key) => (
           <div
