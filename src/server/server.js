@@ -49,7 +49,7 @@ const startServer = async () => {
     });
 
     socket.on('send_message', (data) => {
-      socket.to(data.room).emit('receive_message', data.content);
+      socket.to(data.room).emit('receive_message', data);
     });
 
     socket.on('disconnect', () => {

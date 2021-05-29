@@ -65,8 +65,8 @@ const widgets = {
       <div
         className="category"
         style={{
-          height: '30px',
-          width: '30px',
+          width: 'fit-content',
+          padding: '0.5em',
           fontWeight: '500',
           borderRadius: '6px',
           backgroundColor: '#F3DA75',

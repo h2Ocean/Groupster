@@ -1,29 +1,29 @@
 #GroupChat_container {
   width: 100vw;
-  height: 93vh;
+  height: 92vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
 #NavSidebar {
-  height: 95.6vh;
   width: 20%;
   text-align: left;
 }
 
-#MessageWindow {
+.Chat {
   width: 65%;
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: 90% auto;
   grid-template-areas:
     'messages'
     'write';
-  border-radius: 25px;
+  place-items: center;
+  background-color: rgb(43, 43, 43);
+  overflow-x: hidden;
 }
 
 #Members {
-  height: 95.6vh;
   width: 15%;
   background-color: #d2d4da;
 }
