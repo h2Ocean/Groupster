@@ -54,7 +54,16 @@ const NavSidebar = (props) => {
   }, [currentChannel]);
 
   return (
-    <div id="NavSidebar" style={{ backgroundColor: '#474747' }}>
+    <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
+      <svg style={{ width: '50px', height: '50px', color: 'purple' }} type="image/svg+xml">
+        <iframe
+          title="art"
+          src="https://drive.google.com/thumbnail?id=1ElU9W2TszJl4YDJ_AzB3-HBhIGeTJNcW"
+          alt="Art Icon"
+          style={{ height: '50px' }}
+        />
+      </svg>
+
       {widgets.category('Sci')}
       {widgets.category('Hist')}
       <div className="navBarWidget">

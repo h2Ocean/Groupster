@@ -92,7 +92,7 @@ const Profile = () => {
   if (!edit) {
     return (
       <>
-        <NavTopbar title="Groupster" showSearchbar="false" />
+        <NavTopbar showSearchbar="false" />
         <Container className="Profile">
           <h1 className={classes.header}>Profile Page</h1>
           <div className="profilePageBody">

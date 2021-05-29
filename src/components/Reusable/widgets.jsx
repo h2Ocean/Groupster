@@ -31,7 +31,7 @@ const widgets = {
     return (
       <div
         className="groupWidget"
-        style={{ textIndent: '15px', paddingTop: '10px', fontSize: '16px', color: '#D9DDE7' }}
+        style={{ textIndent: '15px', paddingTop: '10px', fontSize: '16px' }}
       >
         {name}
       </div>
@@ -47,7 +47,6 @@ const widgets = {
           alignItems: 'center',
           paddingLeft: '10%',
           paddingTop: '10px',
-          color: '#D9DDE7',
         }}
       >
         <span

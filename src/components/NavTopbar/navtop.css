@@ -16,8 +16,6 @@
   height: 20px;
 }
 .profileIcon {
-  position: absolute;
-  right: 6vw;
   font-size: 30px;
 }
 .profileIcon:hover {
@@ -54,4 +52,11 @@ a:hover {
 
 a:active {
   text-decoration: underline;
+}
+
+.rightContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 3vw;
 }
