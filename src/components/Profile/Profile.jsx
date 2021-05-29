@@ -1,12 +1,11 @@
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, gql } from '@apollo/client';
+import { useLazyQuery, useMutation, gql } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { auth } from '../../firebase';
-import biography from './dummydata.js';
 import './Profile.css';
 
 const GET_USER = gql`
@@ -21,13 +20,24 @@ const GET_USER = gql`
   }
 `;
 
+const UPDATE_USER = gql`
+  mutation updateBio($info: UpdateBio!) {
+    updateBio(info: $info) {
+      name
+      email
+      bio
+    }
+  }
+`;
+
 const Profile = () => {
   const [isLogged, setIsLogged] = useState([]);
-  const [fullName, setFullName] = useState('Travis Wheaton');
-  const [userName, setUserName] = useState('tjwheaton53');
-  const [bio, setBio] = useState(biography);
+  const [fullName, setFullName] = useState();
+  const [userName, setUserName] = useState();
+  const [profilePic, setProfilePic] = useState();
+  const [userBio, setUserBio] = useState();
   let userEmail;
-  const [email] = useState('tjwheaton53@gmail.com');
+  const [email, setEmail] = useState();
   const [groups] = useState([
     'Medieval History',
     'Asian Cuisine',
@@ -37,13 +47,11 @@ const Profile = () => {
   const [edit, setEdit] = useState(false);
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
-      name: fullName,
-      username: userName,
       email: userEmail,
     },
   });
 
-  console.log('this is data,', data);
+  const [updateProfile] = useMutation(UPDATE_USER);
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -52,16 +60,41 @@ const Profile = () => {
       userEmail = auth.currentUser.email;
       getUser({
         variables: {
-          name: fullName,
-          username: userName,
           email: userEmail,
         },
       });
     }
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      setFullName(data.getProfile[0].name);
+      setUserName(data.getProfile[0].username);
+      setEmail(data.getProfile[0].email);
+      setUserBio(data.getProfile[0].bio);
+    }
+  }, [data]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log({
+      variables: {
+        info: {
+          name: fullName,
+          email,
+          bio: userBio,
+        },
+      },
+    });
+    updateProfile({
+      variables: {
+        info: {
+          name: fullName,
+          email,
+          bio: userBio,
+        },
+      },
+    });
     setEdit(false);
   };
 
@@ -74,7 +107,7 @@ const Profile = () => {
         <h2>Username:&nbsp;</h2>
         <p>{userName}</p>
         <h2>Biography</h2>
-        <p>{bio}</p>
+        <p>{userBio}</p>
         <h2>Email</h2>
         <p>{email}</p>
         <h2>Study Groups</h2>
@@ -111,9 +144,9 @@ const Profile = () => {
         multiline
         rowsMax={5}
         id="standard-multiline-flexible"
-        label="biography"
-        value={bio}
-        onChange={(e) => setBio(e.target.value)}
+        label="Biography"
+        value={userBio}
+        onChange={(e) => setUserBio(e.target.value)}
       />
       <h2>Email</h2>
       <p>{email}</p>

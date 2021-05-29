@@ -24,6 +24,7 @@ export const typeDef = gql`
   }
 
   input UpdateBio {
+    name: String!
     email: String!
     bio: String!
   }
@@ -65,8 +66,9 @@ export const resolvers = {
         bio: res.bio,
       };
     },
-    updateBio: async (_, { info: { bio, email } }) => {
-      const res = await Profile.findOneAndUpdate({ email }, { bio });
+    updateBio: async (_, { info: { name, bio, email } }) => {
+      const res = await Profile.findOneAndUpdate({ email }, { bio, name });
+      console.log(res);
       return {
         id: res._id,
         name: res.name,
