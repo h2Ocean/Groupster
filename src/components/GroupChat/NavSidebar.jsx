@@ -54,7 +54,7 @@ const NavSidebar = (props) => {
   }, [currentChannel]);
 
   return (
-    <div id="NavSidebar" style={{ backgroundColor: '#D2D4DA' }}>
+    <div id="NavSidebar" style={{ backgroundColor: '#474747' }}>
       {widgets.category('Sci')}
       {widgets.category('Hist')}
       <div className="navBarWidget">
