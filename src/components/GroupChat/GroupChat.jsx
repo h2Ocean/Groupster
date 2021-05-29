@@ -49,7 +49,7 @@ const GroupChat = () => {
     <div>
       {isLogged}
       <CssBaseline />
-      <NavTopbar />
+      <NavTopbar title="Chat" showSearchbar="true" />
       <div id="GroupChat_container">
         <NavSidebar setRoom={setRoom} />
         <Chat key={room} room={room} user={data} />

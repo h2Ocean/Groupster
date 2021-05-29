@@ -8,6 +8,7 @@ import { auth } from '../../firebase';
 import biography from './dummydata.js';
 import './Profile.css';
 import theme1 from '../Reusable/theme';
+import NavTopbar from '../NavTopbar/NavTopbar';
 
 const GET_USER = gql`
   query getProfile($email: String!) {
@@ -90,107 +91,113 @@ const Profile = () => {
 
   if (!edit) {
     return (
+      <>
+        <NavTopbar title="Groupster" showSearchbar="false" />
+        <Container className="Profile">
+          <h1 className={classes.header}>Profile Page</h1>
+          <div className="profilePageBody">
+            <Paper className={classes.paper} elevation="1">
+              <img
+                src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
+                alt="profilePhoto"
+              />
+            </Paper>
+            <div style={{ display: 'inline-block', height: '100%' }}>
+              <div className={classes.names}>
+                <h2 className="headerName">Full Name&nbsp;</h2>
+                <span className="entry">{fullName}</span>
+              </div>
+              <div className={classes.names}>
+                <h2 className="headerName">Username&nbsp;</h2>
+                <span className="entry">{userName}</span>
+              </div>
+              <div className={classes.names}>
+                <h2 className="headerName">Email</h2>
+                <p className="entry">{email}</p>
+              </div>
+            </div>
+            <h2>Biography</h2>
+            <p>{bio}</p>
+            <h2>Study Groups</h2>
+            {groups.map((group) => (
+              <p key={group.id}>{group}</p>
+            ))}
+          </div>
+          <ThemeProvider theme={theme1}>
+            <Divider variant="middle" className={classes.divider} />
+            <div className="profileButtonContainer">
+              <Button
+                className="profileButton"
+                aria-label="edit profile"
+                name="edit"
+                type="submit"
+                variant="contained"
+                color="primary"
+                onClick={() => setEdit(true)}
+              >
+                Edit Profile
+              </Button>
+            </div>
+          </ThemeProvider>
+        </Container>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <NavTopbar title="Groupster" showSearchbar={false} />
       <Container className="Profile">
         <h1 className={classes.header}>Profile Page</h1>
         <div className="profilePageBody">
-          <Paper className={classes.paper} elevation="1">
-            <img
-              src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
-              alt="profilePhoto"
-            />
-          </Paper>
-          <div style={{ display: 'inline-block', height: '100%' }}>
-            <div className={classes.names}>
-              <h2 className="headerName">Full Name&nbsp;</h2>
-              <span className="entry">{fullName}</span>
-            </div>
-            <div className={classes.names}>
-              <h2 className="headerName">Username&nbsp;</h2>
-              <span className="entry">{userName}</span>
-            </div>
-            <div className={classes.names}>
-              <h2 className="headerName">Email</h2>
-              <p className="entry">{email}</p>
-            </div>
-          </div>
+          <h2>Full Name:&nbsp;</h2>
+          <TextField
+            name="name"
+            variant="outlined"
+            required
+            id="name"
+            label="Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          <h2>Username:&nbsp;</h2>
+          <p>{userName}</p>
           <h2>Biography</h2>
-          <p>{bio}</p>
+          <TextField
+            name="biography"
+            variant="outlined"
+            fullWidth
+            multiline
+            rowsMax={5}
+            id="standard-multiline-flexible"
+            label="biography"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          />
+
+          <h2>Email</h2>
+          <p>{email}</p>
           <h2>Study Groups</h2>
           {groups.map((group) => (
             <p key={group.id}>{group}</p>
           ))}
         </div>
-        <ThemeProvider theme={theme1}>
-          <Divider variant="middle" className={classes.divider} />
-          <div className="profileButtonContainer">
+        <div className="profileButtonContainer">
+          <ThemeProvider theme={theme1}>
             <Button
               className="profileButton"
-              aria-label="edit profile"
-              name="edit"
-              type="submit"
               variant="contained"
               color="primary"
-              onClick={() => setEdit(true)}
+              aria-label="edit profile"
+              name="edit"
+              onClick={handleSubmit}
             >
-              Edit Profile
+              Save
             </Button>
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </div>
       </Container>
-    );
-  }
-
-  return (
-    <Container className="Profile">
-      <h1 className={classes.header}>Profile Page</h1>
-      <div className="profilePageBody">
-        <h2>Full Name:&nbsp;</h2>
-        <TextField
-          name="name"
-          variant="outlined"
-          required
-          id="name"
-          label="Name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <h2>Username:&nbsp;</h2>
-        <p>{userName}</p>
-        <h2>Biography</h2>
-        <TextField
-          name="biography"
-          variant="outlined"
-          fullWidth
-          multiline
-          rowsMax={5}
-          id="standard-multiline-flexible"
-          label="biography"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        />
-
-        <h2>Email</h2>
-        <p>{email}</p>
-        <h2>Study Groups</h2>
-        {groups.map((group) => (
-          <p key={group.id}>{group}</p>
-        ))}
-      </div>
-      <div className="profileButtonContainer">
-        <ThemeProvider theme={theme1}>
-          <Button
-            className="profileButton"
-            variant="contained"
-            color="primary"
-            aria-label="edit profile"
-            name="edit"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
-        </ThemeProvider>
-      </div>
-    </Container>
+    </>
   );
 };
 

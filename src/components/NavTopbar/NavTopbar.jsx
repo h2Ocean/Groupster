@@ -7,7 +7,8 @@ import colors from '../Reusable/colors';
 import './navtop.css';
 import Search from './Search';
 
-const NavTopbar = () => {
+// eslint-disable-next-line react/prop-types
+const NavTopbar = ({ title, showSearchbar }) => {
   const [anchor, setAnchor] = useState(null);
   const [loggedOut, setLoggedOut] = useState([]);
   const { logout } = useAuth();
@@ -35,9 +36,9 @@ const NavTopbar = () => {
       }}
     >
       <Typography variant="h6" style={{ marginLeft: '15px' }}>
-        Medieval History
+        {title}
       </Typography>
-      <Search />
+      {showSearchbar === 'true' ? <Search /> : null}
       <Button aria-haspopup="true" onClick={handleClick}>
         <span className="material-icons profileIcon">account_circle</span>
       </Button>

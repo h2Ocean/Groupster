@@ -2,7 +2,7 @@
   text-align: center;
   align-items: center;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   /* grid-template-areas:
   "navigation searchBar profile"
   grid-template-columns:
