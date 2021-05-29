@@ -31,6 +31,7 @@ const Profile = () => {
   const [isLogged, setIsLogged] = useState([]);
   const [fullName, setFullName] = useState();
   const [userName, setUserName] = useState();
+  const [profilePic, setProfilePic] = useState();
   const [bio, setBio] = useState(biography);
   let userEmail;
   const [email, setEmail] = useState();
