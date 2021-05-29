@@ -1,17 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useQuery, gql } from '@apollo/client';
 import widgets from '../Reusable/widgets';
-import Channels from './NavComponents/Channels';
+import Rooms from './NavComponents/Rooms';
+
+const GET_CHANNEL = gql`
+  query getChannel($strId: String!) {
+    getChannel(strId: $strId) {
+      id
+      strId
+      name
+      category
+      admin {
+        id
+        email
+        username
+        name
+        age
+      }
+      users {
+        id
+        email
+        username
+        name
+        age
+      }
+      rooms
+    }
+  }
+`;
 
 const NavSidebar = (props) => {
-  const [currentChannel, selectChannel] = useState('knights');
-  const [{ room }] = useState(props);
+  const [name, setName] = useState('TESTINGLOBBY');
+  const [currentChannel, setCurrentChannel] = useState();
+  const strId = `${name}-123456`;
+  const { loading, error, data } = useQuery(GET_CHANNEL, {
+    variables: {
+      strId,
+    },
+  });
+  const [{ setRoom }] = useState(props);
+  const [rooms, setRooms] = useState([]);
 
-  // eslint-disable-next-line consistent-return
-  const setStyle = (channel) => {
-    if (channel === currentChannel) {
-      return '#9fe5c3';
+  useEffect(() => {
+    if (data) {
+      setCurrentChannel(data.getChannel);
     }
-  };
+  }, [data]);
+
+  useEffect(() => {
+    if (currentChannel) {
+      setRooms(currentChannel.rooms);
+    }
+  }, [currentChannel]);
+
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#D2D4DA' }}>
       {widgets.category('Sci')}
@@ -19,7 +60,7 @@ const NavSidebar = (props) => {
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
       </div>
-      <Channels />
+      <Rooms key={rooms} setRoom={setRoom} rooms={rooms} strId={strId} />
       {/* <div className="navBarWidget">
         <div className="heading">Voice Chat</div>
       </div> */}

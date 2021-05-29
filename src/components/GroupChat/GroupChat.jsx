@@ -23,7 +23,7 @@ const GET_USER = gql`
 const GroupChat = () => {
   const [isLogged, setIsLogged] = useState([]);
   const [enviroment, setEnviroment] = useState([]);
-  const [room, setRoom] = useState('lobby');
+  const [room, setRoom] = useState('TESTINGLOBBY-123456-lobby');
   let userEmail;
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
@@ -36,37 +36,26 @@ const GroupChat = () => {
       setIsLogged(<Redirect to="/signup" />);
     } else {
       userEmail = auth.currentUser.email;
+      console.log(userEmail);
       getUser({
         variables: {
           email: userEmail,
         },
       });
     }
-  }, []);
+  }, [room]);
 
-  const populate = () => (
-    <>
+  return (
+    <div>
+      {isLogged}
       <CssBaseline />
       <NavTopbar />
       <div id="GroupChat_container">
         <NavSidebar setRoom={setRoom} />
-        <MessageWindow room={room} user={data} />
+        <MessageWindow key={room} room={room} user={data} />
         <Members />
       </div>
-    </>
-  );
-
-  useEffect(() => {
-    if (isLogged.length === 0 && data) {
-      setEnviroment(populate());
-    }
-  }, [data]);
-
-  return (
-    <>
-      {isLogged}
-      {enviroment}
-    </>
+    </div>
   );
 };
 

@@ -44,8 +44,15 @@ const Chat = (props) => {
   });
   const [sendChat] = useMutation(SEND_CHATS);
   const [{ user }] = useState(props);
-  const { username } = user.getProfile[0];
+  const [username, setUsername] = useState('');
+  let prev;
   const dummy = useRef();
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.getProfile[0].username);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (data) {
@@ -57,7 +64,7 @@ const Chat = (props) => {
           room,
         },
       }));
-      setMessageList([...messageList, ...arr]);
+      setMessageList([...arr]);
     }
   }, [data]);
 
@@ -74,7 +81,6 @@ const Chat = (props) => {
   // handle message recieved
   useEffect(() => {
     socket.on('receive_message', (res) => {
-      console.log(res);
       setMessageList([...messageList, res]);
     });
   });
@@ -91,7 +97,6 @@ const Chat = (props) => {
           room,
         },
       };
-      console.log(messageContent);
       await socket.emit('send_message', messageContent);
       setMessageList([...messageList, messageContent]);
       setMessage('');

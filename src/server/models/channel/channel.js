@@ -3,11 +3,12 @@ import mongoose, { Schema } from 'mongoose';
 const Channel = mongoose.model(
   'Channel',
   new Schema({
-    strId: { type: String, unique: true },
+    strId: { type: String, index: { unique: true } },
     name: String,
     category: String,
-    admin: [{ type: mongoose.types.ObjectId }],
-    users: [{ type: mongoose.types.ObjectId }],
+    admin: [{ type: Schema.Types.ObjectId }],
+    users: [{ type: Schema.Types.ObjectId }],
+    rooms: [{ type: String, unique: true }],
   }),
 );
 
