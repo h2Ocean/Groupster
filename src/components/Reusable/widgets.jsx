@@ -1,4 +1,5 @@
 import React from 'react';
+import { Avatar } from '@material-ui/core';
 import './styleWidgets.css';
 
 const widgets = {
@@ -36,6 +37,9 @@ const widgets = {
         {name}
       </div>
     );
+  },
+  memberAvatar(name, src) {
+    return <Avatar alt={name} src={src} />;
   },
   member(name) {
     return (

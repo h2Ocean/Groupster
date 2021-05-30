@@ -55,17 +55,12 @@ const NavSidebar = (props) => {
 
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
-      <svg style={{ width: '50px', height: '50px', color: 'purple' }} type="image/svg+xml">
-        <iframe
-          title="art"
-          src="https://drive.google.com/thumbnail?id=1ElU9W2TszJl4YDJ_AzB3-HBhIGeTJNcW"
-          alt="Art Icon"
-          style={{ height: '50px' }}
-        />
-      </svg>
-
       {widgets.category('Sci')}
       {widgets.category('Hist')}
+      {widgets.memberAvatar(
+        'Erica',
+        'https://drive.google.com/thumbnail?id=1BxhrkgT0ypUe2Dt-zD2-Kr8lvwel93ym',
+      )}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
