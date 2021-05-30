@@ -1,61 +1,110 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { FaMicroscope, FaPaintBrush, FaLaptop, FaSuitcase } from 'react-icons/fa';
+import { AiOutlineCalculator } from 'react-icons/ai';
+import { IoChatbubblesOutline, IoGlobeOutline } from 'react-icons/io5';
+import { ImBooks } from 'react-icons/im';
+import { BsMusicNoteBeamed } from 'react-icons/bs';
 import List from '@material-ui/core/List';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
-  hide: {
-    display: 'none',
-  },
   drawer: {
     width: '20vw',
     flexShrink: 0,
+    whiteSpace: 'nowrap',
   },
-  drawerPaper: {
+  drawerOpen: {
     width: '20vw',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
+    padding: '5.5px',
   },
 }));
 
+const categoryList = [
+  'Math',
+  'Language',
+  'Science',
+  'Literature',
+  'Social Science',
+  'Art',
+  'Technology',
+  'Business',
+  'Music',
+];
+
+const icons = [
+  <AiOutlineCalculator />,
+  <IoChatbubblesOutline />,
+  <FaMicroscope />,
+  <ImBooks />,
+  <IoGlobeOutline />,
+  <FaPaintBrush />,
+  <FaLaptop />,
+  <FaSuitcase />,
+  <BsMusicNoteBeamed />,
+];
+
 const GroupSidebar = (props) => {
   const [{ open }] = useState(props);
-  const [{ setOpen }] = useState(props);
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [{ setClose }] = useState(props);
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <Drawer
-      className={classes.drawer}
-      variant="persistent"
-      anchor="right"
-      open={open}
+      variant="permanent"
+      className={clsx(classes.drawer, {
+        [classes.drawerOpen]: open,
+        [classes.drawerClose]: !open,
+      })}
       classes={{
-        paper: classes.drawerPaper,
+        paper: clsx({
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        }),
       }}
     >
       <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronRightIcon />
+        <IconButton onClick={setClose}>
+          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </div>
       <Divider />
       <List>
-        <ListItem>Odd Cat Behavior</ListItem>
-        <ListItem>Energy Crystals</ListItem>
-        <ListItem>Javascript for Dummies</ListItem>
+        {categoryList.map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{icons[index]}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
       </List>
       <Divider />
     </Drawer>
