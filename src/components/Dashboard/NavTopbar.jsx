@@ -66,7 +66,6 @@ const NavTopbar = (props) => {
   };
   return (
     <AppBar
-      position="absolute"
       className={clsx(classes.appBar, {
         [classes.appBarShift]: open,
       })}

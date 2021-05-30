@@ -2,7 +2,7 @@
   text-align: center;
   align-items: center;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   /* grid-template-areas:
   "navigation searchBar profile"
   grid-template-columns:
@@ -16,8 +16,6 @@
   height: 20px;
 }
 .profileIcon {
-  position: absolute;
-  right: 6vw;
   font-size: 30px;
 }
 .profileIcon:hover {
@@ -26,8 +24,7 @@
 }
 
 .searchIcon {
-  font-size: 20px;
-  top: 1px;
+  color: black;
 }
 #aDash {
   color: black;
@@ -55,4 +52,11 @@ a:hover {
 
 a:active {
   text-decoration: underline;
+}
+
+.rightContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 3vw;
 }

@@ -8,27 +8,39 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   groupModal: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     position: 'absolute',
+    minWidth: '320px',
     width: '30vw',
     height: '63vh',
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: 'none',
+    borderRadius: '20px',
+    padding: '0 30px 20px 30px',
   },
   modalTitle: {
     textAlign: 'center',
+    fontFamily: 'Quicksand',
+    paddingBottom: '10px',
   },
   summary: {
     textAlign: 'center',
+    maxWidth: '80%',
+    alignSelf: 'center',
   },
   createButton: {
     border: '1px solid',
-    position: 'flex',
     width: '90%',
-    marginTop: '20vh',
-    marginLeft: '1.5vw',
+    marginTop: '30px',
   },
   form: {
     justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop: '20px',
   },
 }));
 
@@ -59,7 +71,7 @@ const CreateGroupModal = () => {
           id="groupCategory"
           disableClearable
           options={categoryList.map((option) => option)}
-          style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}
+          style={{ width: '90%' }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -70,12 +82,7 @@ const CreateGroupModal = () => {
             />
           )}
         />
-        <TextField
-          style={{ width: '90%', marginLeft: '1.5vw' }}
-          label="Group Name"
-          margin="normal"
-          variant="outlined"
-        />
+        <TextField style={{ width: '90%' }} label="Group Name" margin="normal" variant="outlined" />
         <Button type="button" size="large" className={classes.createButton}>
           Create Group
         </Button>
