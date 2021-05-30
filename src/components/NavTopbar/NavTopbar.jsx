@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Button, Menu, MenuItem, Typography } from '@material-ui/core';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContent';
-
+import colors from '../Reusable/colors';
+import groupster from '../Reusable/groupster_offset.svg';
 import './navtop.css';
 import Search from './Search';
 
-const NavTopbar = () => {
+// eslint-disable-next-line react/prop-types
+const NavTopbar = ({ element, showSearchbar }) => {
   const [anchor, setAnchor] = useState(null);
   const [loggedOut, setLoggedOut] = useState([]);
   const { logout } = useAuth();
@@ -29,34 +31,46 @@ const NavTopbar = () => {
       id="NavTopbar"
       style={{
         width: '100vw',
-        backgroundColor: 'lightGrey',
+        backgroundColor: '#d4d6dc',
         height: '60px',
-        border: '1px solid rgba(0,0,0,.125)',
       }}
     >
-      <a href="/" id="aDash">
-        Dashboard
-      </a>
-      <Search />
-      <Button aria-haspopup="true" onClick={handleClick}>
-        <span className="material-icons profileIcon">account_circle</span>
-      </Button>
-      {loggedOut}
-      <Menu
-        id="simple-menu"
-        anchorEl={anchor}
-        keepMounted
-        open={Boolean(anchor)}
-        onClose={handleClose}
-      >
-        <MenuItem component={RouterLink} to="/profile">
-          Profile
-        </MenuItem>
-        <MenuItem component={RouterLink} to="/explore">
-          Preferences
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
-      </Menu>
+      <img
+        src={groupster}
+        alt="logo"
+        style={{
+          marginLeft: '15px',
+          height: '40px',
+        }}
+      />
+      <div className="rightContent">
+        <Typography variant="h6" style={{ marginLeft: '15px' }}>
+          {element}
+        </Typography>
+        {showSearchbar === 'true' ? <Search /> : null}
+        <Button aria-haspopup="true" onClick={handleClick}>
+          <span className="material-icons profileIcon">account_circle</span>
+        </Button>
+        {loggedOut}
+        <Menu
+          id="simple-menu"
+          anchorEl={anchor}
+          keepMounted
+          open={Boolean(anchor)}
+          onClose={handleClose}
+        >
+          <MenuItem component={RouterLink} to="/profile">
+            Profile
+          </MenuItem>
+          <MenuItem component={RouterLink} to="/">
+            Dashboard
+          </MenuItem>
+          <MenuItem component={RouterLink} to="/explore">
+            Preferences
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
+        </Menu>
+      </div>
     </div>
   );
 };

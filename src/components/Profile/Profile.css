@@ -1,7 +1,8 @@
 .Profile {
   font-family: 'Quicksand', sans-serif;
+  text-align: left;
+  min-width: 350px;
 }
-
 .Profile-name {
   position: absolute;
   left: 10vw;
@@ -17,4 +18,23 @@
 .Profile-bio {
   border: 1px solid blue;
   margin-left: 26vw;
+}
+
+.headerName {
+  margin-right: 20px;
+}
+
+.profilePageBody {
+  padding: 20px;
+}
+.profileButton {
+  width: 200px;
+}
+.profileButton:hover {
+  color: mintcream;
+}
+.profileButtonContainer {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
 }
