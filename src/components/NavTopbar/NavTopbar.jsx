@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, Typography } from '@material-ui/core';
+import { Button, Menu, MenuItem, Typography, Badge } from '@material-ui/core';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
+import MailIcon from '@material-ui/icons/Mail';
 import { useAuth } from '../../contexts/AuthContent';
 import colors from '../Reusable/colors';
 import groupster from '../Reusable/groupster_offset.svg';
@@ -48,6 +49,9 @@ const NavTopbar = ({ element, showSearchbar }) => {
           {element}
         </Typography>
         {showSearchbar === 'true' ? <Search /> : null}
+        <Badge badgeContent={4} color="primary">
+          <MailIcon />
+        </Badge>
         <Button aria-haspopup="true" onClick={handleClick}>
           <span className="material-icons profileIcon">account_circle</span>
         </Button>

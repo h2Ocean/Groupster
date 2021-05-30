@@ -14,6 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import { Link, Redirect } from 'react-router-dom';
 import { useLazyQuery, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
+import logo from '../Reusable/groupster_border.svg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -87,6 +88,19 @@ const Signup = (props) => {
 
   return (
     <div style={{ height: '100vh' }}>
+      <img
+        src={logo}
+        alt="Groupster Logo"
+        style={{
+          // borderRadius: '20px',
+          // border: '3px solid #7e6ecb',
+          maxWidth: '350px',
+          height: '80px',
+          alignSelf: 'center',
+          marginTop: '3vh',
+          marginBottom: '15px',
+        }}
+      />
       {loggedIn}
       <Container component="main" maxWidth="xs" className="loginContainer">
         <CssBaseline />
