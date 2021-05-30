@@ -98,7 +98,6 @@ const Dashboard = (props) => {
     <div className={classes.root}>
       {isLogged}
       <NavTopbar key={open} setOpen={setOpen} open={open} />
-      <NavSidebar />
       <main className={clsx(classes.content, open && classes.contentShift)}>
         <Container maxWidth="md" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>

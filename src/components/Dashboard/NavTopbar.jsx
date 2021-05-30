@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import GroupSidebar from './GroupSidebar';
+import NavSidebar from './NavSidebar/NavSidebar';
 import '../NavTopbar/navtop.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     display: 'flex',
-    width: '100% - 20vw',
-    marginLeft: '20vw',
+    width: '100%vw',
+    marginLeft: '0vw',
     backgroundColor: 'lightGrey',
     border: '1px solid rgba(0,0,0,.125)',
     height: '8vh',
@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     display: 'flex',
-    width: '100% - 40vw',
+    width: '100% - 20vw',
     marginLeft: '20vw',
-    marginRight: '20vw',
+    marginRight: '0vw',
     height: '8vh',
     backgroundColor: 'lightGrey',
     border: '1px solid rgba(0,0,0,.125)',
@@ -83,7 +83,6 @@ const NavTopbar = (props) => {
           Your Groups
           <MenuIcon />
         </IconButton>
-        <GroupSidebar key={open} setOpen={setOpen} open={open} />
       </Toolbar>
     </AppBar>
   );
