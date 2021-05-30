@@ -59,10 +59,11 @@ const categoryList = [
 const CreateGroupModal = () => {
   const classes = useStyles();
   return (
-    <div style={{ top: '20%', left: '40%' }} className={classes.groupModal}>
+    <div style={{ top: '20%', left: '35%' }} className={classes.groupModal}>
       <h2 className={classes.modalTitle}>Create a New Group</h2>
       <p className={classes.summary}>
-        Your group is where you and your friends can study. Create yours and start studying now.
+        Your group is where you and your friends can go to study. Create yours and start studying
+        now.
       </p>
       <div className={classes.form}>
         <Autocomplete
