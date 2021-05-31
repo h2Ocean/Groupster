@@ -20,7 +20,8 @@ const GET_USER = gql`
     }
   }
 `;
-const GroupChat = () => {
+const GroupChat = (props) => {
+  const [{ client }] = useState(props);
   const [isLogged, setIsLogged] = useState([]);
   const [enviroment, setEnviroment] = useState([]);
   const [room, setRoom] = useState('TESTINGLOBBY-123456-lobby');
@@ -51,7 +52,7 @@ const GroupChat = () => {
       <NavTopbar title="Chat" showSearchbar="true" />
       <div id="GroupChat_container">
         <NavSidebar setRoom={setRoom} />
-        <Chat key={room} room={room} user={data} />
+        <Chat key={room} client={client} room={room} user={data} />
         <Members />
       </div>
     </div>
