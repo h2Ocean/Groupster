@@ -15,9 +15,11 @@ import Paper from '@material-ui/core/Paper';
 import ClearIcon from '@material-ui/icons/Clear';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import FileViewer from 'react-file-viewer';
 import './styles/chat.css';
 import { auth, storage } from '../../../../firebase';
+import 'react-notifications/lib/notifications.css';
 
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
@@ -67,15 +69,28 @@ const Chat = (props) => {
   const [hasFile, setHasFile] = useState(false);
   const [file, setFile] = useState({});
   const [placeholder, setPlaceholder] = useState('Message...');
+  const maxSize = 5242880;
   const dummy = useRef();
+
+  const bytesToSize = (bytes) => {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return '0 Byte';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    return `${Math.round(bytes / (1024, i) ** 2)} ${sizes[i]}`;
+  };
+
   const onDrop = useCallback((files) => {
-    setFile({
-      file: files[0],
-      type: files[0].name.substr(files[0].name.indexOf('.')),
-      name: files[0].name,
-    });
-    setHasFile(true);
-    setPlaceholder('');
+    if (files[0].size < maxSize) {
+      setFile({
+        file: files[0],
+        type: files[0].name.substr(files[0].name.indexOf('.')),
+        name: files[0].name,
+      });
+      setHasFile(true);
+      setPlaceholder('');
+    } else {
+      NotificationManager.error(`Max file size is 5mb, yours is ${bytesToSize(files[0].size)}`);
+    }
   }, []);
 
   const userEmail = auth.currentUser.email;
@@ -130,9 +145,39 @@ const Chat = (props) => {
     });
   });
 
-  // handle login
+  const handleClear = () => {
+    setHasFile(false);
+    setPlaceholder('Message...');
+    setFile({});
+  };
+
+  const handleUpload = (upload) => {
+    console.log(upload);
+  };
+
+  const uploadFile = () => {
+    handleClear();
+    const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
+    uploadTask.on(
+      'state_changed',
+      () => {},
+      (error) => {
+        throw new Error(error);
+      },
+      () => {
+        storage
+          .ref('groupster')
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            handleUpload(url);
+          });
+      },
+    );
+  };
 
   const sendMessage = async () => {
+    if (file.name) uploadFile();
     if (username.length > 0) {
       if (message.length > 0) {
         const messageContent = {
@@ -195,39 +240,6 @@ const Chat = (props) => {
     }
   }, [messageContentList]);
 
-  const handleUpload = (upload) => {};
-
-  const uploadFile = () => {
-    let path;
-    const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
-    uploadTask.on(
-      'state_changed',
-      () => {},
-      (error) => {
-        throw new Error(error);
-      },
-      () => {
-        storage
-          .ref('groupster')
-          .child(file.name)
-          .getDownloadURL()
-          .then((url) => {
-            path = url;
-          });
-      },
-    );
-  };
-
-  useEffect(() => {
-    if (file.length > 0) uploadFile();
-  }, [file]);
-
-  const handleClear = () => {
-    setHasFile(false);
-    setPlaceholder('Message...');
-    setFile({});
-  };
-
   return (
     <div className="Chat">
       <div className="chatContainer">
@@ -285,6 +297,7 @@ const Chat = (props) => {
           Send
         </button>
       </div>
+      <NotificationContainer />
     </div>
   );
 };
