@@ -1,10 +1,25 @@
+/* eslint-disable no-alert */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import io from 'socket.io-client';
+import { useDropzone } from 'react-dropzone';
+import AddIcon from '@material-ui/icons/Add';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Paper from '@material-ui/core/Paper';
+import ClearIcon from '@material-ui/icons/Clear';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import FileViewer from 'react-file-viewer';
 import './styles/chat.css';
+import { auth, storage } from '../../../firebase';
+import 'react-notifications/lib/notifications.css';
 
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
@@ -32,31 +47,76 @@ const SEND_CHATS = gql`
   }
 `;
 
+const GET_USER = gql`
+  query getProfile($email: String!) {
+    getProfile(email: $email) {
+      id
+      email
+      username
+      name
+      age
+    }
+  }
+`;
+
 const Chat = (props) => {
   const [{ room }] = useState(props);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
-  const { data } = useQuery(GET_CHATS, {
+  const [sendChat] = useMutation(SEND_CHATS);
+  const [username, setUsername] = useState('');
+  const [hasFile, setHasFile] = useState(false);
+  const [file, setFile] = useState({});
+  const [placeholder, setPlaceholder] = useState('Message...');
+  const maxSize = 5242880;
+  const dummy = useRef();
+
+  const bytesToSize = (bytes) => {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return '0 Byte';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    return `${Math.round(bytes / (1024, i) ** 2)} ${sizes[i]}`;
+  };
+
+  const onDrop = useCallback((files) => {
+    if (files[0].size < maxSize) {
+      setFile({
+        file: files[0],
+        type: files[0].name.substr(files[0].name.indexOf('.')),
+        name: files[0].name,
+      });
+      setHasFile(true);
+      setPlaceholder('');
+    } else {
+      NotificationManager.error(`Max file size is 5mb, yours is ${bytesToSize(files[0].size)}`);
+    }
+  }, []);
+
+  const userEmail = auth.currentUser.email;
+  const { data } = useQuery(GET_USER, {
+    variables: {
+      email: userEmail,
+    },
+  });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { ref, ...rootProps } = getRootProps();
+
+  const chats = useQuery(GET_CHATS, {
     variables: {
       room,
     },
   });
-  const [sendChat] = useMutation(SEND_CHATS);
-  const [{ user }] = useState(props);
-  const [username, setUsername] = useState('');
-  let prev;
-  const dummy = useRef();
-
-  useEffect(() => {
-    if (user) {
-      setUsername(user.getProfile[0].username);
-    }
-  }, [user]);
 
   useEffect(() => {
     if (data) {
-      const arr = data.getChats.map(({ name, msg }) => ({
+      setUsername(data.getProfile[0].username);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (chats.data) {
+      const arr = chats.data.getChats.map(({ name, msg }) => ({
         room,
         content: {
           username: name,
@@ -66,7 +126,7 @@ const Chat = (props) => {
       }));
       setMessageList([...arr]);
     }
-  }, [data]);
+  }, [chats.data]);
 
   const connectToRoom = () => {
     socket.emit('join', room);
@@ -85,31 +145,65 @@ const Chat = (props) => {
     });
   });
 
-  // handle login
+  const handleClear = () => {
+    setHasFile(false);
+    setPlaceholder('Message...');
+    setFile({});
+  };
+
+  const handleUpload = (upload) => {
+    console.log(upload);
+  };
+
+  const uploadFile = () => {
+    handleClear();
+    const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
+    uploadTask.on(
+      'state_changed',
+      () => {},
+      (error) => {
+        throw new Error(error);
+      },
+      () => {
+        storage
+          .ref('groupster')
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            handleUpload(url);
+          });
+      },
+    );
+  };
 
   const sendMessage = async () => {
-    if (message.length > 0) {
-      const messageContent = {
-        room,
-        content: {
-          username,
-          message,
+    if (file.name) uploadFile();
+    if (username.length > 0) {
+      if (message.length > 0) {
+        const messageContent = {
           room,
-        },
-      };
-      await socket.emit('send_message', messageContent);
-      setMessageList([...messageList, messageContent]);
-      setMessage('');
-      dummy.current.scrollIntoView({ behavior: 'smooth' });
-      sendChat({
-        variables: {
-          message: {
-            name: username,
-            msg: message,
+          content: {
+            username,
+            message,
             room,
           },
-        },
-      });
+        };
+        await socket.emit('send_message', messageContent);
+        setMessageList([...messageList, messageContent]);
+        setMessage('');
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+        sendChat({
+          variables: {
+            message: {
+              name: username,
+              msg: message,
+              room,
+            },
+          },
+        });
+      }
+    } else {
+      alert('Username is not set. Please try to relogin');
     }
   };
 
@@ -152,20 +246,58 @@ const Chat = (props) => {
         <div className="messages">{messageContentList}</div>
       </div>
       <div className="messageInputs">
-        <input
+        <Input
+          className="chatInput"
           type="text"
-          placeholder="Message..."
+          placeholder={placeholder}
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          style={{ color: '#757575' }}
           onKeyPress={handleKeyDown}
+          endAdornment={
+            <div>
+              <InputAdornment position="end" {...rootProps}>
+                <input type="submit" {...getInputProps()} />
+                <AddIcon className="file-upload" tyle={{ color: '#757575' }} />
+              </InputAdornment>
+            </div>
+          }
+          startAdornment={
+            hasFile ? (
+              <Paper
+                style={{
+                  maxWidth: '40vw',
+                  marginRight: '10px',
+                  padding: '.8vh 3px .8vh 3px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  backgroundColor: '#757575',
+                  color: '#d2d4da',
+                }}
+              >
+                <div style={{ marginTop: '2px' }}>{file.name}</div>
+                <Grid container justify="flex-end" alignItems="flex-end">
+                  <IconButton
+                    onClick={handleClear}
+                    style={{ marginRight: '1px', height: '1vh', width: '1vw' }}
+                  >
+                    <ClearIcon style={{ float: 'right' }} />
+                  </IconButton>
+                </Grid>
+              </Paper>
+            ) : (
+              <></>
+            )
+          }
         />
         {/* the entire code breaks unless you have this invisible button */}
         <button id="msgSendButton" type="submit" onClick={sendMessage}>
           Send
         </button>
       </div>
+      <NotificationContainer />
     </div>
   );
 };

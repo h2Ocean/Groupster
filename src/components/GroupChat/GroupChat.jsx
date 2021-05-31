@@ -36,7 +36,6 @@ const GroupChat = () => {
       setIsLogged(<Redirect to="/signup" />);
     } else {
       userEmail = auth.currentUser.email;
-      console.log(userEmail);
       getUser({
         variables: {
           email: userEmail,
