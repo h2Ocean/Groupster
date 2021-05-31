@@ -293,7 +293,7 @@ const Chat = (props) => {
           }
         />
         {/* the entire code breaks unless you have this invisible button */}
-        <button style={{ display: 'none' }} type="submit" onClick={sendMessage}>
+        <button id="msgSendButton" type="submit" onClick={sendMessage}>
           Send
         </button>
       </div>

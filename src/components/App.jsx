@@ -10,6 +10,7 @@ import Profile from './Profile/Profile';
 import './App.css';
 import { AuthProvider } from '../contexts/AuthContent';
 import Explore from './Explore/Explore';
+import Welcome from './Welcome/Welcome';
 
 const App = () => {
   const httpLink = createHttpLink({
@@ -27,6 +28,7 @@ const App = () => {
         <AuthProvider>
           <ApolloProvider client={client}>
             <Switch>
+              <Route path="/welcome" component={Welcome} />
               <Route exact path="/" component={Dashboard} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />

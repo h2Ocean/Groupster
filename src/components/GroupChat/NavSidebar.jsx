@@ -54,8 +54,13 @@ const NavSidebar = (props) => {
   }, [currentChannel]);
 
   return (
-    <div id="NavSidebar" style={{ backgroundColor: '#D2D4DA' }}>
+    <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
       {widgets.category('Sci')}
+      {widgets.category('Hist')}
+      {widgets.memberAvatar(
+        'Erica',
+        'https://drive.google.com/thumbnail?id=1BxhrkgT0ypUe2Dt-zD2-Kr8lvwel93ym',
+      )}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}

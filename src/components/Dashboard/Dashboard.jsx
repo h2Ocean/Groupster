@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-// import { ThemeProvider } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Container from '@material-ui/core/Container';
@@ -16,29 +15,26 @@ import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
 import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
-import NavSidebar from './NavSidebar/NavSidebar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '90%',
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
   },
   content: {
     transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
+      easing: theme.transitions.easing.easeIn,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginRight: 0,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginRight: '10vw',
   },
   header: {
     paddingTop: '10vh',
@@ -94,11 +90,11 @@ const Dashboard = (props) => {
       setIsLogged(<Redirect to="/signup" />);
     }
   }, []);
+
   return (
     <div className={classes.root}>
       {isLogged}
       <NavTopbar key={open} setOpen={setOpen} open={open} />
-      <NavSidebar />
       <main className={clsx(classes.content, open && classes.contentShift)}>
         <Container maxWidth="md" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>
