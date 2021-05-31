@@ -124,21 +124,13 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      variables: {
-        name: fullName,
-        email,
-        bio: userBio,
-        pfp: picFile,
-      },
-    });
     updateProfile({
       variables: {
         info: {
           name: fullName,
           email,
           bio: userBio,
-          pfp: picFile,
+          pfp: profilePic,
         },
       },
     });
@@ -177,7 +169,7 @@ const Profile = () => {
                     name: fullName,
                     email,
                     bio: userBio,
-                    pfp: picFile,
+                    pfp: url,
                   },
                 },
               });
