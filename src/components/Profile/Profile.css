@@ -34,9 +34,8 @@
   align-content: center;
   justify-content: center;
 }
-.profilePageBody p {
+p {
   font-family: 'Roboto', sans-serif;
-  display: inline-block;
 }
 @media (min-width: 950px) {
   .profilePageBody {
@@ -60,4 +59,8 @@
 }
 .profileInfo {
   max-width: 700px;
+}
+
+.profilePageEdit {
+  padding: 0 20px 0 20px;
 }

@@ -189,39 +189,39 @@ const Profile = () => {
       <NavTopbar title="Groupster" showSearchbar={false} />
       <Container className="Profile">
         <h1 className={classes.header}>Profile Page</h1>
+        <div className="profilePageEdit">
+          <h2>Full Name:&nbsp;</h2>
+          <TextField
+            name="name"
+            variant="outlined"
+            required
+            id="name"
+            label="Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          <h2>Username:&nbsp;</h2>
+          <p>{userName}</p>
+          <h2>Biography</h2>
+          <TextField
+            name="biography"
+            variant="outlined"
+            fullWidth
+            multiline
+            rowsMax={5}
+            id="standard-multiline-flexible"
+            label="biography"
+            value={userBio}
+            onChange={(e) => setUserBio(e.target.value)}
+          />
 
-        <h2>Full Name:&nbsp;</h2>
-        <TextField
-          name="name"
-          variant="outlined"
-          required
-          id="name"
-          label="Name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <h2>Username:&nbsp;</h2>
-        <p>{userName}</p>
-        <h2>Biography</h2>
-        <TextField
-          name="biography"
-          variant="outlined"
-          fullWidth
-          multiline
-          rowsMax={5}
-          id="standard-multiline-flexible"
-          label="biography"
-          value={userBio}
-          onChange={(e) => setUserBio(e.target.value)}
-        />
-
-        <h2>Email</h2>
-        {email}
-        <h2>Study Groups</h2>
-        {groups.map((group) => (
-          <p key={group.id}>{group}</p>
-        ))}
-
+          <h2>Email</h2>
+          <p>{email}</p>
+          <h2>Study Groups</h2>
+          {groups.map((group) => (
+            <p key={group.id}>{group}</p>
+          ))}
+        </div>
         <div className="profileButtonContainer">
           <ThemeProvider theme={theme1}>
             <Button

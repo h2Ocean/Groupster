@@ -5,18 +5,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
-import Grid from '@material-ui/core/Grid';
+import {
+  Container,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Modal,
+  Grid,
+} from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
+import food from '../Reusable/NF_MOFAD_EATER_2978.0.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     left: '53vh',
     bottom: '86.2vh',
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
 }));
 
@@ -122,6 +130,7 @@ const Dashboard = (props) => {
               {groupList.map((category) => (
                 <Grid item key={category} xs={4} sm={4} md={4}>
                   <Card className={classes.card}>
+                    <CardMedia className={classes.media} image={food} />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {category}
