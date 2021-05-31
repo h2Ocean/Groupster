@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useAuth } from '../../contexts/AuthContent';
 import GroupSidebar from './GroupSidebar';
+import groupster from '../Reusable/groupster_offset.svg';
 import '../NavTopbar/navtop.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,10 +49,10 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
   },
   profileIcon: {
-    marginLeft: '91vw',
+    marginLeft: '78vw',
   },
   profileIconShift: {
-    marginLeft: '72.86vw',
+    marginLeft: '59.86vw',
   },
 }));
 
@@ -93,7 +94,7 @@ const NavTopbar = (props) => {
       >
         <Toolbar>
           <IconButton
-            color="primary"
+            color="secondary"
             aria-label="open drawer"
             edge="end"
             onClick={handleDrawerOpen}
@@ -102,6 +103,14 @@ const NavTopbar = (props) => {
           >
             <MenuIcon />
           </IconButton>
+          <img
+            src={groupster}
+            alt="logo"
+            style={{
+              marginLeft: '40px',
+              height: '40px',
+            }}
+          />
           <Button
             aria-haspopup="true"
             className={clsx(classes.profileIcon, open && classes.profileIconShift)}

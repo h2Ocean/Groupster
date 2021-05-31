@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -17,6 +17,7 @@ import { Redirect } from 'react-router-dom';
 import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
+import theme1 from '../Reusable/theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,63 +93,65 @@ const Dashboard = (props) => {
   }, []);
 
   return (
-    <div className={classes.root}>
-      {isLogged}
-      <NavTopbar key={open} setOpen={setOpen} open={open} />
-      <main className={clsx(classes.content, open && classes.contentShift)}>
-        <Container maxWidth="md" className={classes.header}>
-          <h1 className={classes.title}>Discover More Groups</h1>
-          <Autocomplete
-            debug
-            noOptionsText={
-              <Button type="button" onClick={() => setModalOpen(true)}>
-                Create a Group
-              </Button>
-            }
-            id="groupSearch"
-            disableClearable
-            options={groupList.map((option) => option)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Search or Create Groups"
-                margin="normal"
-                variant="outlined"
-                InputProps={{ ...params.InputProps, type: 'search' }}
-              />
-            )}
-          />
-          <Container className={classes.cardGrid} maxWidth="lg">
-            <Grid container spacing={4}>
-              {groupList.map((category) => (
-                <Grid item key={category} xs={4} sm={4} md={4}>
-                  <Card className={classes.card}>
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {category}
-                      </Typography>
-                    </CardContent>
-                    <CardActions className={classes.actions}>
-                      <Button size="small" color="primary">
-                        Join Group
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+    <ThemeProvider theme={theme1}>
+      <div className={classes.root}>
+        {isLogged}
+        <NavTopbar key={open} setOpen={setOpen} open={open} />
+        <main className={clsx(classes.content, open && classes.contentShift)}>
+          <Container maxWidth="md" className={classes.header}>
+            <h1 className={classes.title}>Discover More Groups</h1>
+            <Autocomplete
+              debug
+              noOptionsText={
+                <Button type="button" onClick={() => setModalOpen(true)}>
+                  Create a Group
+                </Button>
+              }
+              id="groupSearch"
+              disableClearable
+              options={groupList.map((option) => option)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Search or Create Groups"
+                  margin="normal"
+                  variant="outlined"
+                  InputProps={{ ...params.InputProps, type: 'search' }}
+                />
+              )}
+            />
+            <Container className={classes.cardGrid} maxWidth="lg">
+              <Grid container spacing={4}>
+                {groupList.map((category) => (
+                  <Grid item key={category} xs={4} sm={4} md={4}>
+                    <Card className={classes.card}>
+                      <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {category}
+                        </Typography>
+                      </CardContent>
+                      <CardActions className={classes.actions}>
+                        <Button size="small" color="primary">
+                          Join Group
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
           </Container>
-        </Container>
-        <Modal
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <CreateGroupModal />
-        </Modal>
-      </main>
-    </div>
+          <Modal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <CreateGroupModal />
+          </Modal>
+        </main>
+      </div>
+    </ThemeProvider>
   );
 };
 

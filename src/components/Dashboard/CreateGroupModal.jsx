@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable arrow-body-style */
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
+import { useMutation, gql } from '@apollo/client';
 
 const useStyles = makeStyles((theme) => ({
   groupModal: {
@@ -56,8 +57,41 @@ const categoryList = [
   'Music',
 ];
 
+const CREATE_GROUP = gql`
+  mutation createChannel($info: CreateChannel!) {
+    createChannel(info: $info) {
+      name
+      category
+    }
+  }
+`;
+
 const CreateGroupModal = () => {
   const classes = useStyles();
+  const [groupName, setGroupName] = useState();
+  const [groupCategory, setGroupCategory] = useState();
+  const [createGroup] = useMutation(CREATE_GROUP);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({
+      variables: {
+        info: {
+          name: groupName,
+          category: groupCategory,
+        },
+      },
+    });
+    createGroup({
+      variables: {
+        info: {
+          name: groupName,
+          category: groupCategory,
+        },
+      },
+    });
+  };
+
   return (
     <div style={{ top: '20%', left: '35%' }} className={classes.groupModal}>
       <h2 className={classes.modalTitle}>Create a New Group</h2>
@@ -72,6 +106,8 @@ const CreateGroupModal = () => {
           disableClearable
           options={categoryList.map((option) => option)}
           style={{ width: '90%' }}
+          onChange={(e, value) => setGroupCategory(value)}
+          value={groupCategory}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -82,8 +118,15 @@ const CreateGroupModal = () => {
             />
           )}
         />
-        <TextField style={{ width: '90%' }} label="Group Name" margin="normal" variant="outlined" />
-        <Button type="button" size="large" className={classes.createButton}>
+        <TextField
+          style={{ width: '90%' }}
+          label="Group Name"
+          margin="normal"
+          variant="outlined"
+          value={groupName}
+          onChange={(e) => setGroupName(e.target.value)}
+        />
+        <Button type="button" size="large" className={classes.createButton} onClick={handleSubmit}>
           Create Group
         </Button>
       </div>
