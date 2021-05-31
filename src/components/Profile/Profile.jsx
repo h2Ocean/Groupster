@@ -53,6 +53,11 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  pfp: {
+    width: '300px',
+    height: '300px',
+    objectFit: 'cover',
+  },
 }));
 
 const UPDATE_USER = gql`
@@ -69,11 +74,13 @@ const UPDATE_USER = gql`
 const Profile = () => {
   const maxSize = 5242880;
   const [isLogged, setIsLogged] = useState([]);
-  const [fullName, setFullName] = useState();
-  const [userName, setUserName] = useState();
-  const [profilePic, setProfilePic] = useState();
-  const [userBio, setUserBio] = useState();
-  const [picFile, setPicFile] = useState();
+  const [fullName, setFullName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [profilePic, setProfilePic] = useState(
+    'https://firebasestorage.googleapis.com/v0/b/groupster-befe4.appspot.com/o/images%2FIMG_3909_50.jpg?alt=media&token=25a81788-e22e-4e64-9c3b-733c2f47affa',
+  );
+  const [userBio, setUserBio] = useState('');
+  const [picFile, setPicFile] = useState('');
   let userEmail;
   const [email, setEmail] = useState();
   const [groups] = useState([
@@ -148,10 +155,9 @@ const Profile = () => {
   const handleUploadClick = (e) => {
     e.preventDefault();
     console.log(e.target.files[0]);
-    let path;
     const file = e.target.files[0];
     if (file.size < maxSize) {
-      const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
+      const uploadTask = storage.ref(`groupster/${file.name}`).put(file);
 
       uploadTask.on(
         'state_changed',
@@ -165,18 +171,17 @@ const Profile = () => {
             .child(file.name)
             .getDownloadURL()
             .then((url) => {
-              path = url;
-              return path;
-            })
-            .then((filePath) => {
               updateProfile({
                 variables: {
                   info: {
+                    name: fullName,
                     email,
-                    pfp: filePath,
+                    bio: userBio,
+                    pfp: picFile,
                   },
                 },
               });
+              setProfilePic(url);
             });
         },
       );
@@ -194,7 +199,7 @@ const Profile = () => {
           <h1 className={classes.header}>Profile Page</h1>
           <div className="profilePageBody">
             <Paper className={classes.paper} elevation="1">
-              <img src={profilePic} alt="profilePhoto" />
+              <img src={profilePic} alt="profilePhoto" className={classes.pfp} />
             </Paper>
             <div style={{ display: 'inline-block', height: '100%' }}>
               <div className={classes.names}>
@@ -245,7 +250,7 @@ const Profile = () => {
         <h1 className={classes.header}>Profile Page</h1>
         <div className="profilePageBody">
           <Paper className={classes.paper} elevation="1">
-            <img src={profilePic} alt="profilePhoto" />
+            <img className={classes.pfp} src={profilePic} alt="profilePhoto" />
           </Paper>
           <h2>Full Name:&nbsp;</h2>
           <TextField

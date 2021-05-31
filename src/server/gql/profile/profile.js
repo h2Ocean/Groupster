@@ -9,8 +9,8 @@ export const typeDef = gql`
     username: String!
     email: String!
     age: Int!
-    bio: String
-    pfp: String
+    bio: String!
+    pfp: String!
   }
 
   extend type Query {
@@ -25,10 +25,10 @@ export const typeDef = gql`
   }
 
   input UpdateBio {
-    name: String
-    email: String
-    bio: String
-    pfp: String
+    name: String!
+    email: String!
+    bio: String!
+    pfp: String!
   }
 
   extend type Mutation {
