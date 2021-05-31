@@ -23,16 +23,19 @@ const GET_USER = gql`
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    width: '80vw',
+    // width: '80vw',
     borderBottom: '2px solid #7E6ECB',
     padding: '10px',
   },
   paper: {
     padding: '20px',
-    display: 'inline-block',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     border: '1px solid lightGrey',
     marginRight: '35px',
     marginBottom: '20px',
+    flexGrow: '1',
   },
   divider: {
     background: '#7E6ECB',
@@ -125,37 +128,43 @@ const Profile = () => {
         <Container className="Profile">
           <h1 className={classes.header}>Profile Page</h1>
           <div className="profilePageBody">
-            <Paper className={classes.paper} elevation="1">
-              <img
-                src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
-                alt="profilePhoto"
-                style={{ borderRadius: '5px', flexGrow: '0.1' }}
-              />
-            </Paper>
-            <div style={{ display: 'inline-block', height: '100%' }}>
-              <div className="coreID">
+            <div style={{ display: 'flex', justifyContent: 'center', flexGrow: '0.3' }}>
+              <Paper className={classes.paper} elevation="1">
+                <img
+                  src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
+                  alt="profilePhoto"
+                  style={{ borderRadius: '5px', flexGrow: '0.8' }}
+                />
+              </Paper>
+            </div>
+
+            <div className="profileInfo">
+              <div className="core">
                 <h2 className="headerName">Full Name&nbsp;</h2>
                 <p>{fullName}</p>
               </div>
-              <div className="coreID">
+              <Divider />
+              <div className="core">
                 <h2 className="headerName">Username&nbsp;</h2>
                 <p>{userName}</p>
               </div>
-              <div className="coreID">
+              <Divider />
+              <div className="core">
                 <h2 className="headerName">Email</h2>
                 <p>{email}</p>
               </div>
+              <Divider />
+              <h2>Biography</h2>
+              <p>{userBio}</p>
+              <Divider />
+              <h2>Study Groups</h2>
+              {groups.map((group) => (
+                <p key={group.id}>{group}</p>
+              ))}
             </div>
-
-            <h2>Biography</h2>
-            <p>{userBio}</p>
-            <h2>Study Groups</h2>
-            {groups.map((group) => (
-              <p key={group.id}>{group}</p>
-            ))}
           </div>
           <ThemeProvider theme={theme1}>
-            <Divider variant="middle" className={classes.divider} />
+            <div style={{ borderBottom: '2px solid #7E6ECB', marginTop: '15px' }} />
             <div className="profileButtonContainer">
               <Button
                 className="profileButton"
@@ -180,39 +189,39 @@ const Profile = () => {
       <NavTopbar title="Groupster" showSearchbar={false} />
       <Container className="Profile">
         <h1 className={classes.header}>Profile Page</h1>
-        <div className="profilePageBody">
-          <h2>Full Name:&nbsp;</h2>
-          <TextField
-            name="name"
-            variant="outlined"
-            required
-            id="name"
-            label="Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-          <h2>Username:&nbsp;</h2>
-          <p>{userName}</p>
-          <h2>Biography</h2>
-          <TextField
-            name="biography"
-            variant="outlined"
-            fullWidth
-            multiline
-            rowsMax={5}
-            id="standard-multiline-flexible"
-            label="biography"
-            value={userBio}
-            onChange={(e) => setUserBio(e.target.value)}
-          />
 
-          <h2>Email</h2>
-          {email}
-          <h2>Study Groups</h2>
-          {groups.map((group) => (
-            <p key={group.id}>{group}</p>
-          ))}
-        </div>
+        <h2>Full Name:&nbsp;</h2>
+        <TextField
+          name="name"
+          variant="outlined"
+          required
+          id="name"
+          label="Name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+        <h2>Username:&nbsp;</h2>
+        <p>{userName}</p>
+        <h2>Biography</h2>
+        <TextField
+          name="biography"
+          variant="outlined"
+          fullWidth
+          multiline
+          rowsMax={5}
+          id="standard-multiline-flexible"
+          label="biography"
+          value={userBio}
+          onChange={(e) => setUserBio(e.target.value)}
+        />
+
+        <h2>Email</h2>
+        {email}
+        <h2>Study Groups</h2>
+        {groups.map((group) => (
+          <p key={group.id}>{group}</p>
+        ))}
+
         <div className="profileButtonContainer">
           <ThemeProvider theme={theme1}>
             <Button

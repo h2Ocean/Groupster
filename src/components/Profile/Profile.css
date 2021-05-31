@@ -19,16 +19,34 @@
   border: 1px solid blue;
   margin-left: 26vw;
 }
-
-.coreID {
-  align-items: baseline;
+.core {
+  display: flex;
+  justify-content: space-between;
 }
 .headerName {
   margin-bottom: 10px;
+  /* display: inline-block; */
 }
 .profilePageBody {
   padding: 0 20px 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
 }
+.profilePageBody p {
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+}
+@media (min-width: 950px) {
+  .profilePageBody {
+    padding: 0 20px 0 20px;
+    display: flex;
+    align-content: center;
+    justify-content: start;
+  }
+}
+
 .profileButton {
   width: 200px;
 }
@@ -36,7 +54,10 @@
   color: mintcream;
 }
 .profileButtonContainer {
-  margin-top: 25px;
+  margin: 40px;
   display: flex;
   justify-content: center;
+}
+.profileInfo {
+  max-width: 700px;
 }
