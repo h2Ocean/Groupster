@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import NotificationManager from 'react-notifications';
 import { useLazyQuery, useMutation, gql } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
