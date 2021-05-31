@@ -5,10 +5,13 @@ const Rooms = (props) => {
   const [{ rooms }] = useState(props);
   const [{ strId }] = useState(props);
   const [{ setRoom }] = useState(props);
+  const [{ currentRoom }] = useState(props);
   const [roomList, setRoomList] = useState([]);
   useEffect(() => {
     if (rooms.length > 0) {
-      const arr = rooms.map((room) => <Room strId={strId} setRoom={setRoom} room={room} />);
+      const arr = rooms.map((room) => (
+        <Room strId={strId} setRoom={setRoom} room={room} currentRoom={currentRoom} />
+      ));
       setRoomList([...roomList, arr]);
     }
   }, [rooms]);

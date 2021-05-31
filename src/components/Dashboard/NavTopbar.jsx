@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
   },
-  profileIcon: {
-    marginLeft: '91vw',
-  },
+  // profileIcon: {
+  //   marginLeft: '91vw',
+  // },
   profileIconShift: {
     marginLeft: '72.86vw',
   },
@@ -99,6 +99,7 @@ const NavTopbar = (props) => {
             onClick={handleDrawerOpen}
             size="small"
             className={clsx(classes.menuButton, open && classes.hide)}
+            style={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <MenuIcon />
           </IconButton>

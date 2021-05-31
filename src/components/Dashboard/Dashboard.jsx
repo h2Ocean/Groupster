@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: '5vh',
-    fontFamily: 'Roboto',
   },
   cardGrid: {
     paddingTop: '8vh',

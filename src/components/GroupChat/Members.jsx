@@ -26,7 +26,8 @@ const avatar = (name, src) => widgets.memberAvatar(`${name}`, `${src}`);
 
 const Members = () => (
   <div id="Members">
-    <div className="navBarWidget" style={{ paddingTop: '30px', border: 'none' }}>
+    <div className="heading">Members</div>
+    <div className="navBarWidget" style={{ border: 'none' }}>
       {members.map((member) => widgets.member(member.name, avatar(member.name, member.src)))}
     </div>
   </div>

@@ -51,7 +51,7 @@ const GroupChat = () => {
       <CssBaseline />
       <NavTopbar title="Chat" showSearchbar="true" />
       <div id="GroupChat_container">
-        <NavSidebar setRoom={setRoom} />
+        <NavSidebar setRoom={setRoom} currentRoom={room} />
         <Chat key={room} room={room} user={data} />
         <Members />
       </div>
