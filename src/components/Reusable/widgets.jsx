@@ -73,7 +73,6 @@ const widgets = {
       <div
         className="groupMember"
         style={{
-          width: '130px',
           fontSize: '16px',
           display: 'flex',
           alignItems: 'center',

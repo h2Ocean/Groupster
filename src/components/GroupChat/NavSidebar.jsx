@@ -38,14 +38,13 @@ const NavSidebar = (props) => {
   const [name, setName] = useState('TESTINGLOBBY');
   const [currentChannel, setCurrentChannel] = useState();
   const strId = `${name}-123456`;
-  const { loading, error, data } = useQuery(GET_CHANNEL, {
+  const { data } = useQuery(GET_CHANNEL, {
     variables: {
       strId,
     },
   });
   const [{ setRoom }] = useState(props);
   const [rooms, setRooms] = useState([]);
-  const [{ currentRoom }] = useState(props);
 
   useEffect(() => {
     if (data) {
@@ -67,7 +66,7 @@ const NavSidebar = (props) => {
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
       </div>
-      <Rooms key={rooms} setRoom={setRoom} rooms={rooms} strId={strId} currentRoom={currentRoom} />
+      <Rooms key={rooms} setRoom={setRoom} rooms={rooms} strId={strId} />
       {/* <div className="navBarWidget">
         <div className="heading">Voice Chat</div>
       </div> */}

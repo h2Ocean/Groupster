@@ -20,7 +20,8 @@ const GET_USER = gql`
     }
   }
 `;
-const GroupChat = () => {
+const GroupChat = (props) => {
+  const [{ client }] = useState(props);
   const [isLogged, setIsLogged] = useState([]);
   const [enviroment, setEnviroment] = useState([]);
   const [room, setRoom] = useState('TESTINGLOBBY-123456-lobby');
@@ -36,7 +37,6 @@ const GroupChat = () => {
       setIsLogged(<Redirect to="/signup" />);
     } else {
       userEmail = auth.currentUser.email;
-      console.log(userEmail);
       getUser({
         variables: {
           email: userEmail,
@@ -51,8 +51,8 @@ const GroupChat = () => {
       <CssBaseline />
       <NavTopbar title="Chat" showSearchbar="true" />
       <div id="GroupChat_container">
-        <NavSidebar setRoom={setRoom} currentRoom={room} />
-        <Chat key={room} room={room} user={data} />
+        <NavSidebar setRoom={setRoom} />
+        <Chat key={room} client={client} room={room} user={data} />
         <Members />
       </div>
     </div>
