@@ -6,6 +6,7 @@ const profileSchema = new Schema({
   email: { type: String, unique: true, required: true },
   age: Number,
   bio: { type: String, default: '' },
+  pfp: String,
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
