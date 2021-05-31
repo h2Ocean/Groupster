@@ -33,7 +33,7 @@ const NavSidebar = (props) => {
   const [name, setName] = useState('TESTINGLOBBY');
   const [currentChannel, setCurrentChannel] = useState();
   const strId = `${name}-123456`;
-  const { loading, error, data } = useQuery(GET_CHANNEL, {
+  const { data } = useQuery(GET_CHANNEL, {
     variables: {
       strId,
     },
