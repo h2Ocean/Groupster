@@ -9,16 +9,32 @@ export const typeDef = gql`
     msg: String!
     created: String!
     room: String!
+    file: File
+  }
+
+  type File {
+    name: String!
+    url: String!
+    isImage: Boolean!
+    type: String!
   }
 
   extend type Query {
     getChats(room: String!): [Chat]
   }
 
+  input FileInput {
+    name: String!
+    url: String!
+    isImage: Boolean!
+    type: String!
+  }
+
   input InputMessage {
     name: String!
     msg: String!
     room: String!
+    file: FileInput
   }
 
   extend type Mutation {
@@ -39,11 +55,12 @@ export const resolvers = {
   },
   Mutation: {
     // prettier dis
-    sendMessage: async (_, { message: { name, msg, room } }) => {
+    sendMessage: async (_, { message: { name, msg, room, file } }) => {
       const message = new Chat({
         name,
         msg,
         room,
+        file,
         created: new Date().toISOString(),
       });
       const res = await message.save();
@@ -53,6 +70,7 @@ export const resolvers = {
         msg: res.msg,
         room: res.room,
         created: res.created,
+        file: res.file,
       };
     },
   },

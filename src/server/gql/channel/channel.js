@@ -19,8 +19,13 @@ export const typeDef = gql`
     category: String!
   }
 
+  input InputGetChannel {
+    strId: String!
+    getAll: Boolean!
+  }
+
   extend type Query {
-    getChannel(strId: String!): Channel!
+    getChannel(strId: InputGetChannel!): Channel!
   }
 
   input InputRoom {
@@ -37,18 +42,22 @@ export const typeDef = gql`
 
 export const resolvers = {
   Query: {
-    async getChannel(_, { strId }) {
+    async getChannel(_, { strId, getAll }) {
       try {
-        const channel = await Channel.find({ strId });
-        return {
-          id: channel[0]._id,
-          strId: channel[0].strId,
-          name: channel[0].name,
-          category: channel[0].category,
-          admin: channel[0].admin,
-          rooms: channel[0].rooms,
-          users: channel[0].users,
-        };
+        if (!getAll) {
+          const channel = await Channel.find({ strId });
+          return {
+            id: channel[0]._id,
+            strId: channel[0].strId,
+            name: channel[0].name,
+            category: channel[0].category,
+            admin: channel[0].admin,
+            rooms: channel[0].rooms,
+            users: channel[0].users,
+          };
+        }
+        const channel = await Channel.find();
+        return channel;
       } catch (err) {
         throw new Error(err);
       }

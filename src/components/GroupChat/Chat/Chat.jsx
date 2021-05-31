@@ -33,6 +33,12 @@ const GET_CHATS = gql`
       msg
       created
       room
+      file {
+        name
+        url
+        isImage
+        type
+      }
     }
   }
 `;
@@ -45,6 +51,7 @@ const SEND_CHATS = gql`
       msg
       created
       room
+      file
     }
   }
 `;
@@ -153,6 +160,12 @@ const Chat = (props) => {
           username: name,
           message: msg,
           room,
+          file: {
+            name: 'String!',
+            url: 'String!',
+            isImage: false,
+            type: 'String!',
+          },
         },
       }));
       setMessageList([...arr]);
@@ -184,6 +197,10 @@ const Chat = (props) => {
 
   const handleUpload = (upload) => {
     console.log(upload);
+    // name: String!
+    // url: String!
+    // isImage: Boolean!
+    // type: String!
   };
 
   const uploadFile = () => {
@@ -217,6 +234,12 @@ const Chat = (props) => {
             username,
             message,
             room,
+            file: {
+              name: 'String!',
+              url: 'String!',
+              isImage: false,
+              type: 'String!',
+            },
           },
         };
         await socket.emit('send_message', messageContent);
@@ -240,6 +263,7 @@ const Chat = (props) => {
 
   const populate = () => {
     if (messageList) {
+      console.log(messageList);
       setMessageContentList([
         messageList.map(({ content }, key) => (
           <div
