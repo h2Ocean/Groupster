@@ -20,23 +20,19 @@ const GET_USER = gql`
     }
   }
 `;
+
 const useStyles = makeStyles((theme) => ({
   header: {
     width: '80vw',
     borderBottom: '2px solid #7E6ECB',
     padding: '10px',
   },
-  names: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    marginRight: '10px',
-  },
   paper: {
-    padding: '15px',
+    padding: '20px',
     display: 'inline-block',
     border: '1px solid lightGrey',
-    marginRight: '40px',
+    marginRight: '35px',
+    marginBottom: '20px',
   },
   divider: {
     background: '#7E6ECB',
@@ -133,22 +129,24 @@ const Profile = () => {
               <img
                 src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
                 alt="profilePhoto"
+                style={{ borderRadius: '5px', flexGrow: '0.1' }}
               />
             </Paper>
             <div style={{ display: 'inline-block', height: '100%' }}>
-              <div className={classes.names}>
+              <div className="coreID">
                 <h2 className="headerName">Full Name&nbsp;</h2>
-                <span className="entry">{fullName}</span>
+                <p>{fullName}</p>
               </div>
-              <div className={classes.names}>
+              <div className="coreID">
                 <h2 className="headerName">Username&nbsp;</h2>
-                <span className="entry">{userName}</span>
+                <p>{userName}</p>
               </div>
-              <div className={classes.names}>
+              <div className="coreID">
                 <h2 className="headerName">Email</h2>
-                <p className="entry">{email}</p>
+                <p>{email}</p>
               </div>
             </div>
+
             <h2>Biography</h2>
             <p>{userBio}</p>
             <h2>Study Groups</h2>
@@ -209,7 +207,7 @@ const Profile = () => {
           />
 
           <h2>Email</h2>
-          <p>{email}</p>
+          {email}
           <h2>Study Groups</h2>
           {groups.map((group) => (
             <p key={group.id}>{group}</p>

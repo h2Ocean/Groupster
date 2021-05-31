@@ -68,25 +68,27 @@ const widgets = {
   memberAvatar(name, src) {
     return <Avatar alt={name} src={src} />;
   },
-  member(name) {
+  member(name, element) {
     return (
       <div
         className="groupMember"
         style={{
+          width: '130px',
           fontSize: '16px',
           display: 'flex',
           alignItems: 'center',
-          paddingLeft: '10%',
           paddingTop: '10px',
+          justifyContent: 'space-evenly',
         }}
       >
-        <span
+        {element}
+        {/* <span
           id="face-icon"
           className="material-icons"
           style={{ fontSize: '4vh', paddingRight: '5px' }}
         >
           face
-        </span>
+        </span> */}
         {name}
       </div>
     );

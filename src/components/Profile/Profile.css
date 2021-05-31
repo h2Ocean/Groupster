@@ -20,12 +20,14 @@
   margin-left: 26vw;
 }
 
-.headerName {
-  margin-right: 20px;
+.coreID {
+  align-items: baseline;
 }
-
+.headerName {
+  margin-bottom: 10px;
+}
 .profilePageBody {
-  padding: 20px;
+  padding: 0 20px 0 20px;
 }
 .profileButton {
   width: 200px;
