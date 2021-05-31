@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import FileViewer from 'react-file-viewer';
 import './styles/chat.css';
-import { auth, storage } from '../../../../firebase';
+import { auth, storage } from '../../../firebase';
 import 'react-notifications/lib/notifications.css';
 
 let socket;

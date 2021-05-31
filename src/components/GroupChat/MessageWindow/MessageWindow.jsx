@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Chat from './Chat/Chat';
+import Chat from '../Chat/Chat';
 
 const MessageWindow = (props) => {
   const [{ room }] = useState(props);
