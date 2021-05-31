@@ -10,6 +10,7 @@ export const typeDef = gql`
     email: String!
     age: Int!
     bio: String
+    pfp: String
   }
 
   extend type Query {
@@ -24,9 +25,10 @@ export const typeDef = gql`
   }
 
   input UpdateBio {
-    name: String!
-    email: String!
-    bio: String!
+    name: String
+    email: String
+    bio: String
+    pfp: String
   }
 
   extend type Mutation {
@@ -66,8 +68,8 @@ export const resolvers = {
         bio: res.bio,
       };
     },
-    updateBio: async (_, { info: { name, bio, email } }) => {
-      const res = await Profile.findOneAndUpdate({ email }, { bio, name });
+    updateBio: async (_, { info: { name, bio, email, pfp } }) => {
+      const res = await Profile.findOneAndUpdate({ email }, { bio, name, pfp });
       console.log(res);
       return {
         id: res._id,
@@ -76,6 +78,7 @@ export const resolvers = {
         username: res.username,
         age: res.age,
         bio: res.bio,
+        pfp: res.pfp,
       };
     },
   },

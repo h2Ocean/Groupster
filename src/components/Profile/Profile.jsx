@@ -1,10 +1,13 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import NotificationManager from 'react-notifications';
 import { useLazyQuery, useMutation, gql } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
-import { Container, TextField, Button, Paper, Divider } from '@material-ui/core';
-import { auth } from '../../firebase';
+import { Container, TextField, Button, Paper, Divider, IconButton } from '@material-ui/core';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { auth, storage } from '../../firebase';
 import './Profile.css';
 import theme1 from '../Reusable/theme';
 import NavTopbar from '../NavTopbar/NavTopbar';
@@ -17,6 +20,7 @@ const GET_USER = gql`
       name
       age
       bio
+      pfp
     }
   }
 `;
@@ -41,6 +45,14 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     background: '#7E6ECB',
   },
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  input: {
+    display: 'none',
+  },
 }));
 
 const UPDATE_USER = gql`
@@ -49,16 +61,19 @@ const UPDATE_USER = gql`
       name
       email
       bio
+      pfp
     }
   }
 `;
 
 const Profile = () => {
+  const maxSize = 5242880;
   const [isLogged, setIsLogged] = useState([]);
   const [fullName, setFullName] = useState();
   const [userName, setUserName] = useState();
   const [profilePic, setProfilePic] = useState();
   const [userBio, setUserBio] = useState();
+  const [picFile, setPicFile] = useState();
   let userEmail;
   const [email, setEmail] = useState();
   const [groups] = useState([
@@ -96,6 +111,7 @@ const Profile = () => {
       setUserName(data.getProfile[0].username);
       setEmail(data.getProfile[0].email);
       setUserBio(data.getProfile[0].bio);
+      setProfilePic(data.getProfile[0].pfp);
     }
   }, [data]);
 
@@ -103,11 +119,10 @@ const Profile = () => {
     e.preventDefault();
     console.log({
       variables: {
-        info: {
-          name: fullName,
-          email,
-          bio: userBio,
-        },
+        name: fullName,
+        email,
+        bio: userBio,
+        pfp: picFile,
       },
     });
     updateProfile({
@@ -116,24 +131,70 @@ const Profile = () => {
           name: fullName,
           email,
           bio: userBio,
+          pfp: picFile,
         },
       },
     });
     setEdit(false);
   };
 
+  const bytesToSize = (bytes) => {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return '0 Byte';
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    return `${Math.round(bytes / (1024, i) ** 2)} ${sizes[i]}`;
+  };
+
+  const handleUploadClick = (e) => {
+    e.preventDefault();
+    console.log(e.target.files[0]);
+    let path;
+    const file = e.target.files[0];
+    if (file.size < maxSize) {
+      const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
+
+      uploadTask.on(
+        'state_changed',
+        () => {},
+        (error) => {
+          throw new Error(error);
+        },
+        () => {
+          storage
+            .ref('groupster')
+            .child(file.name)
+            .getDownloadURL()
+            .then((url) => {
+              path = url;
+              return path;
+            })
+            .then((filePath) => {
+              updateProfile({
+                variables: {
+                  info: {
+                    email,
+                    pfp: filePath,
+                  },
+                },
+              });
+            });
+        },
+      );
+    } else {
+      NotificationManager.error(`Max file size is 5mb, yours is ${bytesToSize(file.size)}`);
+    }
+  };
+
   if (!edit) {
     return (
       <>
+        {console.log(profilePic)}
         <NavTopbar showSearchbar="false" />
         <Container className="Profile">
           <h1 className={classes.header}>Profile Page</h1>
           <div className="profilePageBody">
             <Paper className={classes.paper} elevation="1">
-              <img
-                src="https://drive.google.com/thumbnail?id=1fzO160F2ECqqz_nWgkiVHSKcBTtOy1Fs"
-                alt="profilePhoto"
-              />
+              <img src={profilePic} alt="profilePhoto" />
             </Paper>
             <div style={{ display: 'inline-block', height: '100%' }}>
               <div className={classes.names}>
@@ -183,6 +244,9 @@ const Profile = () => {
       <Container className="Profile">
         <h1 className={classes.header}>Profile Page</h1>
         <div className="profilePageBody">
+          <Paper className={classes.paper} elevation="1">
+            <img src={profilePic} alt="profilePhoto" />
+          </Paper>
           <h2>Full Name:&nbsp;</h2>
           <TextField
             name="name"
@@ -193,6 +257,27 @@ const Profile = () => {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
+          <div className={classes.root}>
+            Profile&nbsp;Picture
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={handleUploadClick}
+            />
+            <label htmlFor="contained-button-file">
+              <Button
+                variant="contained"
+                color="primary"
+                component="span"
+                startIcon={<CloudUploadIcon />}
+              >
+                Upload
+              </Button>
+            </label>
+          </div>
           <h2>Username:&nbsp;</h2>
           <p>{userName}</p>
           <h2>Biography</h2>
