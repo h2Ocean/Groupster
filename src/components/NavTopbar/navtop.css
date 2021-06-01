@@ -53,10 +53,16 @@ a:hover {
 a:active {
   text-decoration: underline;
 }
-
+.leftContent {
+  display: flex;
+  align-items: center;
+}
 .rightContent {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-right: 3vw;
+}
+.breadcrumbs {
+  font-size: 16px;
 }
