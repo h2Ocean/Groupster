@@ -142,7 +142,11 @@ const NavTopbar = (props) => {
             >
               Dashboard
             </Typography>
-            <Breadcrumbs aria-label="breadcrumb" style={{ marginTop: '10px', marginLeft: '15px' }}>
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              maxItems={1}
+              style={{ marginTop: '10px', marginLeft: '15px' }}
+            >
               <div className="breadcrumbs">{category}</div>
               <Typography className="breadcrumbs" component={RouterLink} to="/chat">
                 {group}
