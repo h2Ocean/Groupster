@@ -16,8 +16,8 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useAuth } from '../../contexts/AuthContent';
 import GroupSidebar from './GroupSidebar';
-import '../NavTopbar/navtop.css';
 import groupster from '../Reusable/groupster_offset.svg';
+import '../NavTopbar/navtop.css';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -64,7 +64,16 @@ const useStyles = makeStyles((theme) => ({
   //   marginLeft: '91vw',
   // },
   profileIconShift: {
-    marginLeft: '72.86vw',
+    marginLeft: '49.86vw',
+  },
+  groupPath: {
+    marginTop: '10px',
+    marginLeft: '15px',
+  },
+  groupPathShift: {
+    marginTop: '10px',
+    marginLeft: '23vw',
+    position: 'absolute',
   },
 }));
 
@@ -141,11 +150,9 @@ const NavTopbar = (props) => {
             >
               Dashboard
             </Typography>
-
             <Breadcrumbs
               aria-label="breadcrumb"
-              maxItems={1}
-              style={{ marginTop: '10px', marginLeft: '15px' }}
+              className={clsx(classes.groupPath, open && classes.groupPathShift)}
             >
               <div className="breadcrumbs">{category}</div>
               <Typography className="breadcrumbs" component={RouterLink} to="/chat">

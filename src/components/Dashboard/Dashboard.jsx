@@ -1,7 +1,8 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -17,6 +18,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
+import { useQuery, gql } from '@apollo/client';
 import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
@@ -94,13 +96,27 @@ const groupList = [
 ];
 const pictures = [food, python, chemistry, humor, guitar, java, music, food, history];
 
+const GET_GROUPS = gql`
+  query getAllChannels($category: String!) {
+    getAllChannels(category: $category) {
+      name
+    }
+  }
+`;
+
 const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
-  const [category, selectCategory] = useState('Math');
+  const [category, selectCategory] = useState('History');
   const [group, selectGroup] = useState('Medieval History');
+  const [searchedGroups, setSearchedGroups] = useState('');
+
+  const handleJoin = (e) => {
+    e.preventDefault();
+    alert('Your request to join has been sent');
+  };
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -124,6 +140,8 @@ const Dashboard = (props) => {
             }
             id="groupSearch"
             disableClearable
+            value={searchedGroups}
+            onChange={(e, value) => setSearchedGroups(value)}
             options={groupList.map((option) => option)}
             renderInput={(params) => (
               <TextField
@@ -135,36 +153,40 @@ const Dashboard = (props) => {
               />
             )}
           />
-          <Container className={classes.cardGrid} maxWidth="lg">
+          <Container className={classes.cardGrid} width="lg">
             <Grid container spacing={4}>
-              {groupList.map((cat, index) => (
-                <Grid item key={cat} xs={4} sm={4} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia className={classes.media} image={pictures[index]} />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {cat}
-                      </Typography>
-                    </CardContent>
-                    <CardActions className={classes.actions}>
-                      <Button size="small" color="primary">
-                        Join Group
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
+              {groupList
+                .filter((cat) => {
+                  return cat.toLowerCase().indexOf(searchedGroups.toLowerCase()) !== -1;
+                })
+                .map((cat, index) => (
+                  <Grid item key={cat} xs={4} sm={4} md={4}>
+                    <Card className={classes.card}>
+                      <CardMedia className={classes.media} image={pictures[index]} />
+                      <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {cat}
+                        </Typography>
+                      </CardContent>
+                      <CardActions className={classes.actions}>
+                        <Button size="small" color="primary" onClick={handleJoin}>
+                          Join Group
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
             </Grid>
           </Container>
+          <Modal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <CreateGroupModal />
+          </Modal>
         </Container>
-        <Modal
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <CreateGroupModal />
-        </Modal>
       </main>
     </div>
   );

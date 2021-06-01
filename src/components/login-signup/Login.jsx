@@ -72,7 +72,7 @@ const Signup = (props) => {
           email: userEmail.toLowerCase(),
         },
       });
-      setLoggedIn(<Redirect to="/dashboard" />);
+      setLoggedIn(<Redirect to="/explore" />);
     } catch (err) {
       console.log(err);
       setError('Failed to login');
