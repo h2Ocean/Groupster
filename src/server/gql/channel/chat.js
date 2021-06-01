@@ -48,6 +48,7 @@ export const resolvers = {
     async getChats(_, { room }) {
       try {
         const chats = await Chat.find({ room });
+        console.log(chats);
         return chats;
       } catch (err) {
         throw new Error(err);

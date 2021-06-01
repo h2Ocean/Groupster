@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import NotificationManager from 'react-notifications';
 import { useLazyQuery, useMutation, gql } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
@@ -124,21 +124,13 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      variables: {
-        name: fullName,
-        email,
-        bio: userBio,
-        pfp: picFile,
-      },
-    });
     updateProfile({
       variables: {
         info: {
           name: fullName,
           email,
           bio: userBio,
-          pfp: picFile,
+          pfp: profilePic,
         },
       },
     });
@@ -177,7 +169,7 @@ const Profile = () => {
                     name: fullName,
                     email,
                     bio: userBio,
-                    pfp: picFile,
+                    pfp: url,
                   },
                 },
               });
