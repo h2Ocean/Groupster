@@ -137,7 +137,6 @@ const NavTopbar = (props) => {
                 height: '40px',
               }}
             />
-
             <Typography
               variant="h6"
               style={{
@@ -168,6 +167,7 @@ const NavTopbar = (props) => {
           >
             <span className="material-icons profileIcon">account_circle</span>
           </Button>
+          {loggedOut}
           <Menu
             id="simple-menu"
             anchorEl={anchor}

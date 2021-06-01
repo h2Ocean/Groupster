@@ -23,6 +23,13 @@ import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
 import food from '../Reusable/NF_MOFAD_EATER_2978.0.jpg';
+import python from '../Reusable/groupPics/python.png';
+import chemistry from '../Reusable/groupPics/chemistry-2.png';
+import humor from '../Reusable/groupPics/humor2-sm.jpeg';
+import guitar from '../Reusable/groupPics/guitar.jpeg';
+import java from '../Reusable/groupPics/java.svg';
+import music from '../Reusable/groupPics/music.jpeg';
+import history from '../Reusable/groupPics/history.jpeg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +94,7 @@ const groupList = [
   'Vietnamese food recipes',
   'Medieval History',
 ];
+const pictures = [food, python, chemistry, humor, guitar, java, music, food, history];
 
 const GET_GROUPS = gql`
   query getAllChannels($category: String!) {
@@ -151,10 +159,10 @@ const Dashboard = (props) => {
                 .filter((cat) => {
                   return cat.toLowerCase().indexOf(searchedGroups.toLowerCase()) !== -1;
                 })
-                .map((cat) => (
+                .map((cat, index) => (
                   <Grid item key={cat} xs={4} sm={4} md={4}>
                     <Card className={classes.card}>
-                      <CardMedia className={classes.media} image={food} />
+                      <CardMedia className={classes.media} image={pictures[index]} />
                       <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {cat}
