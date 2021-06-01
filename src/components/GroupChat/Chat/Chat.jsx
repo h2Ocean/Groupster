@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -5,7 +6,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useLazyQuery, useQuery, useMutation, gql } from '@apollo/client';
 import io from 'socket.io-client';
 import { useDropzone } from 'react-dropzone';
 import AddIcon from '@material-ui/icons/Add';
@@ -17,6 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import FileViewer from 'react-file-viewer';
+import { v4 as uuidv4 } from 'uuid';
 import './styles/chat.css';
 import { auth, storage } from '../../../firebase';
 import 'react-notifications/lib/notifications.css';
@@ -64,13 +66,50 @@ const Chat = (props) => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const [messageContentList, setMessageContentList] = useState([]);
-  const [sendChat] = useMutation(SEND_CHATS);
   const [username, setUsername] = useState('');
   const [hasFile, setHasFile] = useState(false);
   const [file, setFile] = useState({});
   const [placeholder, setPlaceholder] = useState('Message...');
   const maxSize = 5242880;
   const dummy = useRef();
+  const [{ client }] = useState(props);
+  const userEmail = auth.currentUser.email;
+  const [prev, setPrev] = useState(-1);
+  const user = useQuery(GET_USER, {
+    variables: {
+      email: userEmail,
+    },
+  });
+  const chats = useQuery(GET_CHATS, {
+    variables: {
+      room,
+    },
+  });
+  const [sendChat, { data }] = useMutation(SEND_CHATS, {
+    update: (cache, mutationResult) => {
+      const newChat = mutationResult.data.sendMessage;
+      const cachedData = cache.readQuery({
+        query: GET_CHATS,
+        variables: { room },
+      });
+      cache.writeQuery({
+        query: GET_CHATS,
+        variables: { room },
+        data: { Chat: newChat },
+      });
+    },
+    optimisticResponse: {
+      __typename: 'Mutation',
+      sendMessage: {
+        __typename: 'Chat',
+        id: `This part we don't know yet but it will be a unique string so just to be safe ${uuidv4()}`,
+        name: username,
+        msg: message,
+        room,
+        created: uuidv4(),
+      },
+    },
+  });
 
   const bytesToSize = (bytes) => {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -93,29 +132,21 @@ const Chat = (props) => {
     }
   }, []);
 
-  const userEmail = auth.currentUser.email;
-  const { data } = useQuery(GET_USER, {
-    variables: {
-      email: userEmail,
-    },
-  });
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const { ref, ...rootProps } = getRootProps();
 
-  const chats = useQuery(GET_CHATS, {
-    variables: {
-      room,
-    },
-  });
-
   useEffect(() => {
-    if (data) {
-      setUsername(data.getProfile[0].username);
+    if (user.data) {
+      setUsername(user.data.getProfile[0].username);
     }
-  }, [data]);
+  }, [user.data]);
 
   useEffect(() => {
     if (chats.data) {
+      if (prev !== Object.keys(client.cache.data.data).length) {
+        chats.refetch();
+        setPrev(Object.keys(client.cache.data.data).length);
+      }
       const arr = chats.data.getChats.map(({ name, msg }) => ({
         room,
         content: {
@@ -126,7 +157,7 @@ const Chat = (props) => {
       }));
       setMessageList([...arr]);
     }
-  }, [chats.data]);
+  }, [chats]);
 
   const connectToRoom = () => {
     socket.emit('join', room);
@@ -236,7 +267,7 @@ const Chat = (props) => {
 
   useEffect(() => {
     if (dummy.current) {
-      dummy.current.scrollIntoView({ behavior: 'smooth' });
+      dummy.current.scrollIntoView();
     }
   }, [messageContentList]);
 

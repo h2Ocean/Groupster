@@ -33,7 +33,7 @@ const App = () => {
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/explore" component={Explore} />
-              <Route path="/chat" component={GroupChat} />
+              <Route path="/chat" component={() => <GroupChat client={client} />} />
               <Route path="/profile" component={Profile} />
             </Switch>
           </ApolloProvider>
