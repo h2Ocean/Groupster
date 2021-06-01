@@ -17,7 +17,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: {
-      origin: 'http://localhost:4001',
+      origin: 'http://localhost:5000',
     },
     playground: true,
     introspection: true,
@@ -38,7 +38,7 @@ const startServer = async () => {
 
   const io = socketIo(httpServer, {
     cors: {
-      origin: 'http://localhost:4001',
+      origin: 'http://localhost:5000',
       methods: ['GET', 'POST'],
     },
   });
