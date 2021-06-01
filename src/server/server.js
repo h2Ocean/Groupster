@@ -4,7 +4,6 @@ const socketIo = require('socket.io');
 const path = require('path');
 const app = require('express')();
 const cors = require('cors');
-const index = require('./routes/index ').default;
 const schema = require('./gql/schema').default;
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
@@ -24,7 +23,9 @@ const startServer = async () => {
     introspection: true,
   });
   server.applyMiddleware({ app });
-  app.use(index);
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+  });
   app.use(cors);
 
   await mongoose.connect(url, {

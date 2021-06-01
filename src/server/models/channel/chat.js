@@ -7,6 +7,12 @@ const Chat = mongoose.model(
     msg: String,
     room: String,
     created: { type: Date, default: Date.now },
+    file: {
+      name: String,
+      url: String,
+      isImage: Boolean,
+      fileType: String,
+    },
   }),
 );
 
