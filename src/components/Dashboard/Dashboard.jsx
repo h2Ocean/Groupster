@@ -130,13 +130,13 @@ const Dashboard = (props) => {
           />
           <Container className={classes.cardGrid} maxWidth="lg">
             <Grid container spacing={4}>
-              {groupList.map((category) => (
-                <Grid item key={category} xs={4} sm={4} md={4}>
+              {groupList.map((cat) => (
+                <Grid item key={cat} xs={4} sm={4} md={4}>
                   <Card className={classes.card}>
                     <CardMedia className={classes.media} image={food} />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {category}
+                        {cat}
                       </Typography>
                     </CardContent>
                     <CardActions className={classes.actions}>

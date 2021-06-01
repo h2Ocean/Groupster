@@ -52,7 +52,7 @@ const GroupChat = (props) => {
       <CssBaseline />
       <NavTopbar title="Chat" showSearchbar="false" crumbs={[`${group}`, `${room.slice(20)}`]} />
       <div id="GroupChat_container">
-        <NavSidebar setRoom={setRoom} />
+        <NavSidebar room={room} setRoom={setRoom} />
         <Chat key={room} client={client} room={room} user={data} />
         <Members />
       </div>

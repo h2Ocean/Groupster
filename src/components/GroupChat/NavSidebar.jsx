@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
@@ -5,6 +6,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { v4 as uuidv4 } from 'uuid';
 import widgets from '../Reusable/widgets';
 import Rooms from './NavComponents/Rooms';
 
@@ -34,10 +36,24 @@ const GET_CHANNEL = gql`
   }
 `;
 
+const stringToHash = (string) => {
+  let hash = 0;
+
+  if (string.length === 0) return hash;
+
+  for (let i = 0; i < string.length; i += 1) {
+    const char = string.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash &= hash;
+  }
+
+  return hash;
+};
+
 const NavSidebar = (props) => {
-  const [name, setName] = useState('TESTINGLOBBY');
+  const [name, setName] = useState('Lobby');
   const [currentChannel, setCurrentChannel] = useState();
-  const strId = `${name}-123456`;
+  const strId = `${name}-${stringToHash(name)}`;
   const { data } = useQuery(GET_CHANNEL, {
     variables: {
       strId,
@@ -60,6 +76,7 @@ const NavSidebar = (props) => {
 
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
+      <h5>{`Room code: ${strId}`}</h5>
       {widgets.category('Sci')}
       {widgets.category('Hist')}
       <div className="navBarWidget">
