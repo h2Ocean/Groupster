@@ -25,6 +25,7 @@ const GroupChat = (props) => {
   const [isLogged, setIsLogged] = useState([]);
   const [enviroment, setEnviroment] = useState([]);
   const [room, setRoom] = useState('TESTINGLOBBY-123456-lobby');
+  const [group, setGroup] = useState('Medieval History');
   let userEmail;
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
@@ -49,9 +50,9 @@ const GroupChat = (props) => {
     <div>
       {isLogged}
       <CssBaseline />
-      <NavTopbar title="Chat" showSearchbar="true" />
+      <NavTopbar title="Chat" showSearchbar="false" crumbs={[`${group}`, `${room.slice(20)}`]} />
       <div id="GroupChat_container">
-        <NavSidebar setRoom={setRoom} />
+        <NavSidebar room={room} setRoom={setRoom} />
         <Chat key={room} client={client} room={room} user={data} />
         <Members />
       </div>

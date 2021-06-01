@@ -1,3 +1,5 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -23,6 +25,19 @@ import './styles/chat.css';
 import { auth, storage } from '../../../firebase';
 import 'react-notifications/lib/notifications.css';
 
+const fileTypes = [
+  '.apng',
+  '.avif',
+  '.gif',
+  '.jpg',
+  '.jpeg',
+  '.jfif',
+  '.pjpeg',
+  '.pjp',
+  '.png',
+  '.svg',
+  '.webp',
+];
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
 const GET_CHATS = gql`
@@ -33,6 +48,12 @@ const GET_CHATS = gql`
       msg
       created
       room
+      file {
+        name
+        url
+        isImage
+        fileType
+      }
     }
   }
 `;
@@ -45,6 +66,12 @@ const SEND_CHATS = gql`
       msg
       created
       room
+      file {
+        name
+        url
+        isImage
+        fileType
+      }
     }
   }
 `;
@@ -68,7 +95,8 @@ const Chat = (props) => {
   const [messageContentList, setMessageContentList] = useState([]);
   const [username, setUsername] = useState('');
   const [hasFile, setHasFile] = useState(false);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState({ name: null, url: null, isImage: null, fileType: null });
+  const [fileToUpload, setFileToUpload] = useState({});
   const [placeholder, setPlaceholder] = useState('Message...');
   const maxSize = 5242880;
   const dummy = useRef();
@@ -107,6 +135,7 @@ const Chat = (props) => {
         msg: message,
         room,
         created: uuidv4(),
+        file: {},
       },
     },
   });
@@ -120,9 +149,9 @@ const Chat = (props) => {
 
   const onDrop = useCallback((files) => {
     if (files[0].size < maxSize) {
-      setFile({
+      setFileToUpload({
         file: files[0],
-        type: files[0].name.substr(files[0].name.indexOf('.')),
+        fileType: files[0].name.substr(files[0].name.indexOf('.')),
         name: files[0].name,
       });
       setHasFile(true);
@@ -147,12 +176,13 @@ const Chat = (props) => {
         chats.refetch();
         setPrev(Object.keys(client.cache.data.data).length);
       }
-      const arr = chats.data.getChats.map(({ name, msg }) => ({
+      const arr = chats.data.getChats.map(({ name, msg, file }) => ({
         room,
         content: {
           username: name,
           message: msg,
           room,
+          file,
         },
       }));
       setMessageList([...arr]);
@@ -179,44 +209,87 @@ const Chat = (props) => {
   const handleClear = () => {
     setHasFile(false);
     setPlaceholder('Message...');
-    setFile({});
   };
 
-  const handleUpload = (upload) => {
-    console.log(upload);
+  const handleUpload = (url, { name, fileType }) => {
+    setFile({
+      name,
+      url,
+      isImage: fileTypes.includes(fileType.toLowerCase()),
+      fileType,
+    });
   };
 
   const uploadFile = () => {
     handleClear();
-    const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
-    uploadTask.on(
-      'state_changed',
-      () => {},
-      (error) => {
-        throw new Error(error);
-      },
-      () => {
-        storage
-          .ref('groupster')
-          .child(file.name)
-          .getDownloadURL()
-          .then((url) => {
-            handleUpload(url);
-          });
-      },
-    );
+    const uploadTask = storage.ref(`groupster/${fileToUpload.name}`).put(fileToUpload.file);
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        () => {},
+        (error) => {
+          reject(error);
+        },
+        () =>
+          storage
+            .ref('groupster')
+            .child(fileToUpload.name)
+            .getDownloadURL()
+            .then((url) => {
+              handleUpload(url, fileToUpload);
+              resolve(url);
+            }),
+      );
+    });
   };
 
   const sendMessage = async () => {
-    if (file.name) uploadFile();
     if (username.length > 0) {
-      if (message.length > 0) {
+      if (fileToUpload.name) {
+        uploadFile().then(async (url) => {
+          const messageContent = {
+            room,
+            content: {
+              username,
+              message,
+              room,
+              file: {
+                url,
+                name: fileToUpload.name,
+                fileType: fileToUpload.fileType,
+                isImage: fileTypes.includes(fileToUpload.fileType.toLowerCase()),
+              },
+            },
+          };
+          await socket.emit('send_message', messageContent);
+          setMessageList([...messageList, messageContent]);
+          setMessage('');
+          dummy.current.scrollIntoView({ behavior: 'smooth' });
+          sendChat({
+            variables: {
+              message: {
+                name: username,
+                msg: message,
+                room,
+                file: {
+                  url,
+                  name: fileToUpload.name,
+                  fileType: fileToUpload.fileType,
+                  isImage: fileTypes.includes(fileToUpload.fileType.toLowerCase()),
+                },
+              },
+            },
+          });
+          setFile({ name: null, url: null, isImage: null, fileType: null });
+        });
+      } else if (message.length > 0) {
         const messageContent = {
           room,
           content: {
             username,
             message,
             room,
+            file,
           },
         };
         await socket.emit('send_message', messageContent);
@@ -229,6 +302,7 @@ const Chat = (props) => {
               name: username,
               msg: message,
               room,
+              file,
             },
           },
         });
@@ -236,6 +310,22 @@ const Chat = (props) => {
     } else {
       alert('Username is not set. Please try to relogin');
     }
+  };
+
+  const checkFile = ({ file }) => {
+    if (file.name !== null) {
+      if (file.isImage) {
+        return (
+          <img
+            style={{ width: '20vw', maxHeight: '50vh', objectFit: 'cover' }}
+            src={file.url}
+            alt={file.name}
+          />
+        );
+      }
+      return <a href={file.url}>{file.name}</a>;
+    }
+    return <></>;
   };
 
   const populate = () => {
@@ -248,7 +338,12 @@ const Chat = (props) => {
             id={content.username === username ? 'You' : 'Other'}
             ref={dummy}
           >
-            <div className="messageIndividual">{`${content.username}: ${content.message}`}</div>
+            <div className="messageIndividual">
+              {`${content.username}: `}
+              <br />
+              {checkFile(content)}
+              {content.message}
+            </div>
           </div>
         )),
       ]);
@@ -308,7 +403,7 @@ const Chat = (props) => {
                   color: '#d2d4da',
                 }}
               >
-                <div style={{ marginTop: '2px' }}>{file.name}</div>
+                <div style={{ marginTop: '2px' }}>{fileToUpload.name}</div>
                 <Grid container justify="flex-end" alignItems="flex-end">
                   <IconButton
                     onClick={handleClear}

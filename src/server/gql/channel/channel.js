@@ -24,6 +24,7 @@ export const typeDef = gql`
 
   extend type Query {
     getChannel(strId: String!): Channel!
+    getAllChannels(category: String!): Channel!
   }
 
   input InputRoom {
@@ -52,6 +53,15 @@ export const resolvers = {
           rooms: channel[0].rooms,
           users: channel[0].users,
         };
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+
+    async getAllChannels(_, { category }) {
+      try {
+        const channels = await Channel.find({ category });
+        return channels;
       } catch (err) {
         throw new Error(err);
       }

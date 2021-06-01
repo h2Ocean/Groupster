@@ -3,7 +3,15 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Button, Menu, MenuItem, Typography, IconButton, Toolbar } from '@material-ui/core';
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton,
+  Toolbar,
+  Breadcrumbs,
+} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useAuth } from '../../contexts/AuthContent';
@@ -12,6 +20,10 @@ import groupster from '../Reusable/groupster_offset.svg';
 import '../NavTopbar/navtop.css';
 
 const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   appBar: {
     width: '100%',
     marginLeft: '0vw',
@@ -48,9 +60,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
   },
-  profileIcon: {
-    marginLeft: '78vw',
-  },
+  // profileIcon: {
+  //   marginLeft: '91vw',
+  // },
   profileIconShift: {
     marginLeft: '59.86vw',
   },
@@ -63,6 +75,8 @@ const NavTopbar = (props) => {
   const [anchor, setAnchor] = useState(null);
   const classes = useStyles();
   const { logout } = useAuth();
+  const [{ category }] = useState(props);
+  const [{ group }] = useState(props);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -92,25 +106,49 @@ const NavTopbar = (props) => {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
-          <IconButton
-            color="secondary"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            size="small"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <img
-            src={groupster}
-            alt="logo"
-            style={{
-              marginLeft: '40px',
-              height: '40px',
-            }}
-          />
+        <Toolbar className={classes.toolbar}>
+          <div className="leftContent">
+            <IconButton
+              color="primary"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerOpen}
+              size="small"
+              className={clsx(classes.menuButton, open && classes.hide)}
+              style={{ display: 'flex', justifyContent: 'space-between' }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <img
+              src={groupster}
+              alt="logo"
+              style={{
+                marginLeft: '15px',
+                height: '40px',
+              }}
+            />
+
+            <Typography
+              variant="h6"
+              style={{
+                marginLeft: '15px',
+                marginTop: '5px',
+                border: '1px solid darkGrey',
+                borderRadius: '10px',
+                padding: '0px 5px',
+                color: '#482F75',
+              }}
+            >
+              Dashboard
+            </Typography>
+            <Breadcrumbs aria-label="breadcrumb" style={{ marginTop: '10px', marginLeft: '15px' }}>
+              <div className="breadcrumbs">{category}</div>
+              <Typography className="breadcrumbs" component={RouterLink} to="/chat">
+                {group}
+              </Typography>
+            </Breadcrumbs>
+          </div>
           <Button
             aria-haspopup="true"
             className={clsx(classes.profileIcon, open && classes.profileIconShift)}

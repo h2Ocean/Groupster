@@ -28,6 +28,33 @@ const widgets = {
       </button>
     );
   },
+  button2(name, maximumWidth, height) {
+    return (
+      <button
+        className="button2"
+        type="button"
+        style={{
+          width: '80%',
+          maxWidth: `${maximumWidth}`,
+          height: `${height}` || 'auto',
+          minWidth: '100px',
+          padding: '8px 16px',
+          fontSize: '1.1rem',
+          fontFamily: '"Roboto", sans-serif',
+          fontWeight: '500',
+          borderRadius: '7px',
+          color: '#7E6ECB',
+          backgroundColor: '#F3DA75',
+          lineHeight: '1.75',
+          letterSpacing: '0.02857em',
+          textTransform: 'uppercase',
+          border: 'none',
+        }}
+      >
+        {name}
+      </button>
+    );
+  },
   groupWidget(name) {
     return (
       <div
@@ -41,7 +68,7 @@ const widgets = {
   memberAvatar(name, src) {
     return <Avatar alt={name} src={src} />;
   },
-  member(name) {
+  member(name, element) {
     return (
       <div
         className="groupMember"
@@ -49,17 +76,18 @@ const widgets = {
           fontSize: '16px',
           display: 'flex',
           alignItems: 'center',
-          paddingLeft: '10%',
           paddingTop: '10px',
+          justifyContent: 'space-evenly',
         }}
       >
-        <span
+        {element}
+        {/* <span
           id="face-icon"
           className="material-icons"
           style={{ fontSize: '4vh', paddingRight: '5px' }}
         >
           face
-        </span>
+        </span> */}
         {name}
       </div>
     );

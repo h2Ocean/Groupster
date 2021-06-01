@@ -32,6 +32,9 @@
   background-color: #c9c4e9;
   cursor: pointer;
 }
+.categoryText {
+  font-weight: 600;
+}
 /* .checkMark {
   position: absolute;
   top: 20px;
