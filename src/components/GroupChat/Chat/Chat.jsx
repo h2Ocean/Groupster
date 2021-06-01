@@ -247,7 +247,6 @@ const Chat = (props) => {
     if (username.length > 0) {
       if (fileToUpload.name) {
         uploadFile().then(async (url) => {
-          console.log(url);
           const messageContent = {
             room,
             content: {
