@@ -63,7 +63,7 @@ const NavTopbar = ({ title, elements, showSearchbar, crumbs }) => {
           {title}
         </Typography>
         <Breadcrumbs aria-label="breadcrumb" style={{ marginTop: '10px', marginLeft: '15px' }}>
-          <Typography className="breadcrumbs" component={RouterLink} to="/">
+          <Typography className="breadcrumbs" component={RouterLink} to="/dashboaard">
             Dashboard
           </Typography>
           {crumbs ? crumbs.map((crumb) => <div className="breadcrumbs">{crumb}</div>) : null}
@@ -89,7 +89,7 @@ const NavTopbar = ({ title, elements, showSearchbar, crumbs }) => {
           <MenuItem component={RouterLink} to="/profile">
             Profile
           </MenuItem>
-          <MenuItem component={RouterLink} to="/">
+          <MenuItem component={RouterLink} to="/dashboard">
             Dashboard
           </MenuItem>
           <MenuItem component={RouterLink} to="/explore">

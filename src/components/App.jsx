@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import Signup from './login-signup/SignUp';
 import Login from './login-signup/Login';
 import GroupChat from './GroupChat/GroupChat';
@@ -28,8 +28,8 @@ const App = () => {
         <AuthProvider>
           <ApolloProvider client={client}>
             <Switch>
-              <Route path="/welcome" component={Welcome} />
-              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/" component={Welcome} />
+              <Route path="/dashboard" component={Dashboard} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/explore" component={Explore} />
