@@ -77,8 +77,6 @@ const NavSidebar = (props) => {
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
       <h5>{`Room code: ${strId}`}</h5>
-      {widgets.category('Sci')}
-      {widgets.category('Hist')}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
