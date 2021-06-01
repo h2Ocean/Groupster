@@ -160,6 +160,7 @@ const NavTopbar = (props) => {
           >
             <span className="material-icons profileIcon">account_circle</span>
           </Button>
+          {loggedOut}
           <Menu
             id="simple-menu"
             anchorEl={anchor}
