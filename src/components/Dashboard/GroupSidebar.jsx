@@ -101,7 +101,7 @@ const GroupSidebar = (props) => {
       <List>
         {categoryList.map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{icons[index]}</ListItemIcon>
+            <ListItemIcon style={{ fontSize: '24px' }}>{icons[index]}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}

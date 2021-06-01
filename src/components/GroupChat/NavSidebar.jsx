@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import widgets from '../Reusable/widgets';
 import Rooms from './NavComponents/Rooms';
 
@@ -57,10 +62,6 @@ const NavSidebar = (props) => {
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
       {widgets.category('Sci')}
       {widgets.category('Hist')}
-      {widgets.memberAvatar(
-        'Erica',
-        'https://drive.google.com/thumbnail?id=1BxhrkgT0ypUe2Dt-zD2-Kr8lvwel93ym',
-      )}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
@@ -71,6 +72,20 @@ const NavSidebar = (props) => {
       </div> */}
       <div className="navBarWidget">
         <div className="heading">Resources</div>
+        <div style={{ marginLeft: '15px', fontSize: '16px', textIndent: '10px' }}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              area-controls="panella-content"
+              id="panella-header"
+            >
+              Recent
+            </AccordionSummary>
+          </Accordion>
+        </div>
+        <div style={{ marginLeft: '15px', fontSize: '16px', textIndent: '10px' }}>
+          Resource Upload
+        </div>
       </div>
     </div>
   );

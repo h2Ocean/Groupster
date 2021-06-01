@@ -6,13 +6,18 @@ const Room = (props) => {
   const [{ strId }] = useState(props);
   const [{ room }] = useState(props);
   const [{ setRoom }] = useState(props);
+
   const handleClick = () => {
     setRoom(`${strId}-${room}`);
   };
 
   return (
     <>
-      <div className="channel" onClick={handleClick}>
+      <div
+        className="channel"
+        onClick={handleClick}
+        // style={{ backgroundColor: currentRoom.slice(20) === room ? '#9fe5c3' : null }}
+      >
         {room}
       </div>
     </>

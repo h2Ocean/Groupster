@@ -5,6 +5,7 @@ const Rooms = (props) => {
   const [{ rooms }] = useState(props);
   const [{ strId }] = useState(props);
   const [{ setRoom }] = useState(props);
+
   const [roomList, setRoomList] = useState([]);
   useEffect(() => {
     if (rooms.length > 0) {

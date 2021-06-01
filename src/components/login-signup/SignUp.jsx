@@ -16,6 +16,7 @@ import Alert from '@material-ui/lab/Alert';
 import { Link, Redirect } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { useAuth } from '../../contexts/AuthContent';
+import logo from '../Reusable/groupster_border.svg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -102,9 +103,22 @@ const Signup = () => {
   };
 
   return (
-    <div style={{ overflowY: 'auto' }}>
+    <div className="signup" style={{ margin: 'auto' }}>
+      <img
+        src={logo}
+        alt="Groupster Logo"
+        style={{
+          // borderRadius: '20px',
+          // border: '3px solid #7e6ecb',
+          maxWidth: '350px',
+          height: '80px',
+          alignSelf: 'center',
+          marginTop: '3vh',
+          marginBottom: '15px',
+        }}
+      />
       {redirect}
-      <Container component="main" maxWidth="xs" style={{ height: '100vh' }}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
