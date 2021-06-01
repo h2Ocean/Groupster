@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import { Modal } from '@material-ui/core';
+import { Modal, Backdrop, Fade } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -37,6 +37,7 @@ const GET_CHANNEL = gql`
 const NavSidebar = (props) => {
   const [name, setName] = useState('TESTINGLOBBY');
   const [currentChannel, setCurrentChannel] = useState();
+  const [open, setOpen] = useState(false);
   const strId = `${name}-123456`;
   const { data } = useQuery(GET_CHANNEL, {
     variables: {
@@ -45,6 +46,13 @@ const NavSidebar = (props) => {
   });
   const [{ setRoom }] = useState(props);
   const [rooms, setRooms] = useState([]);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (data) {
@@ -60,8 +68,6 @@ const NavSidebar = (props) => {
 
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
-      {widgets.category('Sci')}
-      {widgets.category('Hist')}
       <div className="navBarWidget">
         <div className="heading">Group</div>
         {widgets.groupWidget('Medieval History')}
@@ -83,9 +89,32 @@ const NavSidebar = (props) => {
             </AccordionSummary>
           </Accordion>
         </div>
-        <div style={{ marginLeft: '15px', fontSize: '16px', textIndent: '10px' }}>
-          Resource Upload
-        </div>
+        <button
+          type="button"
+          onClick={handleOpen}
+          style={{ marginLeft: '15px', fontSize: '16px', border: 'none' }}
+        >
+          Show All
+        </button>
+        <div className="modalContainer">hello</div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className="resourceModal">
+              <h2 id="transition-modal-title">Transition modal</h2>
+              <p id="transition-modal-description">react-transition-group animates me.</p>
+            </div>
+          </Fade>
+        </Modal>
       </div>
     </div>
   );

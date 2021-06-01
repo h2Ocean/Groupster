@@ -21,6 +21,13 @@ import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
 import food from '../Reusable/NF_MOFAD_EATER_2978.0.jpg';
+import python from '../Reusable/groupPics/python.png';
+import chemistry from '../Reusable/groupPics/chemistry-2.png';
+import humor from '../Reusable/groupPics/humor2-sm.jpeg';
+import guitar from '../Reusable/groupPics/guitar.jpeg';
+import java from '../Reusable/groupPics/java.svg';
+import music from '../Reusable/groupPics/music.jpeg';
+import history from '../Reusable/groupPics/history.jpeg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,9 +90,9 @@ const groupList = [
   'Java for Dummies',
   'Beethoven Symphonies',
   'Vietnamese food recipes',
-  'Theoritical Physics',
   'Medieval History',
 ];
+const pictures = [food, python, chemistry, humor, guitar, java, music, food, history];
 
 const Dashboard = (props) => {
   const [open, setOpen] = useState(false);
@@ -130,13 +137,13 @@ const Dashboard = (props) => {
           />
           <Container className={classes.cardGrid} maxWidth="lg">
             <Grid container spacing={4}>
-              {groupList.map((category) => (
-                <Grid item key={category} xs={4} sm={4} md={4}>
+              {groupList.map((cat, index) => (
+                <Grid item key={cat} xs={4} sm={4} md={4}>
                   <Card className={classes.card}>
-                    <CardMedia className={classes.media} image={food} />
+                    <CardMedia className={classes.media} image={pictures[index]} />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {category}
+                        {cat}
                       </Typography>
                     </CardContent>
                     <CardActions className={classes.actions}>

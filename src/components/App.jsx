@@ -28,8 +28,8 @@ const App = () => {
         <AuthProvider>
           <ApolloProvider client={client}>
             <Switch>
-              <Route path="/welcome" component={Welcome} />
-              <Route exact path="/" component={Dashboard} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route exact path="/" component={Welcome} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/explore" component={Explore} />

@@ -53,7 +53,7 @@ const Explore = () => {
         ))}
       </div>
       <div className="buttonContainer">
-        <Link to="/">{widgets.button1('next', '150px')}</Link>
+        <Link to="/dashboard">{widgets.button1('next', '150px')}</Link>
       </div>
     </div>
   );
