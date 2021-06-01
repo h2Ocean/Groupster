@@ -84,6 +84,7 @@ const groupList = [
   'Beethoven Symphonies',
   'Vietnamese food recipes',
   'Theoritical Physics',
+  'Medieval History',
 ];
 
 const Dashboard = (props) => {
@@ -91,6 +92,8 @@ const Dashboard = (props) => {
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
+  const [category, selectCategory] = useState('Math');
+  const [group, selectGroup] = useState('Medieval History');
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -101,7 +104,7 @@ const Dashboard = (props) => {
   return (
     <div className={classes.root}>
       {isLogged}
-      <NavTopbar key={open} setOpen={setOpen} open={open} />
+      <NavTopbar key={open} setOpen={setOpen} open={open} category={category} group={group} />
       <main className={clsx(classes.content, open && classes.contentShift)}>
         <Container maxWidth="md" className={classes.header}>
           <h1 className={classes.title}>Discover More Groups</h1>

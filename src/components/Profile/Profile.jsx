@@ -185,7 +185,7 @@ const Profile = () => {
     return (
       <>
         {console.log(profilePic)}
-        <NavTopbar showSearchbar="false" />
+        <NavTopbar showSearchbar="false" title="Profile" />
         <Container className="Profile">
           <h1 className={classes.header}>Profile Page</h1>
           <div className="profilePageBody">
