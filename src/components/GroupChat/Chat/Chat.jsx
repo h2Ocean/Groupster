@@ -163,6 +163,7 @@ const Chat = (props) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const { ref, ...rootProps } = getRootProps();
+  const [{ resource, setResource, resourceName, setResourceName }] = useState(props);
 
   useEffect(() => {
     if (user.data) {
@@ -205,6 +206,15 @@ const Chat = (props) => {
       setMessageList([...messageList, res]);
     });
   });
+  useEffect(() => {
+    // eslint-disable-next-line consistent-return
+    messageList.forEach((message) => {
+      if (message.content.file.name) {
+        setResource((prev) => [...prev, message.content.file.url]);
+        setResourceName((prev) => [...prev, message.content.file.name]);
+      }
+    });
+  }, [messageList]);
 
   const handleClear = () => {
     setHasFile(false);

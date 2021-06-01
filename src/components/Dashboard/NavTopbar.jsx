@@ -128,7 +128,6 @@ const NavTopbar = (props) => {
                 height: '40px',
               }}
             />
-
             <Typography
               variant="h6"
               style={{
@@ -137,11 +136,12 @@ const NavTopbar = (props) => {
                 border: '1px solid darkGrey',
                 borderRadius: '10px',
                 padding: '0px 5px',
-                color: '#482F75',
+                color: 'lightGrey',
               }}
             >
               Dashboard
             </Typography>
+
             <Breadcrumbs
               aria-label="breadcrumb"
               maxItems={1}
