@@ -4,8 +4,8 @@ import widgets from '../Reusable/widgets';
 import Rooms from './NavComponents/Rooms';
 
 const GET_CHANNEL = gql`
-  query getChannel($values: InputGetChannel!) {
-    getChannel(values: $values) {
+  query getChannel($strId: String!) {
+    getChannel(strId: $strId) {
       id
       strId
       name
@@ -35,10 +35,7 @@ const NavSidebar = (props) => {
   const strId = `${name}-123456`;
   const { data } = useQuery(GET_CHANNEL, {
     variables: {
-      values: {
-        strId,
-        getAll: false,
-      },
+      strId,
     },
   });
   const [{ setRoom }] = useState(props);

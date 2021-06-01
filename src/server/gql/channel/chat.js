@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { gql } from 'apollo-server-express';
+import { FaCodeBranch } from 'react-icons/fa';
 import Chat from '../../models/channel/chat';
 
 export const typeDef = gql`
@@ -13,10 +14,10 @@ export const typeDef = gql`
   }
 
   type File {
-    name: String!
-    url: String!
-    isImage: Boolean!
-    type: String!
+    name: String
+    url: String
+    isImage: Boolean
+    fileType: String
   }
 
   extend type Query {
@@ -24,10 +25,10 @@ export const typeDef = gql`
   }
 
   input FileInput {
-    name: String!
-    url: String!
-    isImage: Boolean!
-    type: String!
+    name: String
+    url: String
+    isImage: Boolean
+    fileType: String
   }
 
   input InputMessage {
@@ -56,11 +57,13 @@ export const resolvers = {
   Mutation: {
     // prettier dis
     sendMessage: async (_, { message: { name, msg, room, file } }) => {
+      let fileToUpload = file;
+      if (file.name === null) fileToUpload = null;
       const message = new Chat({
         name,
         msg,
         room,
-        file,
+        file: fileToUpload,
         created: new Date().toISOString(),
       });
       const res = await message.save();

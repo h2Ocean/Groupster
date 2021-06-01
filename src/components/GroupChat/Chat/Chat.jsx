@@ -37,7 +37,7 @@ const GET_CHATS = gql`
         name
         url
         isImage
-        type
+        fileType
       }
     }
   }
@@ -51,7 +51,12 @@ const SEND_CHATS = gql`
       msg
       created
       room
-      file
+      file {
+        name
+        url
+        isImage
+        fileType
+      }
     }
   }
 `;
@@ -75,7 +80,8 @@ const Chat = (props) => {
   const [messageContentList, setMessageContentList] = useState([]);
   const [username, setUsername] = useState('');
   const [hasFile, setHasFile] = useState(false);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState({ name: null, url: null, isImage: null, fileType: null });
+  const [fileToUpload, setFileToUpload] = useState({});
   const [placeholder, setPlaceholder] = useState('Message...');
   const maxSize = 5242880;
   const dummy = useRef();
@@ -114,6 +120,7 @@ const Chat = (props) => {
         msg: message,
         room,
         created: uuidv4(),
+        file: {},
       },
     },
   });
@@ -127,9 +134,9 @@ const Chat = (props) => {
 
   const onDrop = useCallback((files) => {
     if (files[0].size < maxSize) {
-      setFile({
+      setFileToUpload({
         file: files[0],
-        type: files[0].name.substr(files[0].name.indexOf('.')),
+        fileType: files[0].name.substr(files[0].name.indexOf('.')),
         name: files[0].name,
       });
       setHasFile(true);
@@ -160,12 +167,7 @@ const Chat = (props) => {
           username: name,
           message: msg,
           room,
-          file: {
-            name: 'String!',
-            url: 'String!',
-            isImage: false,
-            type: 'String!',
-          },
+          file,
         },
       }));
       setMessageList([...arr]);
@@ -192,20 +194,33 @@ const Chat = (props) => {
   const handleClear = () => {
     setHasFile(false);
     setPlaceholder('Message...');
-    setFile({});
   };
 
-  const handleUpload = (upload) => {
-    console.log(upload);
-    // name: String!
-    // url: String!
-    // isImage: Boolean!
-    // type: String!
+  const handleUpload = (url, { name, fileType }) => {
+    const fileTypes = [
+      '.apng',
+      '.avif',
+      '.gif',
+      '.jpg',
+      '.jpeg',
+      '.jfif',
+      '.pjpeg',
+      '.pjp',
+      '.png',
+      '.svg',
+      '.webp',
+    ];
+    setFile({
+      name,
+      url,
+      isImage: fileTypes.includes(fileType),
+      fileType,
+    });
   };
 
   const uploadFile = () => {
     handleClear();
-    const uploadTask = storage.ref(`groupster/${file.name}`).put(file.file);
+    const uploadTask = storage.ref(`groupster/${fileToUpload.name}`).put(fileToUpload.file);
     uploadTask.on(
       'state_changed',
       () => {},
@@ -215,31 +230,26 @@ const Chat = (props) => {
       () => {
         storage
           .ref('groupster')
-          .child(file.name)
+          .child(fileToUpload.name)
           .getDownloadURL()
           .then((url) => {
-            handleUpload(url);
+            handleUpload(url, fileToUpload);
           });
       },
     );
   };
 
   const sendMessage = async () => {
-    if (file.name) uploadFile();
+    if (fileToUpload.name) await uploadFile();
     if (username.length > 0) {
-      if (message.length > 0) {
+      if (message.length > 0 || file.url) {
         const messageContent = {
           room,
           content: {
             username,
             message,
             room,
-            file: {
-              name: 'String!',
-              url: 'String!',
-              isImage: false,
-              type: 'String!',
-            },
+            file,
           },
         };
         await socket.emit('send_message', messageContent);
@@ -252,9 +262,11 @@ const Chat = (props) => {
               name: username,
               msg: message,
               room,
+              file,
             },
           },
         });
+        setFile({ name: null, url: null, isImage: null, fileType: null });
       }
     } else {
       alert('Username is not set. Please try to relogin');
@@ -263,7 +275,6 @@ const Chat = (props) => {
 
   const populate = () => {
     if (messageList) {
-      console.log(messageList);
       setMessageContentList([
         messageList.map(({ content }, key) => (
           <div
@@ -332,7 +343,7 @@ const Chat = (props) => {
                   color: '#d2d4da',
                 }}
               >
-                <div style={{ marginTop: '2px' }}>{file.name}</div>
+                <div style={{ marginTop: '2px' }}>{fileToUpload.name}</div>
                 <Grid container justify="flex-end" alignItems="flex-end">
                   <IconButton
                     onClick={handleClear}
