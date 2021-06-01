@@ -5,7 +5,46 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, useQuery, gql } from '@apollo/client';
+import { v4 as uuidv4 } from 'uuid';
+import { auth } from '../../firebase';
+
+const categoryList = [
+  'Math',
+  'Language',
+  'Science',
+  'Literature',
+  'Social Science',
+  'Art',
+  'Technology',
+  'Business',
+  'Music',
+];
+
+const CREATE_GROUP = gql`
+  mutation createChannel($channel: InputChannel!) {
+    createChannel(channel: $channel) {
+      name
+      category
+      admin
+      strId
+      users
+      rooms
+    }
+  }
+`;
+
+const GET_USER = gql`
+  query getProfile($email: String!) {
+    getProfile(email: $email) {
+      id
+      email
+      username
+      name
+      age
+    }
+  }
+`;
 
 const useStyles = makeStyles((theme) => ({
   groupModal: {
@@ -45,48 +84,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const categoryList = [
-  'Math',
-  'Language',
-  'Science',
-  'Literature',
-  'Social Science',
-  'Art',
-  'Technology',
-  'Business',
-  'Music',
-];
-
-const CREATE_GROUP = gql`
-  mutation createChannel($info: CreateChannel!) {
-    createChannel(info: $info) {
-      name
-      category
-    }
-  }
-`;
-
 const CreateGroupModal = () => {
   const classes = useStyles();
+  const userEmail = auth.currentUser.email;
   const [groupName, setGroupName] = useState();
   const [groupCategory, setGroupCategory] = useState();
   const [createGroup] = useMutation(CREATE_GROUP);
+  const user = useQuery(GET_USER, {
+    variables: {
+      email: userEmail,
+    },
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({
       variables: {
-        info: {
+        channel: {
           name: groupName,
           category: groupCategory,
+          admin: user.data.getProfile[0].email,
+          strId: uuidv4(),
+          users: user.data.getProfile[0].email,
+          rooms: 'lobby',
         },
       },
     });
     createGroup({
       variables: {
-        info: {
+        channel: {
           name: groupName,
           category: groupCategory,
+          admin: user.data.getProfile[0].email,
+          strId: uuidv4(),
+          users: user.data.getProfile[0].email,
+          rooms: 'lobby',
         },
       },
     });
