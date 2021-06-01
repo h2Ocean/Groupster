@@ -9,12 +9,15 @@ export const typeDef = gql`
     strId: String!
     name: String!
     category: String!
-    admin: [Profile]
-    users: [Profile]
+    admin: [String]
+    users: [String]
     rooms: [String]
   }
   input InputChannel {
     strId: String!
+    admin: [String]
+    users: [String]
+    rooms: [String]
     name: String!
     category: String!
   }
