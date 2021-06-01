@@ -1,3 +1,5 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -23,6 +25,19 @@ import './styles/chat.css';
 import { auth, storage } from '../../../firebase';
 import 'react-notifications/lib/notifications.css';
 
+const fileTypes = [
+  '.apng',
+  '.avif',
+  '.gif',
+  '.jpg',
+  '.jpeg',
+  '.jfif',
+  '.pjpeg',
+  '.pjp',
+  '.png',
+  '.svg',
+  '.webp',
+];
 let socket;
 const CONNECTION_PORT = 'localhost:4000';
 const GET_CHATS = gql`
@@ -161,7 +176,7 @@ const Chat = (props) => {
         chats.refetch();
         setPrev(Object.keys(client.cache.data.data).length);
       }
-      const arr = chats.data.getChats.map(({ name, msg }) => ({
+      const arr = chats.data.getChats.map(({ name, msg, file }) => ({
         room,
         content: {
           username: name,
@@ -197,23 +212,10 @@ const Chat = (props) => {
   };
 
   const handleUpload = (url, { name, fileType }) => {
-    const fileTypes = [
-      '.apng',
-      '.avif',
-      '.gif',
-      '.jpg',
-      '.jpeg',
-      '.jfif',
-      '.pjpeg',
-      '.pjp',
-      '.png',
-      '.svg',
-      '.webp',
-    ];
     setFile({
       name,
       url,
-      isImage: fileTypes.includes(fileType),
+      isImage: fileTypes.includes(fileType.toLowerCase()),
       fileType,
     });
   };
@@ -221,28 +223,67 @@ const Chat = (props) => {
   const uploadFile = () => {
     handleClear();
     const uploadTask = storage.ref(`groupster/${fileToUpload.name}`).put(fileToUpload.file);
-    uploadTask.on(
-      'state_changed',
-      () => {},
-      (error) => {
-        throw new Error(error);
-      },
-      () => {
-        storage
-          .ref('groupster')
-          .child(fileToUpload.name)
-          .getDownloadURL()
-          .then((url) => {
-            handleUpload(url, fileToUpload);
-          });
-      },
-    );
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        () => {},
+        (error) => {
+          reject(error);
+        },
+        () =>
+          storage
+            .ref('groupster')
+            .child(fileToUpload.name)
+            .getDownloadURL()
+            .then((url) => {
+              handleUpload(url, fileToUpload);
+              resolve(url);
+            }),
+      );
+    });
   };
 
   const sendMessage = async () => {
-    if (fileToUpload.name) await uploadFile();
     if (username.length > 0) {
-      if (message.length > 0 || file.url) {
+      if (fileToUpload.name) {
+        uploadFile().then(async (url) => {
+          console.log(url);
+          const messageContent = {
+            room,
+            content: {
+              username,
+              message,
+              room,
+              file: {
+                url,
+                name: fileToUpload.name,
+                fileType: fileToUpload.fileType,
+                isImage: fileTypes.includes(fileToUpload.fileType.toLowerCase()),
+              },
+            },
+          };
+          await socket.emit('send_message', messageContent);
+          setMessageList([...messageList, messageContent]);
+          setMessage('');
+          dummy.current.scrollIntoView({ behavior: 'smooth' });
+          sendChat({
+            variables: {
+              message: {
+                name: username,
+                msg: message,
+                room,
+                file: {
+                  url,
+                  name: fileToUpload.name,
+                  fileType: fileToUpload.fileType,
+                  isImage: fileTypes.includes(fileToUpload.fileType.toLowerCase()),
+                },
+              },
+            },
+          });
+          setFile({ name: null, url: null, isImage: null, fileType: null });
+        });
+      } else if (message.length > 0) {
         const messageContent = {
           room,
           content: {
@@ -266,11 +307,26 @@ const Chat = (props) => {
             },
           },
         });
-        setFile({ name: null, url: null, isImage: null, fileType: null });
       }
     } else {
       alert('Username is not set. Please try to relogin');
     }
+  };
+
+  const checkFile = ({ file }) => {
+    if (file.name !== null) {
+      if (file.isImage) {
+        return (
+          <img
+            style={{ width: '20vw', maxHeight: '50vh', objectFit: 'cover' }}
+            src={file.url}
+            alt={file.name}
+          />
+        );
+      }
+      return <a href={file.url}>{file.name}</a>;
+    }
+    return <></>;
   };
 
   const populate = () => {
@@ -283,7 +339,12 @@ const Chat = (props) => {
             id={content.username === username ? 'You' : 'Other'}
             ref={dummy}
           >
-            <div className="messageIndividual">{`${content.username}: ${content.message}`}</div>
+            <div className="messageIndividual">
+              {`${content.username}: `}
+              <br />
+              {checkFile(content)}
+              {content.message}
+            </div>
           </div>
         )),
       ]);
