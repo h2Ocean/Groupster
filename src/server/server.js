@@ -12,33 +12,37 @@ const port = process.env.PORT;
 const pass = process.env.DB_PASSWORD;
 const username = process.env.DB_USERNAME;
 const url = `mongodb+srv://${username}:${pass}@cluster0.fshtv.mongodb.net/groupster?retryWrites=true&w=majority`;
+const corsOptions = {
+	origin: 'http://ec2-18-117-23-9.us-east-2.compute.amazonaws.com',
+	credentials: true,
+    };
 
 const startServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: {
-      origin: 'http://localhost:5000',
+	    origin: 'http://ec2-18-117-23-9.us-east-2.compute.amazonaws.com',
     },
     playground: true,
     introspection: true,
   });
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: corsOptions });
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../build', 'index.html'));
   });
-  app.use(cors);
+  
 
   await mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
   const httpServer = app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}${server.graphqlPath}`);
+    console.log(`Listening at http://ec2-18-117-23-9.us-east-2.compute.amazonaws.com:${port}${server.graphqlPath}`);
   });
 
   const io = socketIo(httpServer, {
-    cors: {
-      origin: 'http://localhost:5000',
+	  cors:  {
+		  origin: 'http://ec2-18-117-23-9.us-east-2.compute.amazonaws.com',
       methods: ['GET', 'POST'],
     },
   });
