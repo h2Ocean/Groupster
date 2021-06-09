@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -18,7 +18,6 @@ import {
   Grid,
 } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
 import NavTopbar from './NavTopbar';
 import CreateGroupModal from './CreateGroupModal';
 import { auth } from '../../firebase';
@@ -96,26 +95,17 @@ const groupList = [
 ];
 const pictures = [food, python, chemistry, humor, guitar, java, music, food, history];
 
-const GET_GROUPS = gql`
-  query getAllChannels($category: String!) {
-    getAllChannels(category: $category) {
-      name
-    }
-  }
-`;
-
-const Dashboard = (props) => {
+const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [isLogged, setIsLogged] = useState([]);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
-  const [category, selectCategory] = useState('History');
-  const [group, selectGroup] = useState('Medieval History');
+  const [category] = useState('History');
+  const [group] = useState('Medieval History');
   const [searchedGroups, setSearchedGroups] = useState('');
 
   const handleJoin = (e) => {
     e.preventDefault();
-    alert('Your request to join has been sent');
   };
 
   useEffect(() => {

@@ -39,7 +39,7 @@ const fileTypes = [
   '.webp',
 ];
 let socket;
-const CONNECTION_PORT = 'localhost:4000';
+const CONNECTION_PORT = '4000';
 const GET_CHATS = gql`
   query GetChats($room: String!) {
     getChats(room: $room) {
