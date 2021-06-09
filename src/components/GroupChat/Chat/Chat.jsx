@@ -39,7 +39,7 @@ const fileTypes = [
   '.webp',
 ];
 let socket;
-const CONNECTION_PORT = 'https://groupster.netlify.app';
+const CONNECTION_PORT = 'https://groupster-chat.herokuapp.com';
 const GET_CHATS = gql`
   query GetChats($room: String!) {
     getChats(room: $room) {

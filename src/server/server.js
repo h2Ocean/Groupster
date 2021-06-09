@@ -13,7 +13,7 @@ const pass = process.env.DB_PASSWORD;
 const username = process.env.DB_USERNAME;
 const url = `mongodb+srv://${username}:${pass}@cluster0.fshtv.mongodb.net/groupster?retryWrites=true&w=majority`;
 const corsOptions = {
-  origin: 'https://groupster.netlify.app',
+  origin: 'https://groupster-chat.herokuapp.com',
   credentials: true,
 };
 
@@ -21,7 +21,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: {
-      origin: 'https://groupster.netlify.app',
+      origin: 'https://groupster-chat.herokuapp.com',
     },
     playground: true,
     introspection: true,
@@ -36,12 +36,12 @@ const startServer = async () => {
     useUnifiedTopology: true,
   });
   const httpServer = app.listen(port, () => {
-    console.log(`Listening at https://groupster.netlify.app:${port}${server.graphqlPath}`);
+    console.log(`Listening at https://groupster-chat.herokuapp.com:${port}${server.graphqlPath}`);
   });
 
   const io = socketIo(httpServer, {
     cors: {
-      origin: 'https://groupster.netlify.app',
+      origin: 'https://groupster-chat.herokuapp.com',
       methods: ['GET', 'POST'],
     },
   });
