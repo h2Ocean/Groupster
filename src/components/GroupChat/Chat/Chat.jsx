@@ -39,7 +39,7 @@ const fileTypes = [
   '.webp',
 ];
 let socket;
-const CONNECTION_PORT = '4000';
+const CONNECTION_PORT = 'https://groupster.netlify.app';
 const GET_CHATS = gql`
   query GetChats($room: String!) {
     getChats(room: $room) {
@@ -166,6 +166,8 @@ const Chat = (props) => {
   const [{ resource, setResource, resourceName, setResourceName }] = useState(props);
 
   useEffect(() => {
+    console.log(user);
+
     if (user.data) {
       setUsername(user.data.getProfile[0].username);
     }
