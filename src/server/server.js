@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const path = require('path');
 const app = require('express')();
-const cors = require('cors');
-const schema = require('./gql/schema').default;
+const schema = require('./gql/schema');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
 
@@ -28,7 +27,7 @@ const startServer = async () => {
   });
   server.applyMiddleware({ app, cors: corsOptions });
   app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../build/', 'index.html'));
   });
 
   await mongoose.connect(url, {

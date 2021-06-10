@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { gql } from 'apollo-server-express';
-import Profile from '../../models/profile/profile';
+const { gql } = require('apollo-server-express');
+const { Profile } = require('../models/profile');
 
-export const typeDef = gql`
+const typeDef = gql`
   type Profile {
     id: ID!
     name: String!
@@ -37,7 +37,7 @@ export const typeDef = gql`
   }
 `;
 
-export const resolvers = {
+const resolvers = {
   Query: {
     async getProfile(_, { email }) {
       try {
@@ -70,7 +70,6 @@ export const resolvers = {
     },
     updateBio: async (_, { info: { name, bio, email, pfp } }) => {
       const res = await Profile.findOneAndUpdate({ email }, { bio, name, pfp });
-      console.log(res);
       return {
         id: res._id,
         name: res.name,
@@ -83,3 +82,5 @@ export const resolvers = {
     },
   },
 };
+
+module.exports = { typeDef, resolvers };

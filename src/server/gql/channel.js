@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import { gql } from 'apollo-server-express';
-import Channel from '../../models/channel/channel';
-import Profile from '../../models/profile/profile';
+const { gql } = require('apollo-server-express');
+const { Channel } = require('../models/channel');
+const { Profile } = require('../models/profile');
 
-export const typeDef = gql`
+const typeDef = gql`
   type Channel {
     id: ID!
     strId: String!
@@ -39,7 +39,7 @@ export const typeDef = gql`
   }
 `;
 
-export const resolvers = {
+const resolvers = {
   Query: {
     async getChannel(_, { strId }) {
       try {
@@ -108,6 +108,8 @@ export const resolvers = {
     },
   },
 };
+
+module.exports = { typeDef, resolvers };
 
 // type Channel {
 //   id: ID!

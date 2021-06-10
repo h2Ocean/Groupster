@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { gql } from 'apollo-server-express';
-import { FaCodeBranch } from 'react-icons/fa';
-import Chat from '../../models/channel/chat';
+const { gql } = require('apollo-server-express');
+const { Chat } = require('../models/chat');
 
-export const typeDef = gql`
+const typeDef = gql`
   type Chat {
     id: ID!
     name: String!
@@ -43,7 +42,7 @@ export const typeDef = gql`
   }
 `;
 
-export const resolvers = {
+const resolvers = {
   Query: {
     async getChats(_, { room }) {
       try {
@@ -79,3 +78,4 @@ export const resolvers = {
     },
   },
 };
+module.exports = { typeDef, resolvers };

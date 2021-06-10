@@ -1,4 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const Channel = mongoose.model(
   'Channel',
@@ -12,7 +14,7 @@ const Channel = mongoose.model(
   }),
 );
 
-export default Channel;
+module.exports = Channel;
 // name: String,
 // desc: String,
 // category: Schema.types.ObjectId,
