@@ -9,7 +9,6 @@ const schema = require('./gql/schema');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
 
-const port = 4000;
 const pass = process.env.DB_PASSWORD;
 const username = process.env.DB_USERNAME;
 const url = `mongodb+srv://${username}:${pass}@cluster0.fshtv.mongodb.net/groupster?retryWrites=true&w=majority`;
@@ -39,8 +38,12 @@ const startServer = async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const httpServer = app.listen(port, () => {
-    console.log(`Listening at https://groupster-chat.herokuapp.com/${port}${server.graphqlPath}`);
+  const httpServer = app.listen(process.env.PORT || 4000, () => {
+    console.log(
+      `Listening at https://groupster-chat.herokuapp.com:${process.env.PORT || 4000}${
+        server.graphqlPath
+      }`,
+    );
   });
 
   const io = socketIo(httpServer, {
