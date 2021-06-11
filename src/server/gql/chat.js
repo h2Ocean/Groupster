@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const { gql } = require('apollo-server-express');
-const { Chat } = require('../models/chat');
+const Chat = require('../models/chat');
 
 const typeDef = gql`
   type Chat {

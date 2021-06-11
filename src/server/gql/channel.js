@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const { gql } = require('apollo-server-express');
-const { Channel } = require('../models/channel');
-const { Profile } = require('../models/profile');
+const Channel = require('../models/channel');
+const Profile = require('../models/profile');
 
 const typeDef = gql`
   type Channel {

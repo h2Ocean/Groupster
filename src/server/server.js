@@ -2,32 +2,37 @@ const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const path = require('path');
-const app = require('express')();
+const express = require('express');
+
+const app = express();
 const schema = require('./gql/schema');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env.local') });
 
-const port = process.env.PORT;
+const port = 4000;
 const pass = process.env.DB_PASSWORD;
 const username = process.env.DB_USERNAME;
 const url = `mongodb+srv://${username}:${pass}@cluster0.fshtv.mongodb.net/groupster?retryWrites=true&w=majority`;
 const corsOptions = {
-  origin: 'https://groupster-chat.herokuapp.com',
+  origin: 'https://groupster-chat.herokuapp.com/',
   credentials: true,
 };
+
+// https://groupster-chat.herokuapp.com
 
 const startServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: {
-      origin: 'https://groupster-chat.herokuapp.com',
+      origin: 'https://groupster-chat.herokuapp.com/',
     },
     playground: true,
     introspection: true,
   });
   server.applyMiddleware({ app, cors: corsOptions });
+  app.use(express.static('build'));
   app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../build/', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../build', 'index.html'));
   });
 
   await mongoose.connect(url, {
@@ -35,12 +40,12 @@ const startServer = async () => {
     useUnifiedTopology: true,
   });
   const httpServer = app.listen(port, () => {
-    console.log(`Listening at https://groupster-chat.herokuapp.com:${port}${server.graphqlPath}`);
+    console.log(`Listening at https://groupster-chat.herokuapp.com/${port}${server.graphqlPath}`);
   });
 
   const io = socketIo(httpServer, {
     cors: {
-      origin: 'https://groupster-chat.herokuapp.com',
+      origin: 'https://groupster-chat.herokuapp.com/',
       methods: ['GET', 'POST'],
     },
   });

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const { gql } = require('apollo-server-express');
-const { Profile } = require('../models/profile');
+const Profile = require('../models/profile');
 
 const typeDef = gql`
   type Profile {

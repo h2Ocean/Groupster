@@ -14,7 +14,7 @@ import Welcome from './Welcome/Welcome';
 
 const App = () => {
   const httpLink = createHttpLink({
-    uri: 'https://groupster.netlify.app/',
+    uri: 'https://groupster-chat.herokuapp.com:4000/graphql',
   });
   const client = new ApolloClient({
     link: httpLink,
