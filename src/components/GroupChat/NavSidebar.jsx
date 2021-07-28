@@ -42,19 +42,7 @@ const GET_CHANNEL = gql`
     }
   }
 `;
-// const GET_CHATS_FOR_ROOM = gql`
-//   query getChats($room: String!) {
-//     getChats(room: $room) {
-//       name
-//       file {
-//         name
-//         url
-//         isImage
-//         fileType
-//       }
-//     }
-//   }
-// `;
+
 
 const stringToHash = (string) => {
   let hash = 0;
@@ -85,13 +73,7 @@ const NavSidebar = (props) => {
   const [rooms, setRooms] = useState([]);
   const resourceList = [];
   const classes = useStyles();
-  // const [chats, setChats] = useState([]);
 
-  // const { data1 } = useQuery(GET_CHATS_FOR_ROOM, {
-  //   variables: {
-  //     room,
-  //   },
-  // });
 
   const handleOpen = () => {
     setOpen(true);
@@ -142,9 +124,6 @@ const NavSidebar = (props) => {
         {widgets.groupWidget('Medieval History')}
       </div>
       <Rooms key={rooms} setRoom={setRoom} rooms={rooms} strId={strId} />
-      {/* <div className="navBarWidget">
-        <div className="heading">Voice Chat</div>
-      </div> */}
       <div className="navBarWidget">
         <div className="heading">Resources</div>
         <div style={{ marginLeft: '15px', fontSize: '16px', textIndent: '10px' }}>
