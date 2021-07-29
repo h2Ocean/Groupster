@@ -2,7 +2,6 @@
 /* eslint-disable no-bitwise */
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Backdrop, Fade, Divider } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -11,12 +10,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { v4 as uuidv4 } from 'uuid';
 import widgets from '../Reusable/widgets';
 import Rooms from './NavComponents/Rooms';
-
-const useStyles = makeStyles((theme) => ({
-  divider: {
-    color: 'red',
-  },
-}));
 
 const GET_CHANNEL = gql`
   query getChannel($strId: String!) {
@@ -42,19 +35,6 @@ const GET_CHANNEL = gql`
     }
   }
 `;
-// const GET_CHATS_FOR_ROOM = gql`
-//   query getChats($room: String!) {
-//     getChats(room: $room) {
-//       name
-//       file {
-//         name
-//         url
-//         isImage
-//         fileType
-//       }
-//     }
-//   }
-// `;
 
 const stringToHash = (string) => {
   let hash = 0;
@@ -81,10 +61,9 @@ const NavSidebar = (props) => {
     },
   });
 
-  const [{ setRoom, room, resource, resourceName }] = useState(props);
+  const [{ setRoom, room, resource }] = useState(props);
   const [rooms, setRooms] = useState([]);
-  const resourceList = [];
-  const classes = useStyles();
+
   // const [chats, setChats] = useState([]);
 
   // const { data1 } = useQuery(GET_CHATS_FOR_ROOM, {
@@ -112,17 +91,7 @@ const NavSidebar = (props) => {
       setRooms(currentChannel.rooms);
     }
   }, [currentChannel]);
-  useEffect(() => {
-    if (resourceName.length > 0) {
-      resourceName.forEach((resrc, ind) => {
-        resourceList.push({
-          name: resrc[ind],
-          linke: resource[ind],
-        });
-      });
-    }
-  });
-
+  let result = [];
   return (
     <div id="NavSidebar" style={{ backgroundColor: '#E6E9EF' }}>
       <div
@@ -142,16 +111,18 @@ const NavSidebar = (props) => {
         {widgets.groupWidget('Medieval History')}
       </div>
       <Rooms key={rooms} setRoom={setRoom} rooms={rooms} strId={strId} />
-      {/* <div className="navBarWidget">
-        <div className="heading">Voice Chat</div>
-      </div> */}
+
       <div className="navBarWidget">
         <div className="heading">Resources</div>
-        <div style={{ marginLeft: '15px', fontSize: '16px', textIndent: '10px' }}>
-          {resource.map((ea, ind) => (
-            <a href={`${resource[ind]}`}>`${ind}`</a>
-          ))}
-        </div>
+        <div
+          style={{
+            marginLeft: '15px',
+            fontSize: '16px',
+            textIndent: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        ></div>
         <button
           type="button"
           onClick={handleOpen}
@@ -174,9 +145,6 @@ const NavSidebar = (props) => {
             <div className="resourceModal">
               <h2 id="transition-modal-title">Resources</h2>
               Click to download
-              {resourceList.map((ea, ind) => (
-                <a href={`${ea.link}`}>`${ea.name}`</a>
-              ))}
               <div
                 style={{
                   display: 'flex',
@@ -185,33 +153,16 @@ const NavSidebar = (props) => {
                   padding: '20px',
                 }}
               >
-                <Divider className={classes.divider} />
-                <div className="rsc">
-                  <a
-                    type="button"
-                    href="https://firebasestorage.googleapis.com/v0/b/groupster-befe4.appspot.com/o/groupster%2F12493824_761156884019250_8719775955904428240_o.jpg?alt=media&token=6377c875-a6ae-47a1-b56d-b3a5d66fc8c2"
-                  >
-                    <span>12493824_761156884019250_8719775955904428240_o.jpg</span>
-                  </a>
-                </div>
-                <Divider className={classes.divider} />
-                <div className="rsc">
-                  <a
-                    type="button"
-                    href="https://firebasestorage.googleapis.com/v0/b/groupster-befe4.appspot.com/o/groupster%2Ftobias_fischer_resume.docx?alt=media&token=4ecf5561-b043-4602-9cc3-b97cece89acd"
-                  >
-                    <span>tobias_fischer_resume.docx</span>
-                  </a>
-                </div>
-                <Divider className={classes.divider} />
-                <div className="rsc">
-                  <a
-                    type="button"
-                    href="https://firebasestorage.googleapis.com/v0/b/groupster-befe4.appspot.com/o/groupster%2FExercise_%20An%20Introduction%20to%20SQL.pdf?alt=media&token=9838b678-4685-4723-b180-733ace9d4061"
-                  >
-                    <span>Exercise_ An Introduction to SQL.pdf</span>
-                  </a>
-                </div>
+                {props.resource.map((ea, ind) => (
+                  <>
+                    <Divider />
+                    <div className="rsc">
+                      <a type="button" href={`${ea.url}`}>
+                        <span>{`${ea.name}`}</span>
+                      </a>
+                    </div>
+                  </>
+                ))}
               </div>
             </div>
           </Fade>

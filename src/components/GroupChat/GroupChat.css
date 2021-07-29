@@ -1,9 +1,42 @@
-#GroupChat_container {
-  width: 100vw;
-  height: 92vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+@media (min-width: 415px) {
+  #GroupChat_container {
+    width: 100vw;
+    height: 92vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .Chat {
+    width: 65%;
+    display: grid;
+    grid-template-rows: 90% auto;
+    grid-template-areas:
+      'messages'
+      'write';
+    place-items: center;
+    background-color: rgb(43, 43, 43);
+    overflow-x: hidden;
+  }
+}
+@media (max-width: 414px) {
+  #GroupChat_container {
+    width: 100vw;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .Chat {
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 90% auto;
+    grid-template-areas:
+      'messages'
+      'write';
+    place-items: center;
+    background-color: rgb(43, 43, 43);
+    overflow-x: hidden;
+  }
 }
 
 #NavSidebar {
@@ -79,6 +112,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 25px;
+  overflow-y: auto;
 }
 
 .rsc {

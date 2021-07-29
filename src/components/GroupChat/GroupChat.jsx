@@ -6,6 +6,7 @@ import { auth } from '../../firebase';
 import NavTopbar from '../NavTopbar/NavTopbar';
 import Chat from './Chat/Chat';
 import NavSidebar from './NavSidebar';
+import NavSideDrawer from './NavSideDrawer';
 import Members from './Members';
 import './GroupChat.css';
 
@@ -27,7 +28,6 @@ const GroupChat = (props) => {
   const [room, setRoom] = useState('TESTINGLOBBY-123456-lobby');
   const [group, setGroup] = useState('Medieval History');
   const [resource, setResource] = useState([]);
-  const [resourceName, setResourceName] = useState([]);
   let userEmail;
   const [getUser, { data }] = useLazyQuery(GET_USER, {
     variables: {
@@ -54,7 +54,12 @@ const GroupChat = (props) => {
       <CssBaseline />
       <NavTopbar title="Chat" showSearchbar="false" crumbs={[`${group}`, `${room.slice(20)}`]} />
       <div id="GroupChat_container">
-        <NavSidebar setRoom={setRoom} room={room} resource={resource} resourceName={resourceName} />
+        {window.innerWidth <= 700 ? (
+          <NavSideDrawer />
+        ) : (
+          <NavSidebar setRoom={setRoom} room={room} resource={resource} setResource={setResource} />
+        )}
+
         <Chat
           key={room}
           client={client}
@@ -62,8 +67,6 @@ const GroupChat = (props) => {
           user={data}
           resource={resource}
           setResource={setResource}
-          resourceName={resourceName}
-          setResourceName={setResourceName}
         />
         <Members />
       </div>

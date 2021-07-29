@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+// eslint-disable-next-line object-curly-newline
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import Signup from './login-signup/SignUp';

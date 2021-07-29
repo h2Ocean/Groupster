@@ -206,13 +206,16 @@ const Chat = (props) => {
       setMessageList([...messageList, res]);
     });
   });
+  // send resource list to parent component
   useEffect(() => {
     // eslint-disable-next-line consistent-return
-    messageList.forEach((message) => {
-      if (message.content.file.name) {
-        setResource((prev) => [...prev, message.content.file.url]);
-        setResourceName((prev) => [...prev, message.content.file.name]);
-      }
+    const resourceList = messageList.filter((message) => {
+      const { name } = message.content.file;
+      return name;
+    });
+    resourceList.forEach((resource) => {
+      const { name, fileType, url } = resource.content.file;
+      setResource((prev) => [...prev, { name, fileType, url }]);
     });
   }, [messageList]);
 
